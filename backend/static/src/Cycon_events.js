@@ -1741,7 +1741,7 @@ function selectLayers(Layer, ID_Layer) {
             dataType: 'json',
             success: function (data) {
                 // Create the html section to place in the cycon page.
-            
+                
                 var html_section = document.getElementById(ID_Layer);
 
                 // create the field box for the new layer option.
@@ -1760,7 +1760,6 @@ function selectLayers(Layer, ID_Layer) {
                 textbox.style.display = "none";
             
                 field.appendChild(textbox);
-
                 // Create option to edit the parameter for the NN layer option.
                 for (var Parameter in data) {
 
