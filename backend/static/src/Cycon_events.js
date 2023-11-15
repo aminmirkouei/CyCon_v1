@@ -91,7 +91,9 @@ function changePreoptCategory(category, ID_Preopts) {
         async: false,
         dataType: 'json',
         success: function (data) {
-            select = document.getElementById(ID_Preopts);
+            // data from getCataforyPropts() function returns the optimizer for that catagory
+            // data include Name, Display_Name, Definition, Parameters
+            select = document.getElementById(ID_Preopts); // the id for the optimizer drop down
             select.options.length = 0;
             // Remove existing options in the selection
             var len = select.length;
@@ -278,7 +280,7 @@ function readTextFile(file, callback) {
 
 function getData(files, fileSelected, choice) {
     const form = document.getElementById("MLAI_Form");
-    console.log("get form :", form, files, choice, fileSelected);
+    console.log("get form :", form, files, fileSelected, choice);
     // Copy over information from element outside of form to the copy inside form
     document.getElementById("projectName_copy").value = document.getElementById("projectName").value;
     document.getElementById("phase1Text_copy").value = document.getElementById("phase1Text").value;
@@ -302,7 +304,7 @@ function getData(files, fileSelected, choice) {
     //});
 
     // iterate through entries...
-    for (var pair of formData.entries()) {
+    for (var pair of formData.entries()) {         // Each pair of form field name and value
         console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
@@ -1024,7 +1026,7 @@ function checkCSV(files, fileSelected, choice) {
     data.append("csvFile", csvFile)
 
     //document.getElementById("Results").innerHTML += data;
-
+    console.log("Data", data)
     $.ajax({
         url: "/experiments/getCSVResults",
         data: data,
@@ -1100,7 +1102,7 @@ function checkCSV(files, fileSelected, choice) {
 function checkCSV_Preopt(form) {
     document.getElementById("csv_Error_Preopt").innerHTML = "";
     document.getElementById("csv_Results_Preopt").innerHTML = "";
-
+    console.log(form)
     var formData = new FormData(form);
     var csvFormData = new FormData(document.getElementById("csvForm"));
 
@@ -1115,15 +1117,16 @@ function checkCSV_Preopt(form) {
     formData.append("Perform_Preopt", "Yes")
 
     formData.append("preoptCounter", preoptCounter)
-
+    
     // iterate through entries...
     for (var pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        console.log(pair)
+        // console.log(pair[0] + ": " + pair[1]);
         dict_data[pair[0]] = pair[1]
     }
 
     for (var pair of csvFormData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         dict_data[pair[0]] = pair[1]
     }
 
@@ -1145,7 +1148,6 @@ function checkCSV_Preopt(form) {
     data.append("processes", JSON.stringify(dict_data))
     data.append("csvFileName", csvFileName)
     data.append("csvFile", csvFile)
-
     document.getElementById("Results").innerHTML += data;
 
     $.ajax({
@@ -1156,6 +1158,7 @@ function checkCSV_Preopt(form) {
         processData: false, // important
         contentType: false, // important,
         success: function (Results) {
+            console.log(Results)
             if (Results[0] == "worked") {
 
                 Results = Results[2]
@@ -1331,7 +1334,7 @@ function downloadCSV(form) {
 
 
 // Addes the selected preoptimization to the form. 
-function selectPreopt(Preopt, ID_Preopt) {
+function selectPreopt(Preopt, ID_Preopt) {  // the preoptimization drop down and ID_Preopt section (empty div section)
     if (preoptCounter != 10) {
 
         var Preopt_selection = document.getElementById(Preopt)
@@ -1341,7 +1344,7 @@ function selectPreopt(Preopt, ID_Preopt) {
 
         dict_values = { Preopt: Preopt_value };
 
-        const sent_data = JSON.stringify(dict_values)
+        const sent_data = JSON.stringify(dict_values) // sending preoptimization name
 
         // Get the parameters for the selected Preopt option.
         $.ajax({
@@ -1352,7 +1355,9 @@ function selectPreopt(Preopt, ID_Preopt) {
             async: false,
             dataType: 'json',
             success: function (data) {
+                // data = gets the parameters given the name
                 // Create the html section to place in the cycon page.
+                // console.log(data)
                 var html_section = document.getElementById(ID_Preopt);
 
                 // create the field box for the new preopt option.
@@ -1730,7 +1735,7 @@ function selectLayers(Layer, ID_Layer) {
         dict_values = { Layer: Layer_value };
 
         const sent_data = JSON.stringify(dict_values)
-
+        console.log(sent_data)
         // Get the parameters for the selected layer option.
         $.ajax({
             url: "/experiments/getLayerParameters",
@@ -1800,6 +1805,7 @@ function selectLayers(Layer, ID_Layer) {
                         // Create choices and options to edit the parameter
 
                         fillSection(field, data, Parameter, "Layer", layerCounter)
+
                     }
                 }
                 // TO DO LATER: Add button to remove the individual NN layer.
@@ -1832,6 +1838,22 @@ function selectLayers(Layer, ID_Layer) {
                 // add field to div section
                 html_section.appendChild(divElement)
                 html_section.appendChild(field)
+                var Remove_one = document.createElement('button');
+                Remove_one.type = 'button';
+                Remove_one.textContent = 'Remove one';  // Set the button text content
+
+                // Apply some basic CSS styles
+                Remove_one.style.padding = '5px 5px';
+                Remove_one.style.backgroundColor = 'white';
+                Remove_one.style.color = 'Black';
+                Remove_one.style.border = '1px solid #ccc';
+                Remove_one.style.borderRadius = '5px';
+                Remove_one.addEventListener('click', function() {
+                    removeOne(layerCounter);
+                  });
+
+                // Append the button to the fieldset
+                html_section.appendChild(Remove_one);
                 
 
             }
@@ -1840,6 +1862,22 @@ function selectLayers(Layer, ID_Layer) {
         layerCounter = layerCounter + 1;
     }
 }
+
+
+    // function removeOne(layerCounter) {
+    //     const form = document.getElementById("DLANN_Form");
+    //     var formData = new FormData(form);
+    //     console.log("Layer counter: ", layerCounter )
+    //     for (const entry of formData.entries())
+    //     {
+    //         if (entry[0].startsWith('Layer_' + layerCounter)) {
+    //             // Remove the entry from the formData
+    //             formData.delete(entry[0]);
+    //           }
+    //           console.log()
+    //     }
+
+    // }
 
 // Removes all csv check information
 function clearAllCSV() {

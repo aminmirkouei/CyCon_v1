@@ -315,7 +315,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
 
                         <!-- Dynamically pull preoptimization options and create new identifyer when selected. -->
                         Category:
-                        {% if g.preopt_Categories %}
+                        {% if g.preopt_Categories %}   <!-- just the name, display names, and the definition of all catagories-->
                         <select id="preopt_categories"
                                 class="px-2 py-1 mr-2 rounded-md border border-gray-400"
                                 name="preopt_categories" onchange="changePreoptCategory(this.id,'preopts')">
@@ -325,7 +325,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                         </select>
                         {% endif %}
                         Optimizer:
-                        {% if g.preopts %}
+                        {% if g.preopts %}  <!-- contains standardizationm optimizers(name, displayName, definition)-->
                         <select id="preopts"
                                 class="px-2 py-1 mr-2 rounded-md border border-gray-400"
                                 name="preopts">
@@ -336,7 +336,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                         <button type="button"
                                 id="AddPreopts"
                                 class="px-2 px-1.5 rounded-lg bg-white border border-gray-400"
-                                onclick="selectPreopt('preopts', 'Preopt_Selection')">Add</button>
+                                onclick="selectPreopt('preopts', 'Preopt_Selection')">Add</button> <!-- Just takes the parameter for specifc optimizer and add it in the Preopt_selection div-->
                         <button type="button"
                                 id="clearPreopts"
                                 class="px-2 px-1.5 rounded-lg bg-white border border-gray-400"
@@ -347,7 +347,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
 
                         <button type="submit"
                                 class="my-2 px-2 px-1.5 rounded-lg bg-white border border-gray-400"
-                                value="Check" onclick="changePreoptSubmit('Check')"> Check </button>
+                                value="Check" onclick="changePreoptSubmit('Check')"> Check </button> <!-- This submits the code submits the form search for checkCSV_Preopt in cycon js-->
 
                         <p id="csv_Error_Preopt"></p>
                         <p id="csv_Title_Preopt">CSV values:</p>
