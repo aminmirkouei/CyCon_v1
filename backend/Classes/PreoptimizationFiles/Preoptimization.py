@@ -213,6 +213,7 @@ def getDataset(fileName):
 # Return the column titles in an array.
 def getCSVColumnTitles(data):
     ##df = getDataset(data['csvFileName'])
+    
     df = pd.read_csv(data['csvFile'], index_col=None)
 
     titles_list = list(df.columns.values)

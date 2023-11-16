@@ -485,6 +485,9 @@ function getData(files, fileSelected, choice) {
                         F1 = Results["F1"]
                         F1_micro = Results["F1_micro"]
                         F1_macro = Results["F1_macro"]
+                        Recall = Results["recall"]
+                        Recall_macro = Results["recall_macro"]
+                        Recall_micro = Results["recall_micro"]
                         Precision = Results["Precision"]
                         Precision_micro = Results["Precision_micro"]
                         Precision_macro = Results["Precision_macro"]
@@ -505,6 +508,11 @@ function getData(files, fileSelected, choice) {
                         writeData.paragraph += Results["F1_Intro"].bold() + Results["F1"] + "<br\>"
                         writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>"
                         writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>"
+
+                        writeData.paragraph += Results["Recall_Intro"].bold() + Results["recall"] + "<br\>"
+                        writeData.paragraph += Results["Recall_micro_Intro"].bold() + Results["recall_micro"] + "<br\>"
+                        writeData.paragraph += Results["Recall_macro_Intro"].bold() + Results["recall_macro"] + "<br\>"
+
                         writeData.paragraph += `${img.outerHTML}` + "<br\>"
 
                         //$('#Results').html(data.paragraph);
@@ -1849,7 +1857,11 @@ function selectLayers(Layer, ID_Layer) {
                 Remove_one.style.border = '1px solid #ccc';
                 Remove_one.style.borderRadius = '5px';
                 Remove_one.addEventListener('click', function() {
-                    removeOne(layerCounter);
+                    // var fieldset = Remove_one.previousSibling; // Get the fieldset element
+                    // var divElement = fieldset.previousSibling;
+                    // html_section.removeChild(fieldset);
+                    // html_section.removeChild(divElement);
+                    // html_section.removeChild(Remove_one);
                   });
 
                 // Append the button to the fieldset
@@ -1868,13 +1880,19 @@ function selectLayers(Layer, ID_Layer) {
     //     const form = document.getElementById("DLANN_Form");
     //     var formData = new FormData(form);
     //     console.log("Layer counter: ", layerCounter )
+    //     layerDelete = layerCounter - 1
     //     for (const entry of formData.entries())
     //     {
-    //         if (entry[0].startsWith('Layer_' + layerCounter)) {
+    //         if (entry[0].startsWith('Layer_' + layerDelete)) {
+    //             // console.log("Hello")
     //             // Remove the entry from the formData
     //             formData.delete(entry[0]);
-    //           }
-    //           console.log()
+    //           }  
+    //     }
+
+    //     for (const entry of formData.entries())
+    //     {
+    //         console.log(entry)
     //     }
 
     // }
@@ -2351,15 +2369,13 @@ function createCSVBlob(csvContent) {
 function changeCSV(files, selectedFile, choice) {
     clearAllCSV()
     clearAllPreopt()
-
     let csvFileName;
     let csvFile;
     // create option to select classification column
     if(choice === "Choose uploaded file") {
         const foundFile = files.find(f => f.filename === selectedFile);
         const data = JSON.parse(JSON.stringify(foundFile.content));
-        console.log("data: ", data, );
-
+        // console.log("data: ", data, );
         // Create CSV content
         const csvContent = createCSV(data);
 
@@ -2369,15 +2385,19 @@ function changeCSV(files, selectedFile, choice) {
         csvFileName = selectedFile;
         csvFile = csvBlob;
 
-        console.log("created csv: ", csvFile, csvBlob)
+        // console.log("created csv: ", csvFile, csvBlob)
     } else {
+        if (files.name.endsWith('.npy')){
+        }
+    else{
         csvFileName = document.getElementById("csvFile").files[0].name;
         csvFile = document.getElementById("csvFile").files[0];
+        }
     }
-    console.log("changeCSV", files, selectedFile, csvFile);
+    // console.log("changeCSV", files, selectedFile, csvFile);
 
     dict_values = { "csvFileName": csvFileName, "csvFile": csvFile };
-
+    console.log(dict_values)
     const sent_data = JSON.stringify(dict_values)
 
     const data = new FormData();
@@ -2475,7 +2495,8 @@ function checkModel() {
 
     // iterate through entries...
     for (var pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
+        console.log(pair)
         dict_data[pair[0]] = pair[1]
     }
 
