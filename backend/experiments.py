@@ -377,7 +377,7 @@ def run_experiment():
         # K-Fold
         elif data['validation'] == "K-Fold":
             status, msg, Metrics = MLA_Validation.K_Fold(data)
-
+        logging.debug("statussssss %s", status)
         if status == "worked":
             # Open json file for the experiment.
             baseFolder = os.getcwd()
@@ -459,7 +459,12 @@ def getAlgorithmParameters():
     Parameters = MLA.getParameters(data["Algorithm"])
 
     return json.dumps(Parameters)
+   
+   # Definition ::
 
+   # Inputs()
+
+   # Output()
 @bp.route("/getCategoryPreopts", methods=["POST"])
 def getCategoryPreopts():
     output = request.get_json() # Recieved {catagory: catagoryName}

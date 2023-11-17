@@ -618,7 +618,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                 <div class="border-b border-gray-400 p-2">
                     <h1 class="mb-2 font-bold text-xl">Metrics</h1>
 
-                    <form id="resultForm">
+                    <form id="resultForm">  <!-- Takes you to displayResults function-->
 
                         <input type="checkbox" id=Met_ACC name="Met_ACC" value=Met_ACC checked> <label for=Met_ACC>ACC</label><br>
                         <input type="checkbox" id=Met_Precision name="Met_Precision" value=Met_Precision checked> <label for=Met_Precision>Precision</label><br>
@@ -627,7 +627,12 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                         <input type="checkbox" id=Met_F1 name="Met_F1" value=Met_F1 checked> <label for=Met_F1>F1</label><br>
                         <input type="checkbox" id=Met_F1_Micro name="Met_F1_Micro" value=Met_F1_Micro checked> <label for=Met_F1_Micro>F1 (Micro)</label><br>
                         <input type="checkbox" id=Met_F1_Macro name="Met_F1_Macro" value=Met_F1_Macro checked> <label for=Met_F1_Macro>F1 (Macro)</label><br>
+
+                        <input type="checkbox" id=Met_Recall name="Met_Recall" value=Met_Recall checked> <label for=Met_Recall>Recall</label><br>
+                        <input type="checkbox" id=Met_Recall_Micro name="Met_Recall_Micro" value=Met_Recall_Micro checked> <label for=Met_Recall_Micro>Recall (Micro)</label><br>
+                        <input type="checkbox" id=Met_Recall_Macro name="Met_Recall_Macro" value=Met_Recall_Macro checked> <label for=Met_Recall_Macro>Recall (Macro)</label><br>
                         <input type="checkbox" id=Met_CM name="Met_CM" value=Met_CM checked> <label for=Met_CM>Confusion Matrix</label><br>
+                        
 
 
                         <button type="submit"

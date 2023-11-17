@@ -23,6 +23,7 @@ from backend.Classes.PreoptimizationFiles import RemoveData
 from backend.Classes.PreoptimizationFiles import Standardization
 
 from urllib.parse import quote
+import logging
 
 class Preopt_Category:
     def __init__(self, name, display_name, definition):
@@ -213,8 +214,13 @@ def getDataset(fileName):
 # Return the column titles in an array.
 def getCSVColumnTitles(data):
     ##df = getDataset(data['csvFileName'])
-    
-    df = pd.read_csv(data['csvFile'], index_col=None)
+    if data['csvFileName'].endswith('.npy'):
+        numpy_array = np.load(data['csvFile'])
+        # Convert the NumPy array to a DataFrame
+        df = pd.DataFrame(data=numpy_array[1:, :], columns=numpy_array[0, :])
+    elif data['csvFileName'].endswith('.csv'):
+        # logging.debug("Hello")
+        df = pd.read_csv(data['csvFile'], index_col=None)
 
     titles_list = list(df.columns.values)
 
@@ -252,7 +258,13 @@ def getCSV_PDF(data):
     try: 
         # convert csv to usable dataset
         ##df = getDataset(data['csvFileName'])
-        df = pd.read_csv(data['csvFile'], index_col=None)
+        if data['csvFileName'].endswith('.npy'):
+            numpy_array = np.load(data['csvFile'])
+            # Convert the NumPy array to a DataFrame
+            df = pd.DataFrame(data=numpy_array[1:, :], columns=numpy_array[0, :])
+        elif data['csvFileName'].endswith('.csv'):
+        # logging.debug("Hello")
+            df = pd.read_csv(data['csvFile'], index_col=None)
 
         # perform preoptimization
         if data["Perform_Preopt"] == "Yes":

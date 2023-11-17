@@ -27,7 +27,13 @@ def Split(data):
     try:
         # convert csv to usable dataset
         ##df_act = getDataset(data['csvFileName'])
-        df_act = pd.read_csv(data['csvFile'], index_col=None)
+        if data['csvFileName'].endswith('.npy'):
+            numpy_array = np.load(data['csvFile'])
+            df_act = pd.DataFrame(data=numpy_array[1:, :], columns=numpy_array[0, :])
+        elif data['csvFileName'].endswith('.csv'):
+            df_act = pd.read_csv(data['csvFile'], index_col=None)
+
+        # df_act = pd.read_csv(data['csvFile'], index_col=None)
         
         # Cycle through the choices of preotimization
         for i in range(int(data["preoptCounter"])):

@@ -305,7 +305,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of formData.entries()) {         // Each pair of form field name and value
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -317,7 +317,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of preoptForm.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -329,7 +329,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of methodForm.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -341,7 +341,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of mla_Form.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -353,7 +353,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of dlann_Form.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -365,7 +365,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of model_compile_Form.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -377,7 +377,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of model_val_Form.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         
         dict_data[pair[0]] = pair[1]
@@ -410,7 +410,7 @@ function getData(files, fileSelected, choice) {
         csvFileName = document.getElementById("csvFile").files[0].name;
         csvFile = document.getElementById("csvFile").files[0];
     }
-    console.log("getData", files, fileSelected, csvFile);
+    // console.log("getData", files, fileSelected, csvFile);
 
 
     const data = new FormData();
@@ -505,7 +505,9 @@ function getData(files, fileSelected, choice) {
                         writeData.paragraph += Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>"
                         writeData.paragraph += Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>"
                         writeData.paragraph += Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>"
+                    
                         writeData.paragraph += Results["F1_Intro"].bold() + Results["F1"] + "<br\>"
+                        
                         writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>"
                         writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>"
 
@@ -984,7 +986,7 @@ function checkCSV(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         //document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -2387,12 +2389,8 @@ function changeCSV(files, selectedFile, choice) {
 
         // console.log("created csv: ", csvFile, csvBlob)
     } else {
-        if (files.name.endsWith('.npy')){
-        }
-    else{
         csvFileName = document.getElementById("csvFile").files[0].name;
         csvFile = document.getElementById("csvFile").files[0];
-        }
     }
     // console.log("changeCSV", files, selectedFile, csvFile);
 

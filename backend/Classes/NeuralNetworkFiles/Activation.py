@@ -57,16 +57,16 @@ Display_Name = "Softmax"
 Definition = ['Softmax activation function.'],
 
 Parameter_0 = {"Name":"axis", 
-               "Type": ["integer"], 
+               "Type": ["int"], 
                "Default_option":"-1", 
                "Default_value":"-1", 
-               "Possible":["integer"],
+               "Possible":["int"],
              "Definition":"Axis along which the softmax normalization is applied."}
 
 
 Parameters = {"Parameter_0":Parameter_0}
 
-list_Activation.append(Layer.Layer(Name, Display_Name, Definition, Parameters))
+# list_Activation.append(Layer.Layer(Name, Display_Name, Definition, Parameters))
 
 
 Name = "LeakyReLU"
