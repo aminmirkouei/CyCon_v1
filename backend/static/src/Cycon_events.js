@@ -919,7 +919,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Created using the Ideal Cycon Tool: https://cycon.nkn.uidaho.edu/cycon", pdf.internal.pageSize.getWidth() - 120, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Created using the Cycon Tool: https://cycon.nkn.uidaho.edu/cycon version: 1.11.17", pdf.internal.pageSize.getWidth() - 120, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
