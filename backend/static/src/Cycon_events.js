@@ -280,7 +280,15 @@ function readTextFile(file, callback) {
 
 
 function updateMetrics(){
-
+    var recallDataElement = document.getElementById('recallData');
+  if (document.getElementById('Met_Recall').checked) {
+    recallDataElement.style.visibility = 'visible';
+    recallDataElement.style.position = 'static';
+  }
+  else if (!document.getElementById('Met_Recall').checked){
+    recallDataElement.style.visibility = 'hidden';
+    recallDataElement.style.position = 'absolute';
+  }
 }
 
 function getData(files, fileSelected, choice) {
@@ -514,9 +522,13 @@ function getData(files, fileSelected, choice) {
                         writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>"
                         writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>"
                         
-                        
-                        writeData.paragraph += Results["Recall_Intro"].bold() + Results["recall"] + "<br\>"
-                        
+                        if (document.getElementById('Met_Recall').checked){
+                        writeData.paragraph += '<span id="recallData">' + Results["Recall_Intro"].bold() + Results["recall"]  + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Recall').checked)
+                        {
+                            writeData.paragraph += '<span id="recallData" style="display: none;">' + Results["Recall_Intro"].bold() + Results["recall"] + "<br\>" + '</span>'
+                        }
                         writeData.paragraph += Results["Recall_micro_Intro"].bold() + Results["recall_micro"] + "<br\>"
                         writeData.paragraph += Results["Recall_macro_Intro"].bold() + Results["recall_macro"] + "<br\>"
 
