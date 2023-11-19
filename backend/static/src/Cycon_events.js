@@ -278,6 +278,11 @@ function readTextFile(file, callback) {
     rawFile.send(null);
 }
 
+
+function updateMetrics(){
+
+}
+
 function getData(files, fileSelected, choice) {
     const form = document.getElementById("MLAI_Form");
     console.log("get form :", form, files, fileSelected, choice);
@@ -428,9 +433,7 @@ function getData(files, fileSelected, choice) {
         success: function (Results) {
             document.getElementById("Results").innerHTML += "Hello?";
             if (Results[0] == "worked") {
-
                 Results = Results[2]
-
                 var writeData = {
                     paragraph: ''
                 }
@@ -510,8 +513,10 @@ function getData(files, fileSelected, choice) {
                         
                         writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>"
                         writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>"
-
+                        
+                        
                         writeData.paragraph += Results["Recall_Intro"].bold() + Results["recall"] + "<br\>"
+                        
                         writeData.paragraph += Results["Recall_micro_Intro"].bold() + Results["recall_micro"] + "<br\>"
                         writeData.paragraph += Results["Recall_macro_Intro"].bold() + Results["recall_macro"] + "<br\>"
 
