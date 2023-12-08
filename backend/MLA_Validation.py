@@ -14,7 +14,7 @@ from sklearn.model_selection import train_test_split
 from pathlib import Path
 from werkzeug.utils import secure_filename
 
-from sklearn.metrics import accuracy_score, f1_score, precision_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, log_loss
 
 from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.metrics import confusion_matrix
@@ -23,6 +23,8 @@ from sklearn.model_selection import KFold
 from sklearn.model_selection import StratifiedKFold
 
 from backend.Classes.PreoptimizationFiles import Preoptimization
+import traceback
+import logging
 
 
 def getDataset(fileName):
@@ -43,7 +45,15 @@ def Split(data):
     try:
         # convert csv to usable dataset
         ##df_act = getDataset(data['csvFileName'])
-        df_act = pd.read_csv(data['csvFile'], index_col=None)
+
+        if data['csvFileName'].endswith('.npy'):
+            numpy_array = np.load(data['csvFile'])
+            df_act = pd.DataFrame(data=numpy_array[1:, :], columns=numpy_array[0, :])
+        elif data['csvFileName'].endswith('.csv'):
+            df_act = pd.read_csv(data['csvFile'], index_col=None)
+        
+        # logging.debug(df_act)
+        # df_act = pd.read_csv(data['csvFile'], index_col=None)
         
         # Cycle through the choices of preotimization
         for i in range(int(data["preoptCounter"])):
@@ -51,9 +61,8 @@ def Split(data):
             preopt_method = data["Preopt_" + str(i)]
             # Perform the preoptimization on the dataset.
             df_act = Preoptimization.perform_Preopt(data, i, df_act)
-
         df = df_act.to_numpy()
-
+        # logging.debug("Testing_11111111111")
         # Split dataset to training and testing set
         random_state = None
         if data["Random_State_Input"] != "":
@@ -68,18 +77,24 @@ def Split(data):
         train_set, test_set = train_test_split(df, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
 
         length = train_set.shape[1] -1
-
+        # logging.debug("Testing_55555555")
         x_train = train_set[:,0:length]
         y_train = train_set[:,length]
         x_test = test_set[:,0:length]
         y_test = test_set[:,length]
-
+        # logging.debug("Testing_6666666")
         #model = KNeighborsClassifier(n_neighbors=3)
         model, settings = MLA.createModel(data)
-
+        # logging.debug("Testing_777777")
+        # logging.debug("X_train: %s", x_train)
+        # logging.debug("X_train: %s", x_train.shape)
+        # logging.debug("X_train: %s", type(x_train))
+        # logging.debug("y_train: %s", y_train)
+        # logging.debug("y_train: %s", y_train.shape)
+        # logging.debug("y_train: %s", type(y_train))
         # Perform the Method.
         model.fit(x_train, y_train)
-
+        # logging.debug("Testing_8888888")
         # Predict the testset
         y_pred = model.predict(x_test)
 
@@ -91,7 +106,10 @@ def Split(data):
         Precision = precision_score(y_test, y_pred, average=None)
         Precision_micro = precision_score(y_test, y_pred, average='micro')
         Precision_macro = precision_score(y_test, y_pred, average='macro')
-
+        recall = recall_score(y_test, y_pred, average=None)
+        recall_micro = recall_score(y_test, y_pred, average='micro')
+        recall_macro = recall_score(y_test, y_pred, average='macro')
+        logging.debug("Testing_22222222")
         # create a confusion matrix
         #def fig_to_base64(fig):
         #    img = io.BytesIO()
@@ -121,7 +139,7 @@ def Split(data):
         #encoded = fig_to_base64(fig)
         #my_html = '<img src="data:image/png;base64, {}">'.format(encoded.decode('utf-8'))
 
-
+        # logging.debug("Testing_3333333333")
         # Send the Metrics
         Metrics = {"Validation": "Split",
 
@@ -132,6 +150,9 @@ def Split(data):
                    "F1_Intro": "F1 for each Class: ",
                    "F1_micro_Intro": "F1 (Micro): ",
                    "F1_macro_Intro": "F1 (Macro): ",
+                   "Recall_Intro": "Recall for each class: ",
+                   "Recall_micro_Intro": "Recall (Micro): ",
+                   "Recall_macro_Intro": "Recall (Macro): ",
 
                     "Accuracy": Accuracy,
                     "Precision": Precision.tolist(),
@@ -140,6 +161,9 @@ def Split(data):
                     "F1": F1.tolist(),
                     "F1_micro": F1_micro,
                     "F1_macro": F1_macro,
+                    "recall" : recall.tolist(),
+                    "recall_macro": recall_macro,
+                    "recall_micro": recall_micro,
 
                     "cm_overall": my_base64_jpgData,
                 
@@ -154,8 +178,9 @@ def Split(data):
         return status, msg, Metrics
 
     except Exception as e:
+        line_number = traceback.extract_tb(e.__traceback__)[-1].lineno
         Metrics = ""
-        msg = str(e)
+        msg = f"Error occurred at: {str(e)}"
         status = "error"
 
         return status, msg, Metrics
@@ -165,8 +190,14 @@ def K_Fold(data):
     try:
         # convert csv to usable dataset
         ##df_act = getDataset(data['csvFileName'])
-        df_act = pd.read_csv(data['csvFile'], index_col=None)
+        if data['csvFileName'].endswith('.npy'):
+            numpy_array = np.load(data['csvFile'])
+            df_act = pd.DataFrame(data=numpy_array[1:, :], columns=numpy_array[0, :])
+        elif data['csvFileName'].endswith('.csv'):
+            df_act = pd.read_csv(data['csvFile'], index_col=None)
         
+        # df_act = pd.read_csv(data['csvFile'], index_col=None)
+        logging.debug(df_act)
         # Cycle through the choices of preotimization
         for i in range(int(data["preoptCounter"])):
             # Get the choice of preoptimization.
@@ -174,7 +205,9 @@ def K_Fold(data):
             # Perform the preoptimization on the dataset.
             df_act = Preoptimization.perform_Preopt(data, i, df_act)
 
+        
         df = df_act.to_numpy()
+        
 
         length = df.shape[1] -1
 

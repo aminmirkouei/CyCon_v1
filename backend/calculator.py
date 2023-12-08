@@ -10,7 +10,14 @@ logger = logging.getLogger()
 def read_data(csvfile):
     data, error = None, None
     try:
-        data = pd.read_csv(csvfile, index_col=None)
+        logging.debug("Helloooooo: %s", csvfile.files[0].name)
+        if csvfile.files[0].name.endswith('.npy'):
+            numpy_array = np.load(data['csvFile'])
+            data = pd.DataFrame(data=numpy_array[1:, :], columns=numpy_array[0, :])
+        elif csvfile.files[0].name.endswith('.csv'):
+            data = pd.read_csv(data['csvFile'], index_col=None)
+
+        # data = pd.read_csv(csvfile, index_col=None)
         # data = data.rename(columns=lambda x: x.strip())
         data.columns = data.columns.str.strip()
         data = data.apply(

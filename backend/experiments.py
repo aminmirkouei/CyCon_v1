@@ -66,10 +66,10 @@ logger = logging.getLogger()
 def load_possible_experiments():
     list_Algorithms = MLA.getMLAs()
     # list for preoptimization options
-    list_Preopt_Categories = Preoptimization.getPreopt_Categories()
-    list_Standardization = Standardization.getStandardization()
+    list_Preopt_Categories = Preoptimization.getPreopt_Categories()  # Just display name, display_name, definition of all
+    list_Standardization = Standardization.getStandardization()      # Name,definition and parameters. for all standardization type
     # list for Neural Network options
-    list_Layer_Categories = NeuralNetwork.getLayer_Categories()
+    list_Layer_Categories = NeuralNetwork.getLayer_Categories()  #
     list_Core = Core.getCore()
     # list for Callback options
     list_Callbacks = Callbacks.getCallbacks()
@@ -117,7 +117,7 @@ def load_possible_experiments():
     g.section_preopt_Category_Names = preopt_Category_Names
     g.section_preopt_Category_Display_Names = preopt_Category_Display_Names
     g.section_preopt_Category_Info =  preopt_Category_Definition
-    g.preopt_Categories = zip(g.section_preopt_Category_Names, g.section_preopt_Category_Display_Names, g.section_preopt_Category_Info)
+    g.preopt_Categories = zip(g.section_preopt_Category_Names, g.section_preopt_Category_Display_Names, g.section_preopt_Category_Info)  # just the name, display names, and the definition of all
 
     # create list of options for the first category of preoprtimization (I.E. Standardization)
     preopt_Names = []
@@ -377,7 +377,7 @@ def run_experiment():
         # K-Fold
         elif data['validation'] == "K-Fold":
             status, msg, Metrics = MLA_Validation.K_Fold(data)
-
+        logging.debug("statussssss %s", status)
         if status == "worked":
             # Open json file for the experiment.
             baseFolder = os.getcwd()
@@ -459,14 +459,19 @@ def getAlgorithmParameters():
     Parameters = MLA.getParameters(data["Algorithm"])
 
     return json.dumps(Parameters)
+   
+   # Definition ::
 
+   # Inputs()
+
+   # Output()
 @bp.route("/getCategoryPreopts", methods=["POST"])
 def getCategoryPreopts():
-    output = request.get_json()
+    output = request.get_json() # Recieved {catagory: catagoryName}
     data = json.loads(output)
 
-    preopts = Preoptimization.getCategoryPreopts(data["Category"])
-
+    preopts = Preoptimization.getCategoryPreopts(data["Category"])  # send the catagoryName as value and the getCataforyPropts() returns the optimizer for that catagory
+                                                                    # it includes Name, Display_Name, Definition, Parameters
     return json.dumps(preopts)
 
 @bp.route("/getCategoryLayers", methods=["POST"])
@@ -484,8 +489,9 @@ def results():
     return render_template("experiments/results.html")
 
 
-@bp.route("/getCSVResults", methods=["POST"])
+@bp.route("/getCSVResults", methods=["POST"]) 
 def getCSVResults():
+    # the request contains process, CSVfileName, CSVfile
     processes_input = request.form.get("processes")
     data = json.loads(processes_input)
 
@@ -530,11 +536,11 @@ def downloadCSV():
     return json.dumps(Results)
 
 @bp.route("/getPreoptParameters", methods=["POST"])
-def getPreoptParameters():
+def getPreoptParameters(): # sending preoptimization name
     output = request.get_json()
     data = json.loads(output)
 
-    Parameters = Preoptimization.getParameters(data["Preopt"])
+    Parameters = Preoptimization.getParameters(data["Preopt"]) # gets the parameters given the name
 
     return json.dumps(Parameters)
 

@@ -91,7 +91,9 @@ function changePreoptCategory(category, ID_Preopts) {
         async: false,
         dataType: 'json',
         success: function (data) {
-            select = document.getElementById(ID_Preopts);
+            // data from getCataforyPropts() function returns the optimizer for that catagory
+            // data include Name, Display_Name, Definition, Parameters
+            select = document.getElementById(ID_Preopts); // the id for the optimizer drop down
             select.options.length = 0;
             // Remove existing options in the selection
             var len = select.length;
@@ -276,9 +278,22 @@ function readTextFile(file, callback) {
     rawFile.send(null);
 }
 
+
+function updateMetrics(){
+    var recallDataElement = document.getElementById('recallData');
+  if (document.getElementById('Met_Recall').checked) {
+    recallDataElement.style.visibility = 'visible';
+    recallDataElement.style.position = 'static';
+  }
+  else if (!document.getElementById('Met_Recall').checked){
+    recallDataElement.style.visibility = 'hidden';
+    recallDataElement.style.position = 'absolute';
+  }
+}
+
 function getData(files, fileSelected, choice) {
     const form = document.getElementById("MLAI_Form");
-    console.log("get form :", form, files, choice, fileSelected);
+    console.log("get form :", form, files, fileSelected, choice);
     // Copy over information from element outside of form to the copy inside form
     document.getElementById("projectName_copy").value = document.getElementById("projectName").value;
     document.getElementById("phase1Text_copy").value = document.getElementById("phase1Text").value;
@@ -302,8 +317,8 @@ function getData(files, fileSelected, choice) {
     //});
 
     // iterate through entries...
-    for (var pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+    for (var pair of formData.entries()) {         // Each pair of form field name and value
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -315,7 +330,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of preoptForm.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -327,7 +342,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of methodForm.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -339,7 +354,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of mla_Form.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -351,7 +366,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of dlann_Form.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -363,7 +378,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of model_compile_Form.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -375,7 +390,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of model_val_Form.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         
         dict_data[pair[0]] = pair[1]
@@ -408,7 +423,7 @@ function getData(files, fileSelected, choice) {
         csvFileName = document.getElementById("csvFile").files[0].name;
         csvFile = document.getElementById("csvFile").files[0];
     }
-    console.log("getData", files, fileSelected, csvFile);
+    // console.log("getData", files, fileSelected, csvFile);
 
 
     const data = new FormData();
@@ -426,9 +441,7 @@ function getData(files, fileSelected, choice) {
         success: function (Results) {
             document.getElementById("Results").innerHTML += "Hello?";
             if (Results[0] == "worked") {
-
                 Results = Results[2]
-
                 var writeData = {
                     paragraph: ''
                 }
@@ -483,6 +496,9 @@ function getData(files, fileSelected, choice) {
                         F1 = Results["F1"]
                         F1_micro = Results["F1_micro"]
                         F1_macro = Results["F1_macro"]
+                        Recall = Results["recall"]
+                        Recall_macro = Results["recall_macro"]
+                        Recall_micro = Results["recall_micro"]
                         Precision = Results["Precision"]
                         Precision_micro = Results["Precision_micro"]
                         Precision_macro = Results["Precision_macro"]
@@ -500,9 +516,22 @@ function getData(files, fileSelected, choice) {
                         writeData.paragraph += Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>"
                         writeData.paragraph += Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>"
                         writeData.paragraph += Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>"
+                    
                         writeData.paragraph += Results["F1_Intro"].bold() + Results["F1"] + "<br\>"
+                        
                         writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>"
                         writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>"
+                        
+                        if (document.getElementById('Met_Recall').checked){
+                        writeData.paragraph += '<span id="recallData">' + Results["Recall_Intro"].bold() + Results["recall"]  + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Recall').checked)
+                        {
+                            writeData.paragraph += '<span id="recallData" style="display: none;">' + Results["Recall_Intro"].bold() + Results["recall"] + "<br\>" + '</span>'
+                        }
+                        writeData.paragraph += Results["Recall_micro_Intro"].bold() + Results["recall_micro"] + "<br\>"
+                        writeData.paragraph += Results["Recall_macro_Intro"].bold() + Results["recall_macro"] + "<br\>"
+
                         writeData.paragraph += `${img.outerHTML}` + "<br\>"
 
                         //$('#Results').html(data.paragraph);
@@ -907,7 +936,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Created using the Ideal Cycon Tool: https://cycon.nkn.uidaho.edu/cycon", pdf.internal.pageSize.getWidth() - 120, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Created using the Cycon Tool: https://cycon.nkn.uidaho.edu/cycon version: 1.11.17", pdf.internal.pageSize.getWidth() - 120, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
@@ -974,7 +1003,7 @@ function checkCSV(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         //document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -1024,7 +1053,7 @@ function checkCSV(files, fileSelected, choice) {
     data.append("csvFile", csvFile)
 
     //document.getElementById("Results").innerHTML += data;
-
+    console.log("Data", data)
     $.ajax({
         url: "/experiments/getCSVResults",
         data: data,
@@ -1100,7 +1129,7 @@ function checkCSV(files, fileSelected, choice) {
 function checkCSV_Preopt(form) {
     document.getElementById("csv_Error_Preopt").innerHTML = "";
     document.getElementById("csv_Results_Preopt").innerHTML = "";
-
+    console.log(form)
     var formData = new FormData(form);
     var csvFormData = new FormData(document.getElementById("csvForm"));
 
@@ -1115,15 +1144,16 @@ function checkCSV_Preopt(form) {
     formData.append("Perform_Preopt", "Yes")
 
     formData.append("preoptCounter", preoptCounter)
-
+    
     // iterate through entries...
     for (var pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        console.log(pair)
+        // console.log(pair[0] + ": " + pair[1]);
         dict_data[pair[0]] = pair[1]
     }
 
     for (var pair of csvFormData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         dict_data[pair[0]] = pair[1]
     }
 
@@ -1145,7 +1175,6 @@ function checkCSV_Preopt(form) {
     data.append("processes", JSON.stringify(dict_data))
     data.append("csvFileName", csvFileName)
     data.append("csvFile", csvFile)
-
     document.getElementById("Results").innerHTML += data;
 
     $.ajax({
@@ -1156,6 +1185,7 @@ function checkCSV_Preopt(form) {
         processData: false, // important
         contentType: false, // important,
         success: function (Results) {
+            console.log(Results)
             if (Results[0] == "worked") {
 
                 Results = Results[2]
@@ -1331,7 +1361,7 @@ function downloadCSV(form) {
 
 
 // Addes the selected preoptimization to the form. 
-function selectPreopt(Preopt, ID_Preopt) {
+function selectPreopt(Preopt, ID_Preopt) {  // the preoptimization drop down and ID_Preopt section (empty div section)
     if (preoptCounter != 10) {
 
         var Preopt_selection = document.getElementById(Preopt)
@@ -1341,7 +1371,7 @@ function selectPreopt(Preopt, ID_Preopt) {
 
         dict_values = { Preopt: Preopt_value };
 
-        const sent_data = JSON.stringify(dict_values)
+        const sent_data = JSON.stringify(dict_values) // sending preoptimization name
 
         // Get the parameters for the selected Preopt option.
         $.ajax({
@@ -1352,7 +1382,9 @@ function selectPreopt(Preopt, ID_Preopt) {
             async: false,
             dataType: 'json',
             success: function (data) {
+                // data = gets the parameters given the name
                 // Create the html section to place in the cycon page.
+                // console.log(data)
                 var html_section = document.getElementById(ID_Preopt);
 
                 // create the field box for the new preopt option.
@@ -1730,7 +1762,7 @@ function selectLayers(Layer, ID_Layer) {
         dict_values = { Layer: Layer_value };
 
         const sent_data = JSON.stringify(dict_values)
-
+        console.log(sent_data)
         // Get the parameters for the selected layer option.
         $.ajax({
             url: "/experiments/getLayerParameters",
@@ -1741,7 +1773,7 @@ function selectLayers(Layer, ID_Layer) {
             dataType: 'json',
             success: function (data) {
                 // Create the html section to place in the cycon page.
-            
+                
                 var html_section = document.getElementById(ID_Layer);
 
                 // create the field box for the new layer option.
@@ -1760,7 +1792,6 @@ function selectLayers(Layer, ID_Layer) {
                 textbox.style.display = "none";
             
                 field.appendChild(textbox);
-
                 // Create option to edit the parameter for the NN layer option.
                 for (var Parameter in data) {
 
@@ -1801,6 +1832,7 @@ function selectLayers(Layer, ID_Layer) {
                         // Create choices and options to edit the parameter
 
                         fillSection(field, data, Parameter, "Layer", layerCounter)
+
                     }
                 }
                 // TO DO LATER: Add button to remove the individual NN layer.
@@ -1833,6 +1865,26 @@ function selectLayers(Layer, ID_Layer) {
                 // add field to div section
                 html_section.appendChild(divElement)
                 html_section.appendChild(field)
+                var Remove_one = document.createElement('button');
+                Remove_one.type = 'button';
+                Remove_one.textContent = 'Remove one';  // Set the button text content
+
+                // Apply some basic CSS styles
+                Remove_one.style.padding = '5px 5px';
+                Remove_one.style.backgroundColor = 'white';
+                Remove_one.style.color = 'Black';
+                Remove_one.style.border = '1px solid #ccc';
+                Remove_one.style.borderRadius = '5px';
+                Remove_one.addEventListener('click', function() {
+                    // var fieldset = Remove_one.previousSibling; // Get the fieldset element
+                    // var divElement = fieldset.previousSibling;
+                    // html_section.removeChild(fieldset);
+                    // html_section.removeChild(divElement);
+                    // html_section.removeChild(Remove_one);
+                  });
+
+                // Append the button to the fieldset
+                html_section.appendChild(Remove_one);
                 
 
             }
@@ -1841,6 +1893,28 @@ function selectLayers(Layer, ID_Layer) {
         layerCounter = layerCounter + 1;
     }
 }
+
+
+    // function removeOne(layerCounter) {
+    //     const form = document.getElementById("DLANN_Form");
+    //     var formData = new FormData(form);
+    //     console.log("Layer counter: ", layerCounter )
+    //     layerDelete = layerCounter - 1
+    //     for (const entry of formData.entries())
+    //     {
+    //         if (entry[0].startsWith('Layer_' + layerDelete)) {
+    //             // console.log("Hello")
+    //             // Remove the entry from the formData
+    //             formData.delete(entry[0]);
+    //           }  
+    //     }
+
+    //     for (const entry of formData.entries())
+    //     {
+    //         console.log(entry)
+    //     }
+
+    // }
 
 // Removes all csv check information
 function clearAllCSV() {
@@ -2314,15 +2388,13 @@ function createCSVBlob(csvContent) {
 function changeCSV(files, selectedFile, choice) {
     clearAllCSV()
     clearAllPreopt()
-
     let csvFileName;
     let csvFile;
     // create option to select classification column
     if(choice === "Choose uploaded file") {
         const foundFile = files.find(f => f.filename === selectedFile);
         const data = JSON.parse(JSON.stringify(foundFile.content));
-        console.log("data: ", data, );
-
+        // console.log("data: ", data, );
         // Create CSV content
         const csvContent = createCSV(data);
 
@@ -2332,15 +2404,15 @@ function changeCSV(files, selectedFile, choice) {
         csvFileName = selectedFile;
         csvFile = csvBlob;
 
-        console.log("created csv: ", csvFile, csvBlob)
+        // console.log("created csv: ", csvFile, csvBlob)
     } else {
         csvFileName = document.getElementById("csvFile").files[0].name;
         csvFile = document.getElementById("csvFile").files[0];
     }
-    console.log("changeCSV", files, selectedFile, csvFile);
+    // console.log("changeCSV", files, selectedFile, csvFile);
 
     dict_values = { "csvFileName": csvFileName, "csvFile": csvFile };
-
+    console.log(dict_values)
     const sent_data = JSON.stringify(dict_values)
 
     const data = new FormData();
@@ -2438,7 +2510,8 @@ function checkModel() {
 
     // iterate through entries...
     for (var pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
+        console.log(pair)
         dict_data[pair[0]] = pair[1]
     }
 

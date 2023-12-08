@@ -44,5 +44,4 @@ def create_app(password_file="/run/secrets/db-password"):
     app.register_blueprint(gallery.bp)
 
     app.add_url_rule("/", endpoint="index")
-
     return app

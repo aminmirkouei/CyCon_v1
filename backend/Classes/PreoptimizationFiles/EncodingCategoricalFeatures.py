@@ -12,6 +12,7 @@ from backend.Classes import HyperParameters
 import matplotlib.pyplot as plt
 
 from sklearn import preprocessing
+import logging
 
 # Create a list of standardization preoptimizations to select from.
 list_ECF = []
@@ -78,7 +79,10 @@ Name = "LabelEncoder"
 Display_Name = "Label Encoder"
 Definition = ["Encode target labels with value between 0 and n_classes-1.\n\nThis transformer should be used to encode target values, i.e. y, and not the input X."]
 
-Parameters = {}
+Parameter_0 = {"Name":"column", "Type": ["select"], "Default_option":"", "Default_value":"", "Possible":["col_names"],
+               "Definition":"Column to perform the preoptimization on."}
+
+Parameters = {"Parameter_0":Parameter_0}
 
 list_ECF.append(Preoptimizer.Preoptimizer(Name, Display_Name, Definition, Parameters))
 
@@ -103,8 +107,12 @@ list_ECF.append(Preoptimizer.Preoptimizer(Name, Display_Name, Definition, Parame
 
 
 # Method to check the chosen preoptimization method and perform it on the dataset.
-def perform_Preopt(data, i, df):
-    # get method
+def perform_Preopt(data, i, df): # i is like the stage, it is applied first if i = 1 
+
+    # This function is first called when check button is clicked, it is the checkCSV_Preopt() in cycon js, values found in formData
+
+    # logging.debug("HHHHHHHHHHHHHHHHH-----------%s", data)   
+    # logging.debug("---------------------------", data["Preopt_" + str(i)])
     method = data["Preopt_" + str(i)]
     Parameters = HyperParameters.getParameters(data["Preopt_" + str(i)], list_ECF)
 
@@ -143,11 +151,13 @@ def perform_Preopt(data, i, df):
     if method == "LabelEncoder":
         le = preprocessing.LabelEncoder()
 
-        index_of_class_col = df.columns.get_loc(data["class_col"])
+        # index_of_class_col = df.columns.get_loc(data["class_col"])
 
-        temp = df[data["class_col"]].unique().tolist()
-        le.fit(df[data["class_col"]].unique().tolist())
-        new_df.iloc[:,index_of_class_col] = le.transform(df.iloc[:,index_of_class_col]) 
+        # temp = df[data["class_col"]].unique().tolist()
+        # le.fit(df[data["class_col"]].unique().tolist())
+
+        # new_df.iloc[:,index_of_class_col] = le.transform(df.iloc[:,index_of_class_col]) 
+        new_df[data["Preopt_" + str(i) + "_column_Input"]] = le.fit_transform(df[[data["Preopt_" + str(i) + "_column_Input"]]])
 
     # Dummy Variables
     if method == "DummyVariables":

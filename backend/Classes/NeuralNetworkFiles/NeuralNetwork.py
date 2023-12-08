@@ -13,7 +13,7 @@ from backend.Classes.NeuralNetworkFiles import Core
 from backend.Classes.NeuralNetworkFiles import Convolution
 from backend.Classes.NeuralNetworkFiles import Normalization
 from backend.Classes.NeuralNetworkFiles import Regularization
-
+from backend.Classes.NeuralNetworkFiles import Activation
 from tensorflow import keras
 
 from io import StringIO
@@ -69,11 +69,20 @@ Definition = ["Regularization layers."]
 
 list_Layer_Categories.append(Layer_Category(Name, Display_Name, Definition))
 
+
+Name = "Activation"
+Display_Name = "Activation"
+Definition = ["Activation layers."]
+
+list_Layer_Categories.append(Layer_Category(Name, Display_Name, Definition))
+
+
 # obtain the list of Layers from all categories via their separate python files
 list_Core = Core.getCore()
 list_Convolution = Convolution.getConvolution()
 list_Normalization = Normalization.getNormalization()
 list_Regularization = Regularization.getRegularization()
+list_Activation = Activation.getActivation()
 
 
 # Methods to process the Neural Network options.
@@ -92,6 +101,9 @@ def getCategoryLayers(Category_Name):
     
     if Category_Name == "Regularization":
         layers = list_Regularization
+    
+    if Category_Name == "Activation":
+        layers = list_Activation
 
     for layer in layers:
         layer_info = {"Name": layer.getName(), "Display_Name": layer.getDisplayName()}
@@ -126,7 +138,12 @@ def getParameters(Layer_Name):
         if layer.getName() == Layer_Name:
             Parameters = layer.getParameters()
             return Parameters
-
+    
+    for layer in list_Activation:
+        if layer.getName() == Layer_Name:
+            Parameters = layer.getParameters()
+            return Parameters
+        
     return Parameters
 
 # Method to create a neural network layer
@@ -169,6 +186,16 @@ def get_Layer(data, i):
                 new_layer = Regularization.create_Layer(data, i)
                 found = 1
                 break
+    
+
+
+    if found == 0:
+        for layers in list_Activation:
+            if layer == layers.getName():
+                new_layer = Activation.create_Layer(data, i)
+                found = 1
+                break
+    
 
     return new_layer
 
