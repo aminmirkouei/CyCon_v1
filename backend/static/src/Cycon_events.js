@@ -280,15 +280,167 @@ function readTextFile(file, callback) {
 
 
 function updateMetrics(){
-    var recallDataElement = document.getElementById('recallData');
+
+    var Met_ACC_Data = document.getElementsByClassName('Met_ACC_Data');
+    if (document.getElementById('Met_ACC').checked) {
+        for (var i = 0; i < Met_ACC_Data.length; i++) {
+        Met_ACC_Data[i].style.visibility = 'visible';
+        Met_ACC_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_ACC').checked){
+        for (var i = 0; i < Met_ACC_Data.length; i++) {
+        Met_ACC_Data[i].style.visibility = 'hidden';
+        Met_ACC_Data[i].style.position = 'fixed';
+        }
+    }
+    
+
+    var Met_Precision_Data = document.getElementsByClassName('Met_Precision_Data');
+    if (document.getElementById('Met_Precision').checked) {
+        for (var i = 0; i < Met_Precision_Data.length; i++) {
+        Met_Precision_Data[i].style.visibility = 'visible';
+        Met_Precision_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_Precision').checked){
+        for (var i = 0; i < Met_Precision_Data.length; i++) {
+        Met_Precision_Data[i].style.visibility = 'hidden';
+        Met_Precision_Data[i].style.position = 'fixed';
+        }
+    }  
+
+
+    var Met_Precision_Micro_Data = document.getElementsByClassName('Met_Precision_Micro_Data');
+    if (document.getElementById('Met_Precision_Micro').checked) {
+        for (var i = 0; i < Met_Precision_Micro_Data.length; i++) {
+        Met_Precision_Micro_Data[i].style.visibility = 'visible';
+        Met_Precision_Micro_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_Precision_Micro').checked){
+        for (var i = 0; i < Met_Precision_Micro_Data.length; i++) {
+        Met_Precision_Micro_Data[i].style.visibility = 'hidden';
+        Met_Precision_Micro_Data[i].style.position = 'fixed';
+        }
+    }
+
+
+    var Met_Precision_Macro_Data = document.getElementsByClassName('Met_Precision_Macro_Data');
+    if (document.getElementById('Met_Precision_Macro').checked) {
+        for (var i = 0; i < Met_Precision_Macro_Data.length; i++) {
+        Met_Precision_Macro_Data[i].style.visibility = 'visible';
+        Met_Precision_Macro_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_Precision_Macro').checked){
+        for (var i = 0; i < Met_Precision_Macro_Data.length; i++) {
+        Met_Precision_Macro_Data[i].style.visibility = 'hidden';
+        Met_Precision_Macro_Data[i].style.position = 'fixed';
+        }
+    }
+
+  
+    var Met_F1_Data = document.getElementsByClassName('Met_F1_Data');
+    if (document.getElementById('Met_F1').checked) {
+        for (var i = 0; i < Met_F1_Data.length; i++) {
+      Met_F1_Data[i].style.visibility = 'visible';
+      Met_F1_Data[i].style.position = 'static';
+    }
+}
+    else if (!document.getElementById('Met_F1').checked){
+        for (var i = 0; i < Met_F1_Data.length; i++) {
+      Met_F1_Data[i].style.visibility = 'hidden';
+      Met_F1_Data[i].style.position = 'fixed';
+        }
+    }
+
+  var Met_F1_Micro_Data = document.getElementsByClassName('Met_F1_Micro_Data');
+  if (document.getElementById('Met_F1_Micro').checked) {
+    for (var i = 0; i < Met_F1_Micro_Data.length; i++) {
+    Met_F1_Micro_Data[i].style.visibility = 'visible';
+    Met_F1_Micro_Data[i].style.position = 'static';
+    }
+  }
+  else if (!document.getElementById('Met_F1_Micro').checked){
+    for (var i = 0; i < Met_F1_Micro_Data.length; i++) {
+    Met_F1_Micro_Data[i].style.visibility = 'hidden';
+    Met_F1_Micro_Data[i].style.position = 'fixed';
+    }
+  }
+
+  var Met_F1_Macro_Data = document.getElementsByClassName('Met_F1_Macro_Data');
+  if (document.getElementById('Met_F1_Macro').checked) {
+    for (var i = 0; i < Met_F1_Macro_Data.length; i++) {
+    Met_F1_Macro_Data[i].style.visibility = 'visible';
+    Met_F1_Macro_Data[i].style.position = 'static';
+    }
+  }
+  else if (!document.getElementById('Met_F1_Macro').checked){
+    for (var i = 0; i < Met_F1_Macro_Data.length; i++) {
+    Met_F1_Macro_Data[i].style.visibility = 'hidden';
+    Met_F1_Macro_Data[i].style.position = 'fixed';
+    }
+  }
+
+
+    var recallDataElement = document.getElementsByClassName('recallData');
   if (document.getElementById('Met_Recall').checked) {
-    recallDataElement.style.visibility = 'visible';
-    recallDataElement.style.position = 'static';
+    for (var i = 0; i < recallDataElement.length; i++) {
+    recallDataElement[i].style.visibility = 'visible';
+    recallDataElement[i].style.position = 'static';
+    }
   }
   else if (!document.getElementById('Met_Recall').checked){
-    recallDataElement.style.visibility = 'hidden';
-    recallDataElement.style.position = 'absolute';
+    for (var i = 0; i < recallDataElement.length; i++) {
+    recallDataElement[i].style.visibility = 'hidden';
+    recallDataElement[i].style.position = 'fixed';
+    }
   }
+
+  var recallMicroData = document.getElementsByClassName('recall_Micro_Data');
+  if (document.getElementById('Met_Recall_Micro').checked) {
+    for (var i = 0; i < recallMicroData.length; i++) {
+    recallMicroData[i].style.visibility = 'visible';
+    recallMicroData[i].style.position = 'static';
+    }
+  }
+  else if (!document.getElementById('Met_Recall_Micro').checked){
+    for (var i = 0; i < recallMicroData.length; i++) {
+    recallMicroData[i].style.visibility = 'hidden';
+    recallMicroData[i].style.position = 'fixed';
+    }
+  }
+
+  var recallMacroData = document.getElementsByClassName('recall_Macro_Data');
+  if (document.getElementById('Met_Recall_Macro').checked) {
+    for (var i = 0; i < recallMacroData.length; i++) {
+    recallMacroData[i].style.visibility = 'visible';
+    recallMacroData[i].style.position = 'static';
+    }
+  }
+  else if (!document.getElementById('Met_Recall_Macro').checked){
+    for (var i = 0; i < recallMacroData.length; i++) {
+    recallMacroData[i].style.visibility = 'hidden';
+    recallMacroData[i].style.position = 'fixed';
+    }
+  }
+
+
+  var Met_CM_Data = document.getElementsByClassName('Met_CM_Data');
+  if (document.getElementById('Met_CM').checked) {
+    for (var i = 0; i < Met_CM_Data.length; i++) {
+    Met_CM_Data[i].style.visibility = 'visible';
+    Met_CM_Data[i].style.position = 'static';
+    }
+  }
+  else if (!document.getElementById('Met_CM').checked){
+    for (var i = 0; i < Met_CM_Data.length; i++) {
+    Met_CM_Data[i].style.visibility = 'hidden';
+    Met_CM_Data[i].style.position = 'fixed';
+    }
+  }
+
 }
 
 function getData(files, fileSelected, choice) {
@@ -512,30 +664,101 @@ function getData(files, fileSelected, choice) {
 
 
                         writeData.paragraph += '=========================Results=========================<br\>'
-                        writeData.paragraph += Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>'
-                        writeData.paragraph += Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>"
-                        writeData.paragraph += Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>"
-                        writeData.paragraph += Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>"
-                    
-                        writeData.paragraph += Results["F1_Intro"].bold() + Results["F1"] + "<br\>"
+
+                        if (document.getElementById('Met_ACC').checked){
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data">' + Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>' + '</span>'
+                            }
+                        else if (!document.getElementById('Met_ACC').checked) {
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data" style="visibility: hidden; position: fixed;">' + Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>' + '</span>'
+                        }
+
+                        /* Met_ACC_Data[i].style.visibility = 'hidden';
+        Met_ACC_Data[i].style.position = 'fixed'; */
+                        if (document.getElementById('Met_Precision').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Data" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>" + '</span>'
+                            }
+                        else if (!document.getElementById('Met_Precision').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Data" style="visibility: hidden; position: fixed;" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>" + '</span>'
+                        }
                         
-                        writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>"
-                        writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>"
+
+                        if (document.getElementById('Met_Precision_Micro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data">' + Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>" + '</span>'
+                            }
+                        else if (!document.getElementById('Met_Precision_Micro').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>" + '</span>'
+                        }
+
+
+
+                        if (document.getElementById('Met_Precision_Macro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data">' + Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Precision_Macro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_macro_Intro"].bold() + Results["Precision_macro"]+ "<br\>" + '</span>'
+                        }
+
+
+                        if (document.getElementById('Met_F1').checked){
+                        writeData.paragraph += '<span id="Met_F1_Data" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["F1"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1').checked) {
+                            writeData.paragraph += '<span id="Met_F1_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["F1"] + "<br\>" + '</span>'
+                        }
+
+
+                        if (document.getElementById('Met_F1_Micro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1_Micro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>" + '</span>'
+                        }
+
+
+                        if (document.getElementById('Met_F1_Macro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1_Macro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Macro_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>" + '</span>'
+                        }
                         
                         if (document.getElementById('Met_Recall').checked){
-                        writeData.paragraph += '<span id="recallData">' + Results["Recall_Intro"].bold() + Results["recall"]  + "<br\>" + '</span>'
+                        writeData.paragraph += '<span id="recallData" class="recallData">' + Results["Recall_Intro"].bold() + Results["recall"]  + "<br\>" + '</span>'
                         }
                         else if (!document.getElementById('Met_Recall').checked)
                         {
-                            writeData.paragraph += '<span id="recallData" style="display: none;">' + Results["Recall_Intro"].bold() + Results["recall"] + "<br\>" + '</span>'
+                            writeData.paragraph += '<span id="recallData" class="recallData" style="visibility: hidden; position: fixed;">' + Results["Recall_Intro"].bold() + Results["recall"] + "<br\>" + '</span>'
                         }
-                        writeData.paragraph += Results["Recall_micro_Intro"].bold() + Results["recall_micro"] + "<br\>"
-                        writeData.paragraph += Results["Recall_macro_Intro"].bold() + Results["recall_macro"] + "<br\>"
+                        if (document.getElementById('Met_Recall_Micro').checked){
+                            writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data">' + Results["Recall_micro_Intro"].bold() + Results["recall_micro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Recall_Micro').checked)
+                        {
+                            writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_micro_Intro"].bold() + Results["recall_micro"] + "<br\>" + '</span>'
+                        }
+                
 
-                        writeData.paragraph += `${img.outerHTML}` + "<br\>"
+                        if (document.getElementById('Met_Recall_Macro').checked){
+                            writeData.paragraph +=  '<span id="recall_Macro_Data" class="recall_Macro_Data">' + Results["Recall_macro_Intro"].bold() + Results["recall_macro"] + "<br\>" + '</span>'
+                            }
+                        else if (!document.getElementById('Met_Recall_Macro').checked)
+                        {
+                            writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_macro_Intro"].bold() + Results["recall_macro"] + "<br\>" + '</span>'
+                        }
+
+                        if (document.getElementById('Met_CM').checked){
+                            writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data">' + `${img.outerHTML}` + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_CM').checked){
+                            writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data" style="visibility: hidden; position: fixed;">' + `${img.outerHTML}` + "<br\>" + '</span>'
+                        }
+
 
                         //$('#Results').html(data.paragraph);
                         document.getElementById("Results").innerHTML = writeData.paragraph;
+                        var writeData = {
+                            paragraph: ''
+                        }
                     }
 
                     else if (Results['Validation'] == "K-Fold") {
@@ -543,39 +766,182 @@ function getData(files, fileSelected, choice) {
 
                         for (let i = 0; i < Results["acc_list"].length; i++) {
                             writeData.paragraph += '=========================Results for Fold ' + i + '=========================<br\>'
-                            writeData.paragraph += Results["Accuracy_Intro"].bold() + Results["acc_list"][i] + '<br\>'
-                            writeData.paragraph += Results["Precision_Intro"].bold() + Results["prec_list"][i] + '<br\>'
-                            writeData.paragraph += Results["Precision_micro_Intro"].bold() + Results["prec_micro_list"][i] + '<br\>'
-                            writeData.paragraph += Results["Precision_macro_Intro"].bold() + Results["prec_macro_list"][i] + '<br\>'
-                            writeData.paragraph += Results["F1_Intro"].bold() + Results["f1_list"][i] + '<br\>'
-                            writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["f1_micro_list"][i] + '<br\>'
-                            writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["f1_macro_list"][i] + '<br\>'
+                            if (document.getElementById('Met_ACC').checked){
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data">' + Results["Accuracy_Intro"].bold() + Results["acc_list"][i] + '<br\>' + '</span>' 
+                            }
+                            else if (!document.getElementById('Met_ACC').checked) {
+                                writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data" style="visibility: hidden; position: fixed;">' + Results["Accuracy_Intro"].bold() + Results["acc_list"][i] + '<br\>' + '</span>'
+                            }
+
+                            if (document.getElementById('Met_Precision').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Data" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["prec_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Precision').checked){
+                                writeData.paragraph += '<span id="Met_Precision_Data" style="visibility: hidden; position: fixed;" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["prec_list"][i] + '<br\>' + '</span>'
+                            }
+
+                            if (document.getElementById('Met_Precision_Micro').checked){
+                                writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data">' + Results["Precision_micro_Intro"].bold() + Results["prec_micro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Precision_Micro').checked){
+                                writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_micro_Intro"].bold() + Results["prec_micro_list"][i] + '<br\>' + '</span>'
+                            }
+
+
+                            if (document.getElementById('Met_Precision_Macro').checked){
+                                writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data"">' + Results["Precision_macro_Intro"].bold() + Results["prec_macro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Precision_Macro').checked){
+                                writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_macro_Intro"].bold() + Results["prec_macro_list"][i] + '<br\>' + '</span>'
+                            }
+
+                            
+                            if (document.getElementById('Met_F1').checked){
+                                writeData.paragraph +=  '<span id="Met_F1_Data" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["f1_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_F1').checked){
+                                writeData.paragraph +=  '<span id="Met_F1_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["f1_list"][i] + '<br\>' + '</span>'
+                            }
+                            
+                            if (document.getElementById('Met_F1_Micro').checked){
+                                writeData.paragraph += '<span id="Met_F1_Micro_Data" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["f1_micro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_F1_Micro').checked){
+                                writeData.paragraph += '<span id="Met_F1_Micro_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["f1_micro_list"][i] + '<br\>' + '</span>'
+                            }
+
+                            if (document.getElementById('Met_F1_Macro').checked){
+                                writeData.paragraph +='<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro"].bold() + Results["f1_macro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_F1_Macro').checked){
+                                writeData.paragraph +='<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["F1_macro_Intro"].bold() + Results["f1_macro_list"][i] + '<br\>' + '</span>'
+                            }
+
+
+
+
+                            if (document.getElementById('Met_Recall').checked){
+                                writeData.paragraph += '<span id="recallData" class="recallData">' + Results["Recall_Intro"].bold() + Results["recall_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Recall').checked){
+                                writeData.paragraph += '<span id="recallData" class="recallData" style="visibility: hidden; position: fixed;">' + Results["Recall_Intro"].bold() + Results["recall_list"][i] + '<br\>'  + '</span>'
+                            }
+    
+                            if (document.getElementById('Met_Recall_Micro').checked){
+                                writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data"">' + Results["Recall_micro_Intro"].bold() + Results["recall_micro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Recall_Micro').checked) {
+                                writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_micro_Intro"].bold() + Results["recall_micro_list"][i] + '<br\>' + '</span>'
+                            }
+    
+                            if (document.getElementById('Met_Recall_Macro').checked){
+                                writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data">' + Results["Recall_macro_Intro"].bold() + Results["recall_macro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Recall_Macro').checked) {
+                                writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_macro_Intro"].bold() + Results["recall_macro_list"][i] + '<br\>' + '</span>'
+                            }
+
+
 
                             var img = new Image();
                             img.src = 'data:image/jpeg;base64,' + Results["cm_list"][i];
-
-                            writeData.paragraph += `${img.outerHTML} <br\>`
+                            if (document.getElementById('Met_CM').checked){
+                            writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data">' + `${img.outerHTML} <br\>` + '</span>'
+                            }
+                            else if (!document.getElementById('Met_CM').checked){
+                                writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data" style="visibility: hidden; position: fixed;">' + `${img.outerHTML} <br\>` + '</span>'
+                            }
 
                         }
 
                         writeData.paragraph += '<br\>'
                         writeData.paragraph += '=========================Results Overall=========================<br\>'
-                        writeData.paragraph += Results["Accuracy_Intro_Overall"].bold() + Results["acc_average"] + '<br\>'
-                        writeData.paragraph += Results["Precision_Intro_Overall"].bold() + Results["prec_average"] + '<br\>'
-                        writeData.paragraph += Results["Precision_micro_Intro_Overall"].bold() + Results["prec_micro_average"] + '<br\>'
-                        writeData.paragraph += Results["Precision_macro_Intro_Overall"].bold() + Results["prec_macro_average"] + '<br\>'
-                        writeData.paragraph += Results["F1_Intro_Overall"].bold() + Results["f1_average"] + '<br\>'
-                        writeData.paragraph += Results["F1_micro_Intro_Overall"].bold() + Results["f1_micro_average"] + '<br\>'
-                        writeData.paragraph += Results["F1_macro_Intro_Overall"].bold() + Results["f1_macro_average"] + '<br\>'
+                        if (document.getElementById('Met_ACC').checked){
+                        writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data">' + Results["Accuracy_Intro_Overall"].bold() + Results["acc_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_ACC').checked) {
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data" style="visibility: hidden; position: fixed;">' + Results["Accuracy_Intro_Overall"].bold() + Results["acc_average"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_Precision').checked){
+                        writeData.paragraph += '<span id="Met_Precision_Data" class="Met_Precision_Data">' + Results["Precision_Intro_Overall"].bold() + Results["prec_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Precision').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Data" class="Met_Precision_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_Intro_Overall"].bold() + Results["prec_average"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_Precision_Micro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data">' + Results["Precision_micro_Intro_Overall"].bold() + Results["prec_micro_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Precision_Micro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_micro_Intro_Overall"].bold() + Results["prec_micro_average"] + '<br\>' + '</span>'
+                        }
+                        
+
+                        if (document.getElementById('Met_Precision_Macro').checked){
+                        writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data">' + Results["Precision_macro_Intro_Overall"].bold() + Results["prec_macro_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Precision_Macro').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_macro_Intro_Overall"].bold() + Results["prec_macro_average"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_F1').checked){
+                            writeData.paragraph += '<span id="Met_F1_Data" class="Met_F1_Data">' + Results["F1_Intro_Overall"].bold() + Results["f1_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1').checked) {
+                            writeData.paragraph += '<span id="Met_F1_Data" class="Met_F1_Data" style="visibility: hidden; position: fixed;">' + Results["F1_Intro_Overall"].bold() + Results["f1_average"] + '<br\>' + '</span>'
+                        }
+                        
+                        if (document.getElementById('Met_F1_Micro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro_Overall"].bold() + Results["f1_micro_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1_Micro').checked) {
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" class="Met_F1_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["F1_micro_Intro_Overall"].bold() + Results["f1_micro_average"] + '<br\>' + '</span>'
+                        }
+                        
+                        if (document.getElementById('Met_F1_Macro').checked){
+                        writeData.paragraph += '<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro_Overall"].bold() + Results["f1_macro_average"] + '<br\>'
+                        }
+                        else if (!document.getElementById('Met_F1_Macro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["F1_macro_Intro_Overall"].bold() + Results["f1_macro_average"] + '<br\>'
+                        }
+
+                        if (document.getElementById('Met_Recall').checked){
+                            writeData.paragraph += '<span id="recallData" class="recallData">' + Results["Recall_Intro_Overall"].bold() + Results["recall_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Recall').checked){
+                            writeData.paragraph += '<span id="recallData" class="recallData" style="visibility: hidden; position: fixed;">' + Results["Recall_Intro_Overall"].bold() + Results["recall_average"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_Recall_Micro').checked){
+                            writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data"">' + Results["Recall_micro_Intro_Overall"].bold() + Results["recall_micro_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Recall_Micro').checked) {
+                            writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data" style="visibility: hidden; position: fixed;">' +  Results["Recall_micro_Intro_Overall"].bold() + Results["recall_micro_average"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_Recall_Macro').checked){
+                            writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data">' + Results["Recall_macro_Intro_Overall"].bold() + Results["recall_macro_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Recall_Macro').checked) {
+                            writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_macro_Intro_Overall"].bold() + Results["recall_macro_average"] + '<br\>' + '</span>'
+                        }
 
                         var img = new Image();
                         img.src = 'data:image/jpeg;base64,' + Results['cm_overall'];
 
-                        writeData.paragraph += `${img.outerHTML} <br\>`
+                        if (document.getElementById('Met_CM').checked){
+                            writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data">' + `${img.outerHTML} <br\>` + '</span>'
+                            }
+                        else if (!document.getElementById('Met_CM').checked){
+                            writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data" style="visibility: hidden; position: fixed;">' + `${img.outerHTML} <br\>` + '</span>'
+                        }
+
+                        // writeData.paragraph += `${img.outerHTML} <br\>`
 
                     document.getElementById("Results").innerHTML = writeData.paragraph;
-                    document.getElementById("Results").innerHTML = writeData.paragraph;
-                        document.getElementById("Results").innerHTML = writeData.paragraph;
+                    // document.getElementById("Results").innerHTML = writeData.paragraph;
+                    //     document.getElementById("Results").innerHTML = writeData.paragraph;
                     }
                 }
 
@@ -627,14 +993,118 @@ function getData(files, fileSelected, choice) {
 
 
                         writeData.paragraph += '=========================Results=========================<br\>'
-                        writeData.paragraph += Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>'
-                        writeData.paragraph += Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>"
-                        writeData.paragraph += Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>"
-                        writeData.paragraph += Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>"
-                        writeData.paragraph += Results["F1_Intro"].bold() + Results["F1"] + "<br\>"
-                        writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>"
-                        writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>"
-                        writeData.paragraph += `${img.outerHTML}` + "<br\>"
+
+                    
+
+
+                        if (document.getElementById('Met_ACC').checked){
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data">' + Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>' + '</span>'
+                            }
+                        else if (!document.getElementById('Met_ACC').checked) {
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data" style="visibility: hidden; position: fixed;">' + Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>' + '</span>'
+                        }
+
+
+                        // writeData.paragraph += Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>'
+
+                        if (document.getElementById('Met_Precision').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Data" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>" + '</span>'
+                            }
+                        else if (!document.getElementById('Met_Precision').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Data" style="visibility: hidden; position: fixed;" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>" + '</span>'
+                        }
+                        
+
+                        // writeData.paragraph += Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>"
+
+
+                        if (document.getElementById('Met_Precision_Micro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data">' + Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>" + '</span>'
+                            }
+                        else if (!document.getElementById('Met_Precision_Micro').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>" + '</span>'
+                        }
+
+                        // writeData.paragraph += Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>"
+                        
+
+                        if (document.getElementById('Met_Precision_Macro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data">' + Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Precision_Macro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_macro_Intro"].bold() + Results["Precision_macro"]+ "<br\>" + '</span>'
+                        }
+
+
+                        // writeData.paragraph += Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>"
+
+
+                        if (document.getElementById('Met_F1').checked){
+                        writeData.paragraph += '<span id="Met_F1_Data" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["F1"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1').checked) {
+                            writeData.paragraph += '<span id="Met_F1_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["F1"] + "<br\>" + '</span>'
+                        }
+
+                        // writeData.paragraph += Results["F1_Intro"].bold() + Results["F1"] + "<br\>"
+
+                        if (document.getElementById('Met_F1_Micro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1_Micro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>" + '</span>'
+                        }
+
+                        // writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>"
+
+                        if (document.getElementById('Met_F1_Macro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1_Macro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Macro_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>" + '</span>'
+                        }
+                        
+
+                        if (document.getElementById('Met_Recall').checked){
+                            writeData.paragraph += '<span id="recallData" class="recallData">' + Results["Recall_Intro"].bold() + Results["Recall"]  + "<br\>" + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Recall').checked)
+                            {
+                                writeData.paragraph += '<span id="recallData" class="recallData" style="visibility: hidden; position: fixed;">' + Results["Recall_Intro"].bold() + Results["Recall"] + "<br\>" + '</span>'
+                            }
+                            if (document.getElementById('Met_Recall_Micro').checked){
+                                writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data">' + Results["Recall_micro_Intro"].bold() + Results["Recall_micro"] + "<br\>" + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Recall_Micro').checked)
+                            {
+                                writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_micro_Intro"].bold() + Results["Recall_micro"] + "<br\>" + '</span>'
+                            }
+                    
+    
+                            if (document.getElementById('Met_Recall_Macro').checked){
+                                writeData.paragraph +=  '<span id="recall_Macro_Data" class="recall_Macro_Data">' + Results["Recall_macro_Intro"].bold() + Results["Recall_macro"] + "<br\>" + '</span>'
+                                }
+                            else if (!document.getElementById('Met_Recall_Macro').checked)
+                            {
+                                writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_macro_Intro"].bold() + Results["Recall_macro"] + "<br\>" + '</span>'
+                            }
+                        
+
+
+                            // var img = new Image();
+                            // img.src = 'data:image/jpeg;base64,' + Results['cm_overall'];
+    
+                          
+
+                        // writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>"
+                        // writeData.paragraph += `${img.outerHTML}` + "<br\>"
+
+                          if (document.getElementById('Met_CM').checked){
+                                writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data">' + `${img.outerHTML} <br\>` + '</span>'
+                                }
+                            else if (!document.getElementById('Met_CM').checked){
+                                writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data" style="visibility: hidden; position: fixed;">' + `${img.outerHTML} <br\>` + '</span>'
+                            }
 
                         var img_1 = new Image();
                         img_1.src = "data:image/png;base64," + Results["acc_history"];
@@ -908,7 +1378,7 @@ function displayResults(form) {
 
 document.getElementById("resultForm").addEventListener("submit", function (e) {
     e.preventDefault();
-    displayResults(e.target);
+    // displayResults(e.target);
 });
 
 

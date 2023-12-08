@@ -157,8 +157,9 @@ def perform_Preopt(data, i, df): # i is like the stage, it is applied first if i
         # le.fit(df[data["class_col"]].unique().tolist())
 
         # new_df.iloc[:,index_of_class_col] = le.transform(df.iloc[:,index_of_class_col]) 
-        new_df[data["Preopt_" + str(i) + "_column_Input"]] = le.fit_transform(df[[data["Preopt_" + str(i) + "_column_Input"]]])
-
+        new_df[data["Preopt_" + str(i) + "_column_Input"]] = le.fit_transform(df[data["Preopt_" + str(i) + "_column_Input"]])
+        # logging.debug("check this out %s", new_df[data["Preopt_" + str(i) + "_column_Input"]].dtype)
+        # new_df[data["Preopt_" + str(i) + "_column_Input"]] = new_df[data["Preopt_" + str(i) + "_column_Input"]].astype(float)
     # Dummy Variables
     if method == "DummyVariables":
 

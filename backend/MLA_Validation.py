@@ -54,14 +54,18 @@ def Split(data):
         
         # logging.debug(df_act)
         # df_act = pd.read_csv(data['csvFile'], index_col=None)
-        
+        logging.debug("output_1 %s",df_act['variety'].dtype)
         # Cycle through the choices of preotimization
         for i in range(int(data["preoptCounter"])):
             # Get the choice of preoptimization.
             preopt_method = data["Preopt_" + str(i)]
             # Perform the preoptimization on the dataset.
             df_act = Preoptimization.perform_Preopt(data, i, df_act)
+
+        logging.debug("output_2 %s",df_act['variety'].dtype)
         df = df_act.to_numpy()
+        y = df[:, -1]
+        logging.debug("output_3 %s",y.dtype )
         # logging.debug("Testing_11111111111")
         # Split dataset to training and testing set
         random_state = None
@@ -77,7 +81,7 @@ def Split(data):
         train_set, test_set = train_test_split(df, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
 
         length = train_set.shape[1] -1
-        # logging.debug("Testing_55555555")
+        logging.debug("Testing_1111111111")
         x_train = train_set[:,0:length]
         y_train = train_set[:,length]
         x_test = test_set[:,0:length]
@@ -85,16 +89,16 @@ def Split(data):
         # logging.debug("Testing_6666666")
         #model = KNeighborsClassifier(n_neighbors=3)
         model, settings = MLA.createModel(data)
-        # logging.debug("Testing_777777")
+        logging.debug("Testing_2222222")
         # logging.debug("X_train: %s", x_train)
-        # logging.debug("X_train: %s", x_train.shape)
-        # logging.debug("X_train: %s", type(x_train))
+        logging.debug("X_train shape: %s", x_train.shape)
+        logging.debug("X_train type: %s", type(x_train))
         # logging.debug("y_train: %s", y_train)
-        # logging.debug("y_train: %s", y_train.shape)
-        # logging.debug("y_train: %s", type(y_train))
+        logging.debug("y_train shape: %s", y_train.shape)
+        logging.debug("y_train type: %s", y_train.dtype)
         # Perform the Method.
         model.fit(x_train, y_train)
-        # logging.debug("Testing_8888888")
+        logging.debug("Testing_3333333")
         # Predict the testset
         y_pred = model.predict(x_test)
 
@@ -109,7 +113,6 @@ def Split(data):
         recall = recall_score(y_test, y_pred, average=None)
         recall_micro = recall_score(y_test, y_pred, average='micro')
         recall_macro = recall_score(y_test, y_pred, average='macro')
-        logging.debug("Testing_22222222")
         # create a confusion matrix
         #def fig_to_base64(fig):
         #    img = io.BytesIO()
@@ -235,6 +238,9 @@ def K_Fold(data):
         f1_list = []
         f1_micro_list = []
         f1_macro_list = []
+        recall_list = []
+        recall_micro_list = []
+        recall_macro_list = []
         cm_list = []
         y_test_list = np.empty(1)
         y_predict_list = np.empty(1)
@@ -259,6 +265,10 @@ def K_Fold(data):
             f1 = f1_score(y[test_index], y_pred, average=None)
             f1_micro = f1_score(y[test_index], y_pred, average='micro')
             f1_macro = f1_score(y[test_index], y_pred, average='macro')
+
+            recall = recall_score(y[test_index], y_pred, average=None)
+            recall_micro = recall_score(y[test_index], y_pred, average='micro')
+            recall_macro = recall_score(y[test_index], y_pred, average='macro')
     
             acc_list.append(acc)
             prec_list.append(prec)
@@ -267,6 +277,11 @@ def K_Fold(data):
             f1_list.append(f1)
             f1_micro_list.append(f1_micro)
             f1_macro_list.append(f1_macro)
+
+            recall_list.append(recall)
+            recall_micro_list.append(recall_micro)
+            recall_macro_list.append(recall_macro)
+
             y_test_list = np.concatenate((y_test_list, y[test_index]))
             y_predict_list = np.concatenate((y_predict_list, y_pred))
     
@@ -288,6 +303,11 @@ def K_Fold(data):
         f1_list = np.array(f1_list)
         f1_micro_list = np.array(f1_micro_list)
         f1_macro_list = np.array(f1_macro_list)
+
+        recall_list = np.array(recall_list)
+        recall_micro_list = np.array(recall_micro_list)
+        recall_macro_list = np.array(recall_macro_list)
+
         cm_list = np.array(cm_list)
 
 
@@ -301,6 +321,10 @@ def K_Fold(data):
         f1_average = np.average(f1_list, axis = 0)
         f1_micro_average = np.average(f1_micro_list)
         f1_macro_average = np.average(f1_macro_list)
+
+        recall_average = np.average(recall_list, axis = 0)
+        recall_micro_average = np.average(recall_micro_list)
+        recall_macro_average = np.average(recall_macro_list)
 
         cm = confusion_matrix(y_test_list, y_predict_list, labels=model.classes_)
         color = 'white'
@@ -321,6 +345,9 @@ def K_Fold(data):
                    "F1_Intro": "F1 for each Class: ",
                    "F1_micro_Intro": "F1 (Micro): ",
                    "F1_macro_Intro": "F1 (Macro): ",
+                   "Recall_Intro": "Recall for each class: ",
+                   "Recall_micro_Intro": "Recall (Micro): ",
+                   "Recall_macro_Intro": "Recall (Macro): ",
 
                    "Accuracy_Intro_Overall": 'Average Accuracy: ',
                    "Precision_Intro_Overall": "Average Precision for Each Class: ",
@@ -329,6 +356,9 @@ def K_Fold(data):
                    "F1_Intro_Overall": "Average F1 for each Class: ",
                    "F1_micro_Intro_Overall": "Average F1 (Micro): ",
                    "F1_macro_Intro_Overall": "Average F1 (Macro): ",
+                   "Recall_Intro_Overall": "Average Recall for each class: ",
+                   "Recall_micro_Intro_Overall": "Average Recall (Micro): ",
+                   "Recall_macro_Intro_Overall": "Average Recall (Macro): ",
 
                     "acc_list": acc_list.tolist(), 
                     "prec_list": prec_list.tolist(),
@@ -337,6 +367,9 @@ def K_Fold(data):
                     "f1_list": f1_list.tolist(),
                     "f1_micro_list": f1_micro_list.tolist(),
                     "f1_macro_list": f1_macro_list.tolist(),
+                    "recall_list": recall_list.tolist(),
+                    "recall_micro_list": recall_micro_list.tolist(),
+                    "recall_macro_list": recall_macro_list.tolist(),
                     "cm_list": cm_list.tolist(),
                     "acc_average": acc_average,
                     "prec_average": prec_average.tolist(),
@@ -345,6 +378,9 @@ def K_Fold(data):
                     "f1_average": f1_average.tolist(),
                     "f1_micro_average": f1_micro_average,
                     "f1_macro_average": f1_macro_average,
+                    "recall_average": recall_average.tolist(),
+                    "recall_micro_average": recall_micro_average,
+                    "recall_macro_average": recall_macro_average,
                     "cm_overall": my_base64_jpgData,
                 
                     "Val_Random_State": random_state,

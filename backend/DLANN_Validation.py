@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 from pathlib import Path
 from werkzeug.utils import secure_filename
 
-from sklearn.metrics import accuracy_score, f1_score, precision_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 
 from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.metrics import confusion_matrix
@@ -89,6 +89,9 @@ def Split(data):
         Precision = precision_score(y_test, y_pred, average=None)
         Precision_micro = precision_score(y_test, y_pred, average='micro')
         Precision_macro = precision_score(y_test, y_pred, average='macro')
+        Recall = recall_score(y_test, y_pred, average=None)
+        Recall_micro = recall_score(y_test, y_pred, average='micro')
+        Recall_macro = recall_score(y_test, y_pred, average='macro')
 
         # Create confusion matrix
         confusion_matrix(y_test, y_pred)
@@ -141,6 +144,9 @@ def Split(data):
                    "F1_Intro": "F1 for each Class: ",
                    "F1_micro_Intro": "F1 (Micro): ",
                    "F1_macro_Intro": "F1 (Macro): ",
+                   "Recall_Intro": "Recall for each class: ",
+                   "Recall_micro_Intro": "Recall (Micro): ",
+                   "Recall_macro_Intro": "Recall (Macro): ",
 
                     "Accuracy": Accuracy,
                     "Precision": Precision.tolist(),
@@ -149,6 +155,9 @@ def Split(data):
                     "F1": F1.tolist(),
                     "F1_micro": F1_micro,
                     "F1_macro": F1_macro,
+                    "Recall": Recall.tolist(),
+                    "Recall_micro": Recall_micro,
+                    "Recall_macro": Recall_macro,
 
                     "cm_overall": cm_graph,
                     "acc_history": acc_graph,
