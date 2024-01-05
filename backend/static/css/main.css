@@ -25,6 +25,10 @@
   --tw-content: '';
 }
 
+
+#myFieldset > * {
+  margin-right: 3px; /* Adds a bottom margin of 10 pixels to all child elements */
+}
 /*
 1. Use a consistent sensible line-height in all browsers.
 2. Prevent adjustments of font size after orientation changes in iOS.
