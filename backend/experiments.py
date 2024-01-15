@@ -355,7 +355,7 @@ def calculate():
     logger.debug("=== results: %s | dtype %s", results, type(results))
     return jsonify(processes=results)
 
-
+# it runs machine learning or deep learning experiments 
 @bp.route("/run_experiment", methods=["POST"])
 def run_experiment():    
 
@@ -462,9 +462,9 @@ def getAlgorithmParameters():
    
    # Definition ::
 
-   # Inputs()
+   # Inputs it recieves catagoryName 
 
-   # Output()
+   # Output the optimizer in json format
 @bp.route("/getCategoryPreopts", methods=["POST"])
 def getCategoryPreopts():
     output = request.get_json() # Recieved {catagory: catagoryName}
@@ -474,6 +474,11 @@ def getCategoryPreopts():
                                                                     # it includes Name, Display_Name, Definition, Parameters
     return json.dumps(preopts)
 
+  # Definition ::
+
+   # Inputs it recieves catagoryName 
+
+   # Output the layer in json format
 @bp.route("/getCategoryLayers", methods=["POST"])
 def getCategoryLayers():
     output = request.get_json()
@@ -484,11 +489,16 @@ def getCategoryLayers():
     return json.dumps(layers)
 
 
+
+   # Output the result of rendering the HTML template
 @bp.route("/results")
 def results():
     return render_template("experiments/results.html")
 
 
+
+   # Inputs contains process, CSVfileName, CSVfile
+   # Output the result in PDF
 @bp.route("/getCSVResults", methods=["POST"]) 
 def getCSVResults():
     # the request contains process, CSVfileName, CSVfile
@@ -507,6 +517,9 @@ def getCSVResults():
 
     return json.dumps(Results)
 
+
+   # Inputs the process involved while creating the model
+   # Output the summary of the model
 @bp.route("/getModelSummary", methods=["POST"])
 def getModelSummary():
     processes_input = request.form.get("processes")
@@ -518,6 +531,8 @@ def getModelSummary():
 
     return json.dumps(Results)
 
+   # Inputs the preprocess involved in the csv
+   # Output the csv after preprocess
 @bp.route("/downloadCSV", methods=["POST"])
 def downloadCSV():
     processes_input = request.form.get("processes")
@@ -535,6 +550,8 @@ def downloadCSV():
 
     return json.dumps(Results)
 
+# Inputs the preoptimization name
+# Output the parameters give the name in json formate
 @bp.route("/getPreoptParameters", methods=["POST"])
 def getPreoptParameters(): # sending preoptimization name
     output = request.get_json()
@@ -544,7 +561,8 @@ def getPreoptParameters(): # sending preoptimization name
 
     return json.dumps(Parameters)
 
-
+# Inputs the data
+# Output the parameter of the layer in json format
 @bp.route("/getLayerParameters", methods=["POST"])
 def getLayerParameters():
     output = request.get_json()
@@ -554,6 +572,8 @@ def getLayerParameters():
 
     return json.dumps(Parameters)
 
+# Inputs the data
+# Output the parameter of the callback in json format
 @bp.route("/getCallbackParameters", methods=["Post"])
 def getCallbackParameters():
     output = request.get_json()

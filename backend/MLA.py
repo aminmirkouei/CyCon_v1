@@ -267,7 +267,7 @@ list_MLAs.append(RandomForestClassifier_algorithm)
 # Gaussian Process Classifier
 Name = "GaussianProcessClassifier"
 Definition = ["Gaussian process classification (GPC) based on Laplace approximation."]
-Parameter_0 = {"Name":"Optimizer", "Type": ["option"], "Default_option":"fmin_l_bfgs_b", "Default_value":"fmin_l_bfgs_b", "Possible":["fimn_l_bfgs_b","None"],
+Parameter_0 = {"Name":"Optimizer", "Type": ["option"], "Default_option":"fmin_l_bfgs_b", "Default_value":"fmin_l_bfgs_b", "Possible":["fmin_l_bfgs_b","None"],
                "Definition":"Per default, the ‘L-BFGS-B’ algorithm from scipy.optimize.minimize is used. If None is passed, the kernel’s parameters are kept fixed."}
 Parameter_1 = {"Name":"n_restarts_optimizer", "Type": ["int"], "Default_option":0, "Default_value":0, "Possible":["int"], 
                 "Definition": "The number of restarts of the optimizer for finding the kernel’s parameters which maximize the log-marginal likelihood. The first run of the optimizer is performed from the kernel’s initial parameters, the remaining ones (if any) from thetas sampled log-uniform randomly from the space of allowed theta-values. If greater than 0, all bounds must be finite. Note that n_restarts_optimizer=0 implies that one run is performed."}
@@ -729,7 +729,7 @@ def getSettings(data, Parameters):
 
     return settings
 
-
+# Convert into different data types
 def convertToType(value, Type, additionalNumber = 0):
     if Type[0] == "int":
         return int(value)

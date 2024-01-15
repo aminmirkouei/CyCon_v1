@@ -280,20 +280,172 @@ function readTextFile(file, callback) {
 
 
 function updateMetrics(){
-    var recallDataElement = document.getElementById('recallData');
+
+    var Met_ACC_Data = document.getElementsByClassName('Met_ACC_Data');
+    if (document.getElementById('Met_ACC').checked) {
+        for (var i = 0; i < Met_ACC_Data.length; i++) {
+        Met_ACC_Data[i].style.visibility = 'visible';
+        Met_ACC_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_ACC').checked){
+        for (var i = 0; i < Met_ACC_Data.length; i++) {
+        Met_ACC_Data[i].style.visibility = 'hidden';
+        Met_ACC_Data[i].style.position = 'fixed';
+        }
+    }
+    
+
+    var Met_Precision_Data = document.getElementsByClassName('Met_Precision_Data');
+    if (document.getElementById('Met_Precision').checked) {
+        for (var i = 0; i < Met_Precision_Data.length; i++) {
+        Met_Precision_Data[i].style.visibility = 'visible';
+        Met_Precision_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_Precision').checked){
+        for (var i = 0; i < Met_Precision_Data.length; i++) {
+        Met_Precision_Data[i].style.visibility = 'hidden';
+        Met_Precision_Data[i].style.position = 'fixed';
+        }
+    }  
+
+
+    var Met_Precision_Micro_Data = document.getElementsByClassName('Met_Precision_Micro_Data');
+    if (document.getElementById('Met_Precision_Micro').checked) {
+        for (var i = 0; i < Met_Precision_Micro_Data.length; i++) {
+        Met_Precision_Micro_Data[i].style.visibility = 'visible';
+        Met_Precision_Micro_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_Precision_Micro').checked){
+        for (var i = 0; i < Met_Precision_Micro_Data.length; i++) {
+        Met_Precision_Micro_Data[i].style.visibility = 'hidden';
+        Met_Precision_Micro_Data[i].style.position = 'fixed';
+        }
+    }
+
+
+    var Met_Precision_Macro_Data = document.getElementsByClassName('Met_Precision_Macro_Data');
+    if (document.getElementById('Met_Precision_Macro').checked) {
+        for (var i = 0; i < Met_Precision_Macro_Data.length; i++) {
+        Met_Precision_Macro_Data[i].style.visibility = 'visible';
+        Met_Precision_Macro_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_Precision_Macro').checked){
+        for (var i = 0; i < Met_Precision_Macro_Data.length; i++) {
+        Met_Precision_Macro_Data[i].style.visibility = 'hidden';
+        Met_Precision_Macro_Data[i].style.position = 'fixed';
+        }
+    }
+
+  
+    var Met_F1_Data = document.getElementsByClassName('Met_F1_Data');
+    if (document.getElementById('Met_F1').checked) {
+        for (var i = 0; i < Met_F1_Data.length; i++) {
+      Met_F1_Data[i].style.visibility = 'visible';
+      Met_F1_Data[i].style.position = 'static';
+    }
+}
+    else if (!document.getElementById('Met_F1').checked){
+        for (var i = 0; i < Met_F1_Data.length; i++) {
+      Met_F1_Data[i].style.visibility = 'hidden';
+      Met_F1_Data[i].style.position = 'fixed';
+        }
+    }
+
+  var Met_F1_Micro_Data = document.getElementsByClassName('Met_F1_Micro_Data');
+  if (document.getElementById('Met_F1_Micro').checked) {
+    for (var i = 0; i < Met_F1_Micro_Data.length; i++) {
+    Met_F1_Micro_Data[i].style.visibility = 'visible';
+    Met_F1_Micro_Data[i].style.position = 'static';
+    }
+  }
+  else if (!document.getElementById('Met_F1_Micro').checked){
+    for (var i = 0; i < Met_F1_Micro_Data.length; i++) {
+    Met_F1_Micro_Data[i].style.visibility = 'hidden';
+    Met_F1_Micro_Data[i].style.position = 'fixed';
+    }
+  }
+
+  var Met_F1_Macro_Data = document.getElementsByClassName('Met_F1_Macro_Data');
+  if (document.getElementById('Met_F1_Macro').checked) {
+    for (var i = 0; i < Met_F1_Macro_Data.length; i++) {
+    Met_F1_Macro_Data[i].style.visibility = 'visible';
+    Met_F1_Macro_Data[i].style.position = 'static';
+    }
+  }
+  else if (!document.getElementById('Met_F1_Macro').checked){
+    for (var i = 0; i < Met_F1_Macro_Data.length; i++) {
+    Met_F1_Macro_Data[i].style.visibility = 'hidden';
+    Met_F1_Macro_Data[i].style.position = 'fixed';
+    }
+  }
+
+
+    var recallDataElement = document.getElementsByClassName('recallData');
   if (document.getElementById('Met_Recall').checked) {
-    recallDataElement.style.visibility = 'visible';
-    recallDataElement.style.position = 'static';
+    for (var i = 0; i < recallDataElement.length; i++) {
+    recallDataElement[i].style.visibility = 'visible';
+    recallDataElement[i].style.position = 'static';
+    }
   }
   else if (!document.getElementById('Met_Recall').checked){
-    recallDataElement.style.visibility = 'hidden';
-    recallDataElement.style.position = 'absolute';
+    for (var i = 0; i < recallDataElement.length; i++) {
+    recallDataElement[i].style.visibility = 'hidden';
+    recallDataElement[i].style.position = 'fixed';
+    }
   }
+
+  var recallMicroData = document.getElementsByClassName('recall_Micro_Data');
+  if (document.getElementById('Met_Recall_Micro').checked) {
+    for (var i = 0; i < recallMicroData.length; i++) {
+    recallMicroData[i].style.visibility = 'visible';
+    recallMicroData[i].style.position = 'static';
+    }
+  }
+  else if (!document.getElementById('Met_Recall_Micro').checked){
+    for (var i = 0; i < recallMicroData.length; i++) {
+    recallMicroData[i].style.visibility = 'hidden';
+    recallMicroData[i].style.position = 'fixed';
+    }
+  }
+
+  var recallMacroData = document.getElementsByClassName('recall_Macro_Data');
+  if (document.getElementById('Met_Recall_Macro').checked) {
+    for (var i = 0; i < recallMacroData.length; i++) {
+    recallMacroData[i].style.visibility = 'visible';
+    recallMacroData[i].style.position = 'static';
+    }
+  }
+  else if (!document.getElementById('Met_Recall_Macro').checked){
+    for (var i = 0; i < recallMacroData.length; i++) {
+    recallMacroData[i].style.visibility = 'hidden';
+    recallMacroData[i].style.position = 'fixed';
+    }
+  }
+
+
+  var Met_CM_Data = document.getElementsByClassName('Met_CM_Data');
+  if (document.getElementById('Met_CM').checked) {
+    for (var i = 0; i < Met_CM_Data.length; i++) {
+    Met_CM_Data[i].style.visibility = 'visible';
+    Met_CM_Data[i].style.position = 'static';
+    }
+  }
+  else if (!document.getElementById('Met_CM').checked){
+    for (var i = 0; i < Met_CM_Data.length; i++) {
+    Met_CM_Data[i].style.visibility = 'hidden';
+    Met_CM_Data[i].style.position = 'fixed';
+    }
+  }
+
 }
 
 function getData(files, fileSelected, choice) {
     const form = document.getElementById("MLAI_Form");
-    console.log("get form :", form, files, fileSelected, choice);
+    // console.log("get form :", form, files, fileSelected, choice);
     // Copy over information from element outside of form to the copy inside form
     document.getElementById("projectName_copy").value = document.getElementById("projectName").value;
     document.getElementById("phase1Text_copy").value = document.getElementById("phase1Text").value;
@@ -366,7 +518,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of dlann_Form.entries()) {
-        // console.log(pair[0] + ": " + pair[1]);
+        console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -512,30 +664,101 @@ function getData(files, fileSelected, choice) {
 
 
                         writeData.paragraph += '=========================Results=========================<br\>'
-                        writeData.paragraph += Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>'
-                        writeData.paragraph += Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>"
-                        writeData.paragraph += Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>"
-                        writeData.paragraph += Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>"
-                    
-                        writeData.paragraph += Results["F1_Intro"].bold() + Results["F1"] + "<br\>"
+
+                        if (document.getElementById('Met_ACC').checked){
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data">' + Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>' + '</span>'
+                            }
+                        else if (!document.getElementById('Met_ACC').checked) {
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data" style="visibility: hidden; position: fixed;">' + Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>' + '</span>'
+                        }
+
+                        /* Met_ACC_Data[i].style.visibility = 'hidden';
+        Met_ACC_Data[i].style.position = 'fixed'; */
+                        if (document.getElementById('Met_Precision').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Data" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>" + '</span>'
+                            }
+                        else if (!document.getElementById('Met_Precision').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Data" style="visibility: hidden; position: fixed;" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>" + '</span>'
+                        }
                         
-                        writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>"
-                        writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>"
+
+                        if (document.getElementById('Met_Precision_Micro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data">' + Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>" + '</span>'
+                            }
+                        else if (!document.getElementById('Met_Precision_Micro').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>" + '</span>'
+                        }
+
+
+
+                        if (document.getElementById('Met_Precision_Macro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data">' + Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Precision_Macro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_macro_Intro"].bold() + Results["Precision_macro"]+ "<br\>" + '</span>'
+                        }
+
+
+                        if (document.getElementById('Met_F1').checked){
+                        writeData.paragraph += '<span id="Met_F1_Data" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["F1"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1').checked) {
+                            writeData.paragraph += '<span id="Met_F1_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["F1"] + "<br\>" + '</span>'
+                        }
+
+
+                        if (document.getElementById('Met_F1_Micro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1_Micro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>" + '</span>'
+                        }
+
+
+                        if (document.getElementById('Met_F1_Macro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1_Macro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Macro_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>" + '</span>'
+                        }
                         
                         if (document.getElementById('Met_Recall').checked){
-                        writeData.paragraph += '<span id="recallData">' + Results["Recall_Intro"].bold() + Results["recall"]  + "<br\>" + '</span>'
+                        writeData.paragraph += '<span id="recallData" class="recallData">' + Results["Recall_Intro"].bold() + Results["recall"]  + "<br\>" + '</span>'
                         }
                         else if (!document.getElementById('Met_Recall').checked)
                         {
-                            writeData.paragraph += '<span id="recallData" style="display: none;">' + Results["Recall_Intro"].bold() + Results["recall"] + "<br\>" + '</span>'
+                            writeData.paragraph += '<span id="recallData" class="recallData" style="visibility: hidden; position: fixed;">' + Results["Recall_Intro"].bold() + Results["recall"] + "<br\>" + '</span>'
                         }
-                        writeData.paragraph += Results["Recall_micro_Intro"].bold() + Results["recall_micro"] + "<br\>"
-                        writeData.paragraph += Results["Recall_macro_Intro"].bold() + Results["recall_macro"] + "<br\>"
+                        if (document.getElementById('Met_Recall_Micro').checked){
+                            writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data">' + Results["Recall_micro_Intro"].bold() + Results["recall_micro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Recall_Micro').checked)
+                        {
+                            writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_micro_Intro"].bold() + Results["recall_micro"] + "<br\>" + '</span>'
+                        }
+                
 
-                        writeData.paragraph += `${img.outerHTML}` + "<br\>"
+                        if (document.getElementById('Met_Recall_Macro').checked){
+                            writeData.paragraph +=  '<span id="recall_Macro_Data" class="recall_Macro_Data">' + Results["Recall_macro_Intro"].bold() + Results["recall_macro"] + "<br\>" + '</span>'
+                            }
+                        else if (!document.getElementById('Met_Recall_Macro').checked)
+                        {
+                            writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_macro_Intro"].bold() + Results["recall_macro"] + "<br\>" + '</span>'
+                        }
+
+                        if (document.getElementById('Met_CM').checked){
+                            writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data">' + `${img.outerHTML}` + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_CM').checked){
+                            writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data" style="visibility: hidden; position: fixed;">' + `${img.outerHTML}` + "<br\>" + '</span>'
+                        }
+
 
                         //$('#Results').html(data.paragraph);
                         document.getElementById("Results").innerHTML = writeData.paragraph;
+                        var writeData = {
+                            paragraph: ''
+                        }
                     }
 
                     else if (Results['Validation'] == "K-Fold") {
@@ -543,39 +766,182 @@ function getData(files, fileSelected, choice) {
 
                         for (let i = 0; i < Results["acc_list"].length; i++) {
                             writeData.paragraph += '=========================Results for Fold ' + i + '=========================<br\>'
-                            writeData.paragraph += Results["Accuracy_Intro"].bold() + Results["acc_list"][i] + '<br\>'
-                            writeData.paragraph += Results["Precision_Intro"].bold() + Results["prec_list"][i] + '<br\>'
-                            writeData.paragraph += Results["Precision_micro_Intro"].bold() + Results["prec_micro_list"][i] + '<br\>'
-                            writeData.paragraph += Results["Precision_macro_Intro"].bold() + Results["prec_macro_list"][i] + '<br\>'
-                            writeData.paragraph += Results["F1_Intro"].bold() + Results["f1_list"][i] + '<br\>'
-                            writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["f1_micro_list"][i] + '<br\>'
-                            writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["f1_macro_list"][i] + '<br\>'
+                            if (document.getElementById('Met_ACC').checked){
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data">' + Results["Accuracy_Intro"].bold() + Results["acc_list"][i] + '<br\>' + '</span>' 
+                            }
+                            else if (!document.getElementById('Met_ACC').checked) {
+                                writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data" style="visibility: hidden; position: fixed;">' + Results["Accuracy_Intro"].bold() + Results["acc_list"][i] + '<br\>' + '</span>'
+                            }
+
+                            if (document.getElementById('Met_Precision').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Data" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["prec_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Precision').checked){
+                                writeData.paragraph += '<span id="Met_Precision_Data" style="visibility: hidden; position: fixed;" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["prec_list"][i] + '<br\>' + '</span>'
+                            }
+
+                            if (document.getElementById('Met_Precision_Micro').checked){
+                                writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data">' + Results["Precision_micro_Intro"].bold() + Results["prec_micro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Precision_Micro').checked){
+                                writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_micro_Intro"].bold() + Results["prec_micro_list"][i] + '<br\>' + '</span>'
+                            }
+
+
+                            if (document.getElementById('Met_Precision_Macro').checked){
+                                writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data"">' + Results["Precision_macro_Intro"].bold() + Results["prec_macro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Precision_Macro').checked){
+                                writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_macro_Intro"].bold() + Results["prec_macro_list"][i] + '<br\>' + '</span>'
+                            }
+
+                            
+                            if (document.getElementById('Met_F1').checked){
+                                writeData.paragraph +=  '<span id="Met_F1_Data" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["f1_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_F1').checked){
+                                writeData.paragraph +=  '<span id="Met_F1_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["f1_list"][i] + '<br\>' + '</span>'
+                            }
+                            
+                            if (document.getElementById('Met_F1_Micro').checked){
+                                writeData.paragraph += '<span id="Met_F1_Micro_Data" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["f1_micro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_F1_Micro').checked){
+                                writeData.paragraph += '<span id="Met_F1_Micro_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["f1_micro_list"][i] + '<br\>' + '</span>'
+                            }
+
+                            if (document.getElementById('Met_F1_Macro').checked){
+                                writeData.paragraph +='<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro"].bold() + Results["f1_macro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_F1_Macro').checked){
+                                writeData.paragraph +='<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["F1_macro_Intro"].bold() + Results["f1_macro_list"][i] + '<br\>' + '</span>'
+                            }
+
+
+
+
+                            if (document.getElementById('Met_Recall').checked){
+                                writeData.paragraph += '<span id="recallData" class="recallData">' + Results["Recall_Intro"].bold() + Results["recall_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Recall').checked){
+                                writeData.paragraph += '<span id="recallData" class="recallData" style="visibility: hidden; position: fixed;">' + Results["Recall_Intro"].bold() + Results["recall_list"][i] + '<br\>'  + '</span>'
+                            }
+    
+                            if (document.getElementById('Met_Recall_Micro').checked){
+                                writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data"">' + Results["Recall_micro_Intro"].bold() + Results["recall_micro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Recall_Micro').checked) {
+                                writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_micro_Intro"].bold() + Results["recall_micro_list"][i] + '<br\>' + '</span>'
+                            }
+    
+                            if (document.getElementById('Met_Recall_Macro').checked){
+                                writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data">' + Results["Recall_macro_Intro"].bold() + Results["recall_macro_list"][i] + '<br\>' + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Recall_Macro').checked) {
+                                writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_macro_Intro"].bold() + Results["recall_macro_list"][i] + '<br\>' + '</span>'
+                            }
+
+
 
                             var img = new Image();
                             img.src = 'data:image/jpeg;base64,' + Results["cm_list"][i];
-
-                            writeData.paragraph += `${img.outerHTML} <br\>`
+                            if (document.getElementById('Met_CM').checked){
+                            writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data">' + `${img.outerHTML} <br\>` + '</span>'
+                            }
+                            else if (!document.getElementById('Met_CM').checked){
+                                writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data" style="visibility: hidden; position: fixed;">' + `${img.outerHTML} <br\>` + '</span>'
+                            }
 
                         }
 
                         writeData.paragraph += '<br\>'
                         writeData.paragraph += '=========================Results Overall=========================<br\>'
-                        writeData.paragraph += Results["Accuracy_Intro_Overall"].bold() + Results["acc_average"] + '<br\>'
-                        writeData.paragraph += Results["Precision_Intro_Overall"].bold() + Results["prec_average"] + '<br\>'
-                        writeData.paragraph += Results["Precision_micro_Intro_Overall"].bold() + Results["prec_micro_average"] + '<br\>'
-                        writeData.paragraph += Results["Precision_macro_Intro_Overall"].bold() + Results["prec_macro_average"] + '<br\>'
-                        writeData.paragraph += Results["F1_Intro_Overall"].bold() + Results["f1_average"] + '<br\>'
-                        writeData.paragraph += Results["F1_micro_Intro_Overall"].bold() + Results["f1_micro_average"] + '<br\>'
-                        writeData.paragraph += Results["F1_macro_Intro_Overall"].bold() + Results["f1_macro_average"] + '<br\>'
+                        if (document.getElementById('Met_ACC').checked){
+                        writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data">' + Results["Accuracy_Intro_Overall"].bold() + Results["acc_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_ACC').checked) {
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data" style="visibility: hidden; position: fixed;">' + Results["Accuracy_Intro_Overall"].bold() + Results["acc_average"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_Precision').checked){
+                        writeData.paragraph += '<span id="Met_Precision_Data" class="Met_Precision_Data">' + Results["Precision_Intro_Overall"].bold() + Results["prec_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Precision').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Data" class="Met_Precision_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_Intro_Overall"].bold() + Results["prec_average"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_Precision_Micro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data">' + Results["Precision_micro_Intro_Overall"].bold() + Results["prec_micro_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Precision_Micro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_micro_Intro_Overall"].bold() + Results["prec_micro_average"] + '<br\>' + '</span>'
+                        }
+                        
+
+                        if (document.getElementById('Met_Precision_Macro').checked){
+                        writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data">' + Results["Precision_macro_Intro_Overall"].bold() + Results["prec_macro_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Precision_Macro').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_macro_Intro_Overall"].bold() + Results["prec_macro_average"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_F1').checked){
+                            writeData.paragraph += '<span id="Met_F1_Data" class="Met_F1_Data">' + Results["F1_Intro_Overall"].bold() + Results["f1_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1').checked) {
+                            writeData.paragraph += '<span id="Met_F1_Data" class="Met_F1_Data" style="visibility: hidden; position: fixed;">' + Results["F1_Intro_Overall"].bold() + Results["f1_average"] + '<br\>' + '</span>'
+                        }
+                        
+                        if (document.getElementById('Met_F1_Micro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro_Overall"].bold() + Results["f1_micro_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1_Micro').checked) {
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" class="Met_F1_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["F1_micro_Intro_Overall"].bold() + Results["f1_micro_average"] + '<br\>' + '</span>'
+                        }
+                        
+                        if (document.getElementById('Met_F1_Macro').checked){
+                        writeData.paragraph += '<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro_Overall"].bold() + Results["f1_macro_average"] + '<br\>'
+                        }
+                        else if (!document.getElementById('Met_F1_Macro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["F1_macro_Intro_Overall"].bold() + Results["f1_macro_average"] + '<br\>'
+                        }
+
+                        if (document.getElementById('Met_Recall').checked){
+                            writeData.paragraph += '<span id="recallData" class="recallData">' + Results["Recall_Intro_Overall"].bold() + Results["recall_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Recall').checked){
+                            writeData.paragraph += '<span id="recallData" class="recallData" style="visibility: hidden; position: fixed;">' + Results["Recall_Intro_Overall"].bold() + Results["recall_average"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_Recall_Micro').checked){
+                            writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data"">' + Results["Recall_micro_Intro_Overall"].bold() + Results["recall_micro_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Recall_Micro').checked) {
+                            writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data" style="visibility: hidden; position: fixed;">' +  Results["Recall_micro_Intro_Overall"].bold() + Results["recall_micro_average"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_Recall_Macro').checked){
+                            writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data">' + Results["Recall_macro_Intro_Overall"].bold() + Results["recall_macro_average"] + '<br\>' + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Recall_Macro').checked) {
+                            writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_macro_Intro_Overall"].bold() + Results["recall_macro_average"] + '<br\>' + '</span>'
+                        }
 
                         var img = new Image();
                         img.src = 'data:image/jpeg;base64,' + Results['cm_overall'];
 
-                        writeData.paragraph += `${img.outerHTML} <br\>`
+                        if (document.getElementById('Met_CM').checked){
+                            writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data">' + `${img.outerHTML} <br\>` + '</span>'
+                            }
+                        else if (!document.getElementById('Met_CM').checked){
+                            writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data" style="visibility: hidden; position: fixed;">' + `${img.outerHTML} <br\>` + '</span>'
+                        }
+
+                        // writeData.paragraph += `${img.outerHTML} <br\>`
 
                     document.getElementById("Results").innerHTML = writeData.paragraph;
-                    document.getElementById("Results").innerHTML = writeData.paragraph;
-                        document.getElementById("Results").innerHTML = writeData.paragraph;
+                    // document.getElementById("Results").innerHTML = writeData.paragraph;
+                    //     document.getElementById("Results").innerHTML = writeData.paragraph;
                     }
                 }
 
@@ -627,14 +993,118 @@ function getData(files, fileSelected, choice) {
 
 
                         writeData.paragraph += '=========================Results=========================<br\>'
-                        writeData.paragraph += Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>'
-                        writeData.paragraph += Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>"
-                        writeData.paragraph += Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>"
-                        writeData.paragraph += Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>"
-                        writeData.paragraph += Results["F1_Intro"].bold() + Results["F1"] + "<br\>"
-                        writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>"
-                        writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>"
-                        writeData.paragraph += `${img.outerHTML}` + "<br\>"
+
+                    
+
+
+                        if (document.getElementById('Met_ACC').checked){
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data">' + Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>' + '</span>'
+                            }
+                        else if (!document.getElementById('Met_ACC').checked) {
+                            writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data" style="visibility: hidden; position: fixed;">' + Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>' + '</span>'
+                        }
+
+
+                        // writeData.paragraph += Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>'
+
+                        if (document.getElementById('Met_Precision').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Data" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>" + '</span>'
+                            }
+                        else if (!document.getElementById('Met_Precision').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Data" style="visibility: hidden; position: fixed;" class="Met_Precision_Data">' + Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>" + '</span>'
+                        }
+                        
+
+                        // writeData.paragraph += Results["Precision_Intro"].bold() + Results["Precision"] + "<br\>"
+
+
+                        if (document.getElementById('Met_Precision_Micro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data">' + Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>" + '</span>'
+                            }
+                        else if (!document.getElementById('Met_Precision_Micro').checked) {
+                            writeData.paragraph += '<span id="Met_Precision_Micro_Data" class="Met_Precision_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>" + '</span>'
+                        }
+
+                        // writeData.paragraph += Results["Precision_micro_Intro"].bold() + Results["Precision_micro"] + "<br\>"
+                        
+
+                        if (document.getElementById('Met_Precision_Macro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data">' + Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_Precision_Macro').checked){
+                            writeData.paragraph += '<span id="Met_Precision_Macro_Data" class="Met_Precision_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Precision_macro_Intro"].bold() + Results["Precision_macro"]+ "<br\>" + '</span>'
+                        }
+
+
+                        // writeData.paragraph += Results["Precision_macro_Intro"].bold() + Results["Precision_macro"] + "<br\>"
+
+
+                        if (document.getElementById('Met_F1').checked){
+                        writeData.paragraph += '<span id="Met_F1_Data" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["F1"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1').checked) {
+                            writeData.paragraph += '<span id="Met_F1_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Data">' + Results["F1_Intro"].bold() + Results["F1"] + "<br\>" + '</span>'
+                        }
+
+                        // writeData.paragraph += Results["F1_Intro"].bold() + Results["F1"] + "<br\>"
+
+                        if (document.getElementById('Met_F1_Micro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1_Micro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Micro_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Micro_Data">' + Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>" + '</span>'
+                        }
+
+                        // writeData.paragraph += Results["F1_micro_Intro"].bold() + Results["F1_micro"] + "<br\>"
+
+                        if (document.getElementById('Met_F1_Macro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_F1_Macro').checked){
+                            writeData.paragraph += '<span id="Met_F1_Macro_Data" style="visibility: hidden; position: fixed;" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>" + '</span>'
+                        }
+                        
+
+                        if (document.getElementById('Met_Recall').checked){
+                            writeData.paragraph += '<span id="recallData" class="recallData">' + Results["Recall_Intro"].bold() + Results["Recall"]  + "<br\>" + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Recall').checked)
+                            {
+                                writeData.paragraph += '<span id="recallData" class="recallData" style="visibility: hidden; position: fixed;">' + Results["Recall_Intro"].bold() + Results["Recall"] + "<br\>" + '</span>'
+                            }
+                            if (document.getElementById('Met_Recall_Micro').checked){
+                                writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data">' + Results["Recall_micro_Intro"].bold() + Results["Recall_micro"] + "<br\>" + '</span>'
+                            }
+                            else if (!document.getElementById('Met_Recall_Micro').checked)
+                            {
+                                writeData.paragraph += '<span id="recall_Micro_Data" class="recall_Micro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_micro_Intro"].bold() + Results["Recall_micro"] + "<br\>" + '</span>'
+                            }
+                    
+    
+                            if (document.getElementById('Met_Recall_Macro').checked){
+                                writeData.paragraph +=  '<span id="recall_Macro_Data" class="recall_Macro_Data">' + Results["Recall_macro_Intro"].bold() + Results["Recall_macro"] + "<br\>" + '</span>'
+                                }
+                            else if (!document.getElementById('Met_Recall_Macro').checked)
+                            {
+                                writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_macro_Intro"].bold() + Results["Recall_macro"] + "<br\>" + '</span>'
+                            }
+                        
+
+
+                            // var img = new Image();
+                            // img.src = 'data:image/jpeg;base64,' + Results['cm_overall'];
+    
+                          
+
+                        // writeData.paragraph += Results["F1_macro_Intro"].bold() + Results["F1_macro"] + "<br\>"
+                        // writeData.paragraph += `${img.outerHTML}` + "<br\>"
+
+                          if (document.getElementById('Met_CM').checked){
+                                writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data">' + `${img.outerHTML} <br\>` + '</span>'
+                                }
+                            else if (!document.getElementById('Met_CM').checked){
+                                writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data" style="visibility: hidden; position: fixed;">' + `${img.outerHTML} <br\>` + '</span>'
+                            }
 
                         var img_1 = new Image();
                         img_1.src = "data:image/png;base64," + Results["acc_history"];
@@ -908,7 +1378,7 @@ function displayResults(form) {
 
 document.getElementById("resultForm").addEventListener("submit", function (e) {
     e.preventDefault();
-    displayResults(e.target);
+    // displayResults(e.target);
 });
 
 
@@ -936,7 +1406,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Created using the Cycon Tool: https://cycon.nkn.uidaho.edu/cycon version: 1.11.17", pdf.internal.pageSize.getWidth() - 120, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Copyright © CyCon 2023 version 2.01.04", pdf.internal.pageSize.getWidth() - 70, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
@@ -1390,6 +1860,7 @@ function selectPreopt(Preopt, ID_Preopt) {  // the preoptimization drop down and
                 // create the field box for the new preopt option.
                 var field = document.createElement('fieldset');
                 // create title for the field.
+                field.id = "Field_" + preoptCounter;
                 var legend = document.createElement('legend');
                 legend_text = document.createTextNode(Preopt_name);
                 // legend.appendChild(legend_text);
@@ -1475,6 +1946,76 @@ function selectPreopt(Preopt, ID_Preopt) {  // the preoptimization drop down and
                 html_section.appendChild(divElement)
                 // add field to div section
                 html_section.appendChild(field)
+                // console.log(field)
+                var Remove_one = document.createElement('button');
+                Remove_one.type = 'button';
+                Remove_one.textContent = 'Remove';  // Set the button text content
+
+                // Apply some basic CSS styles
+                Remove_one.style.padding = '5px 5px';
+                Remove_one.style.backgroundColor = 'white';
+                Remove_one.style.color = 'Black';
+                Remove_one.style.border = '1px solid #ccc';
+                Remove_one.style.borderRadius = '5px';
+                Remove_one.addEventListener('click', function() {
+                    var fieldset = Remove_one.previousSibling; // Get the fieldset element
+                    var firstElement = fieldset.querySelector("*");
+                    var divElement = fieldset.previousSibling;
+
+                    if (firstElement) {
+                        var nameAttribute = firstElement.getAttribute("name");
+                        console.log(nameAttribute);
+                      } else {
+                        console.log("No elements found within the fieldset.");
+                      }
+
+                    // layer_delete = fieldset.name.slice(-1)
+                    layer_delete = nameAttribute[7]
+                    // console.log("===>", nameAttribute[7])
+
+                    html_section.removeChild(fieldset);
+                    html_section.removeChild(divElement);
+                    html_section.removeChild(Remove_one);
+                    
+                    const form = document.getElementById("preoptForm");
+                    var formData = new FormData(form);
+                    preoptCounter = preoptCounter - 1;
+                    cur_Delete = parseInt(layer_delete) + 1 
+                    
+                    for (const entry of formData.entries()) {
+                        console.log(entry, cur_Delete)
+                        var entryNumber = parseInt(entry[0].split('_')[1]);
+                        console.log(entryNumber)
+                        if (entry[0].startsWith('Preopt_') && entryNumber >= cur_Delete) {
+                            console.log("=====")
+                            
+                            const [key, value] = entry;
+                            
+                            originalName = key
+                                // Modify the name attribute
+                            console.log(originalName)
+                            const newName = "Preopt_" + String(entryNumber-1) + originalName.slice(8);
+                            // console.log(newName)
+                            var nameInput = form.querySelectorAll('[name="'+ key + '"]');
+                            
+                            for (var i = 0; i < nameInput.length; i++) {
+                                nameInput[i].setAttribute("name", newName);
+                              }
+                            console.log(nameInput.length)
+                            if (nameInput[0]){
+                            console.log(nameInput[0].name)
+                            }
+                            // form.elements[key].name = newName;
+                            console.log("******")
+                            }  
+                        }
+                    console.log("^^^^^^")
+
+                  });
+
+                // Append the button to the fieldset
+                html_section.appendChild(Remove_one);
+                
 
             }
         });
@@ -1623,6 +2164,7 @@ function getCompilerOptions(ID_Compiler) {
 
             // create the field box for the new layer option.
             var field = document.createElement('fieldset');
+            field.id = "myFieldset"
             // create title for the field.
             var legend = document.createElement('legend');
             legend_text = document.createTextNode("Compiler");
@@ -1783,7 +2325,7 @@ function selectLayers(Layer, ID_Layer) {
                 // legend_text = document.createTextNode(Layer_name);
                 // legend.appendChild(legend_text);
                 // field.appendChild(legend);
-               
+                field.name = "Layer_" + layerCounter;
                 // Create a hidden value that will contain the selected parameter name.
                 var textbox = document.createElement("input");
                 textbox.type = "text";
@@ -1836,10 +2378,9 @@ function selectLayers(Layer, ID_Layer) {
                     }
                 }
                 // TO DO LATER: Add button to remove the individual NN layer.
-                
 
 
-                var divElement = document.createElement("div");
+                    var divElement = document.createElement("div");
                     divElement.className = "flex items-center";
 
                     // Create the first horizontal line
@@ -1865,9 +2406,10 @@ function selectLayers(Layer, ID_Layer) {
                 // add field to div section
                 html_section.appendChild(divElement)
                 html_section.appendChild(field)
+                console.log(field)
                 var Remove_one = document.createElement('button');
                 Remove_one.type = 'button';
-                Remove_one.textContent = 'Remove one';  // Set the button text content
+                Remove_one.textContent = 'Remove';  // Set the button text content
 
                 // Apply some basic CSS styles
                 Remove_one.style.padding = '5px 5px';
@@ -1876,12 +2418,60 @@ function selectLayers(Layer, ID_Layer) {
                 Remove_one.style.border = '1px solid #ccc';
                 Remove_one.style.borderRadius = '5px';
                 Remove_one.addEventListener('click', function() {
-                    // var fieldset = Remove_one.previousSibling; // Get the fieldset element
-                    // var divElement = fieldset.previousSibling;
-                    // html_section.removeChild(fieldset);
-                    // html_section.removeChild(divElement);
-                    // html_section.removeChild(Remove_one);
+                    var fieldset = Remove_one.previousSibling; // Get the fieldset element
+                    var firstElement = fieldset.querySelector("*");
+                    var divElement = fieldset.previousSibling;
+                    // console.log(fieldset)
+                    // console.log(fieldset.id)
+                    if (firstElement) {
+                        var nameAttribute = firstElement.getAttribute("name");
+                        console.log(nameAttribute);
+                      } else {
+                        console.log("No elements found within the fieldset.");
+                      }
+
+                    // layer_delete = fieldset.name.slice(-1)
+                    layer_delete = nameAttribute[6]
+                    console.log("===>", nameAttribute[6])
+                    html_section.removeChild(fieldset);
+                    html_section.removeChild(divElement);
+                    html_section.removeChild(Remove_one);
+                
+                    const form = document.getElementById("DLANN_Form");
+                    var formData = new FormData(form);
+                    layerCounter = layerCounter - 1;
+                    cur_Delete = parseInt(layer_delete) + 1 
+                
+                    for (const entry of formData.entries()) {
+                        console.log(entry, cur_Delete, entryNumber)
+                        var entryNumber = parseInt(entry[0].split('_')[1]);
+
+                        if (entry[0].startsWith('Layer_') && entryNumber >= cur_Delete) {
+                            console.log("=======")
+                            const [key, value] = entry;
+                            
+                            originalName = key
+                                // Modify the name attribute
+                            console.log(originalName)
+                            const newName = "Layer_" + String(cur_Delete-1) + originalName.slice(7);
+                            // console.log(newName)
+                            var nameInput = form.querySelectorAll('[name="'+ key + '"]');
+                
+                            for (var i = 0; i < nameInput.length; i++) {
+                                nameInput[i].setAttribute("name", newName);
+                              }
+                            console.log(nameInput.length)
+                            if (nameInput[0]){
+                            console.log(nameInput[0].name)
+                            }
+                            
+                            console.log("******")
+                            // form.elements[key].name = newName;
+                            }  
+                        }
                   });
+
+
 
                 // Append the button to the fieldset
                 html_section.appendChild(Remove_one);
@@ -2510,8 +3100,8 @@ function checkModel() {
 
     // iterate through entries...
     for (var pair of formData.entries()) {
-        // console.log(pair[0] + ": " + pair[1]);
-        console.log(pair)
+        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair)
         dict_data[pair[0]] = pair[1]
     }
 
