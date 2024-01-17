@@ -35,6 +35,9 @@
         <a class="hover:text-slate-200"
            :class="{'text-slate-100': selected === '/experiments/cycon'}"
            href="{{ url_for('experiments.cycon') }}">ML/AI</a>
+         <a class="hover:text-slate-200"
+           :class="{'text-slate-100': selected === '/gallery'}"
+           href="https://cycon-document.readthedocs.io/en/latest/" target="_blank">Documentation</a>
         <a class="hover:text-slate-200"
            :class="{'text-slate-100': selected === '/experiments/lca'}"
            href="{{ url_for('experiments.lca') }}">LCA</a>
@@ -47,6 +50,7 @@
            <a class="hover:text-slate-200"
            :class="{'text-slate-100': selected === '/gallery'}"
            href="{{ url_for('gallery.index') }}">Gallery</a>
+         
         <a class="hover:text-slate-200" href="{{ url_for('auth.logout') }}">Log Out</a>
         {% endif %}
         {% endif %}

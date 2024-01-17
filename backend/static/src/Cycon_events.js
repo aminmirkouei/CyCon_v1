@@ -1406,7 +1406,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Copyright © CyCon 2023 version 2.01.04", pdf.internal.pageSize.getWidth() - 70, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Copyright © CyCon 2023 version 2.01.15", pdf.internal.pageSize.getWidth() - 70, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
@@ -2452,8 +2452,8 @@ function selectLayers(Layer, ID_Layer) {
                             
                             originalName = key
                                 // Modify the name attribute
-                            console.log(originalName)
-                            const newName = "Layer_" + String(cur_Delete-1) + originalName.slice(7);
+                            console.log(originalName, originalName[6])
+                            const newName = "Layer_" + String(parseInt(originalName[6]) - 1) + originalName.slice(7);
                             // console.log(newName)
                             var nameInput = form.querySelectorAll('[name="'+ key + '"]');
                 
@@ -2597,12 +2597,22 @@ function fillSection(section, data, Parameter, Location, counter) {
                 // create radio button
                 var radio_name = Parameter_Name + "_Input";
                 var option = data[Parameter]["Possible"][Option_Int];
+
+                var cardDiv = document.createElement("div");
+                cardDiv.style.border = "1px solid #E5E7EB";
+                cardDiv.style.borderRadius = "0.375rem";
+                cardDiv.style.boxShadow = "0 1px 2px 0 rgba(0, 0, 0, 0.05)";
+                cardDiv.style.padding = "0.5rem";
+                cardDiv.style.marginBottom = "0.3rem";
+                cardDiv.style.display = "inline-block";
+                cardDiv.style.marginLeft = "0.1rem";
+
                 var radio = document.createElement("input");
                 radio.type = "radio";
                 radio.name = radio_name;
                 radio.id = option;
                 radio.value = option;
-                section.appendChild(radio);
+                cardDiv.appendChild(radio);
                 if (option == default_opt) {
                     radio.checked = true;
                 }
@@ -2611,9 +2621,11 @@ function fillSection(section, data, Parameter, Location, counter) {
                 var name_label = option;
                 var label = document.createElement('label')
                 label.htmlFor = name_label;
+                label.style.marginLeft = "0.2rem"; 
                 label.appendChild(document.createTextNode(name_label));
 
-                section.appendChild(label);
+                cardDiv.appendChild(label);
+                section.appendChild(cardDiv);
             }
         }
 

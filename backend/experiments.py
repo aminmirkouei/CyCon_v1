@@ -461,8 +461,7 @@ def getAlgorithmParameters():
     return json.dumps(Parameters)
    
    # Definition ::
-
-   # Inputs it recieves catagoryName 
+   # As an Inputs it recieves catagoryName 
 
    # Output the optimizer in json format
 @bp.route("/getCategoryPreopts", methods=["POST"])
