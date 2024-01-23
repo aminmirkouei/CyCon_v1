@@ -20,6 +20,8 @@ from sklearn.metrics import confusion_matrix
 from backend.Classes.PreoptimizationFiles import Preoptimization
 from backend.Classes.NeuralNetworkFiles import Compiler
 from backend.Classes.NeuralNetworkFiles import Validation
+import logging
+logger = logging.getLogger()
 
 from backend import Loading
 
@@ -53,7 +55,7 @@ def Split(data):
             shuffle = True
     
         train_set, test_set = train_test_split(df, test_size=float(data["Validation_test_split_Input"]), shuffle=shuffle, random_state = random_state)
-
+       
         length = train_set.shape[1] -1
 
         x_train = train_set[:,0:length]
@@ -70,8 +72,8 @@ def Split(data):
         y_test = np.array(y_test)
 
         model = NeuralNetwork.createModel(data)
-
         Compiler.compileModel(model, data)
+    
         history = Validation.fitModel(model, data, x_train, y_train)
 
         y_pred = model.predict(x_test)
@@ -80,7 +82,7 @@ def Split(data):
         y_test = np.argmax(y_test, axis = 1)
 
         labels = np.unique(y_test)
-
+        
         # Obtain the Metrics
         Accuracy = accuracy_score(y_test, y_pred)
         F1 = f1_score(y_test, y_pred, average=None)
@@ -92,7 +94,7 @@ def Split(data):
         Recall = recall_score(y_test, y_pred, average=None)
         Recall_micro = recall_score(y_test, y_pred, average='micro')
         Recall_macro = recall_score(y_test, y_pred, average='macro')
-
+      
         # Create confusion matrix
         confusion_matrix(y_test, y_pred)
 
@@ -104,6 +106,7 @@ def Split(data):
         plt.savefig(my_stringIObytes, format='jpg')
         my_stringIObytes.seek(0)
         cm_graph = base64.b64encode(my_stringIObytes.read()).decode()
+
         plt.close()
 
         # summarize history for accuracy

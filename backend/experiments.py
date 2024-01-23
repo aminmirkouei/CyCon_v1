@@ -403,8 +403,9 @@ def run_experiment():
     # Perform Deep Learning Neural Network.
     if data['methodology'] == "DLANN":
         # Split
+    
         status, msg, Metrics = DLANN_Validation.Split(data)
-
+        logging.debug("statussssss %s", status)
         if status == "worked":
             # Open json file for the experiment.
             baseFolder = os.getcwd()

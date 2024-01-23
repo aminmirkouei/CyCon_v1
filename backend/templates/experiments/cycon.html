@@ -171,11 +171,17 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
 
             </h4>
             <!-- information to display for the name of the project -->
-            <input class="w-64 px-2 py-1 border border-gray-400 rounded-lg bg-white" id="projectName" type="text" name="projectName" placeholder="Name of the project">
+            <div class="flex flex-col items-end gap-6 w-96">
+                <div class="relative w-full min-w-[200px]">
+            <input class="peer h-full min-h-[50px] w-full resize-none border-b border-black bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-200" 
+                   id="projectName" type="text" name="projectName"
+                   placeholder="Name of the project">
+            </div>
+            </div>
 
             <div class="">
                 <div class="flex flex-row">
-                    <h3 class="mb-2 font-medium ">Goal and Scope</h3>
+                    <h3 class="mb-2 font-medium mr-2">Goal and Scope</h3>
                     <!-- information to display for the definition of the project -->
                     <div class="popup" onclick="popupInformation('Experiment_Definition_Info')">
                         <img src="../../static/Images/information_icon.png"
@@ -188,12 +194,11 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
 
                 <textarea id="phase1Text"
                           name="phase1Text" rows="3" cols="50"
-                          class="resize w-64 px-2 py-1 border border-gray-400 rounded-lg bg-white"
-                ></textarea>
+                          class="resize w-72 px-2 py-1 border border-gray-400 rounded-xl bg-white"></textarea>
+                
             </div>
 
                 </div>
-
 
                 <!-- Dataset section -->
                 <div class="border-b border-gray-400 p-2">

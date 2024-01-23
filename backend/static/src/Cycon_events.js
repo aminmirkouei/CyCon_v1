@@ -518,7 +518,7 @@ function getData(files, fileSelected, choice) {
 
     // iterate through entries...
     for (var pair of dlann_Form.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -582,6 +582,7 @@ function getData(files, fileSelected, choice) {
     data.append("processes", JSON.stringify(dict_data))
     data.append("csvFileName", csvFileName)
     data.append("csvFile", csvFile)
+    console.log(dict_data)
 
     $.ajax({
         url: "/experiments/run_experiment",
@@ -591,6 +592,7 @@ function getData(files, fileSelected, choice) {
         processData: false, // important
         contentType: false, // important,
         success: function (Results) {
+            console.log(Results)
             document.getElementById("Results").innerHTML += "Hello?";
             if (Results[0] == "worked") {
                 Results = Results[2]
@@ -1127,7 +1129,7 @@ function getData(files, fileSelected, choice) {
                 }
 
                 writeData.paragraph += '<FONT COLOR="#ff0000">ERROR: <br>';
-                writeData.paragraph += Results[1];
+                writeData.paragraph += Results;
                 writeData.paragraph += '</FONT >';
 
                 document.getElementById("Results").innerHTML = writeData.paragraph;
