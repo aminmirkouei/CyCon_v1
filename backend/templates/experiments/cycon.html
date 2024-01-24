@@ -433,6 +433,19 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                             </select>
                             {% endif %}
 
+                        
+                            <br>
+                            Ensemble method:
+                            {% if g.Ensembles %}
+                            <select id="EnsembleAlgorithm"
+                                    class="px-2 py-1 mr-2 rounded-md border border-gray-400"
+                                    name="EnsembleAlgorithm" onchange="changeEnsemble(this.id, 'Parameters')">
+                                {% for choices, infos in g.Ensembles%}
+                                <option value={{ choices }}>{{ choices }}</option>
+                                {% endfor %}
+                            </select>
+                            {% endif %}
+
                             <br><br>
                             For more information on MLA algorithms, visit  <a href="https://scikit-learn.org/stable/supervised_learning.html">scikit-learn.org</a>
 

@@ -4,6 +4,7 @@ import io
 import base64
 
 from backend import MLA
+from backend import Ensemble
 
 import pandas as pd
 import numpy as np
@@ -88,7 +89,7 @@ def Split(data):
         y_test = test_set[:,length]
         # logging.debug("Testing_6666666")
         #model = KNeighborsClassifier(n_neighbors=3)
-        model, settings = MLA.createModel(data)
+        model, settings = Ensemble.createModel(data)
        
         
         # Perform the Method.
@@ -247,7 +248,7 @@ def K_Fold(data):
             x_test = X[test_index]
             y_test = y[test_index]
             
-            model, settings = MLA.createModel(data)
+            model, settings = Ensemble.createModel(data)
 
             model.fit(X[train_index], y[train_index])
     

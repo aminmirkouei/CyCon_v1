@@ -163,6 +163,108 @@ function changeLayerCategory(category, ID_Layers) {
     });
 }
 
+function changeEnsemble(algorithms, ID_Parameters) { 
+    var algorithms_selection = document.getElementById(algorithms)
+    var algorithm_name = algorithms_selection.value
+    //document.getElementById("Results").innerHTML = method_name
+
+    dict_values = { Algorithm: algorithm_name };
+
+    const sent_data = JSON.stringify(dict_values)
+
+    $.ajax({
+        url: "/experiments/getEnsembleParameters",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(sent_data),
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            //document.getElementById("Results").innerHTML = "";
+            var html_section = document.getElementById(ID_Parameters);
+            html_section.innerHTML = "";
+
+            // create the field box for the new preopt option.
+            var field = document.createElement('fieldset');
+            // create title for the field.
+            var legend = document.createElement('legend');
+            legend_text = document.createTextNode(algorithm_name);
+            // legend.appendChild(legend_text);
+            // field.appendChild(legend);
+
+            for (var Parameter in data) {
+                //document.getElementById("Results").innerHTML += data[Parameter]["Name"] + " ";
+                var Parameter_Name = data[Parameter]["Name"];
+
+                if (data.hasOwnProperty(Parameter)) {
+                    // Create a label, which will be the parameter Name followed by the default value.
+                    var name_label = Parameter_Name + " (Default: " + data[Parameter]["Default_value"] + ") ";
+                    var label = document.createElement('label');
+                    label.htmlFor = name_label;
+                    label.appendChild(document.createTextNode(name_label));
+                    let id_info = data[Parameter]["Name"] + "_Info";
+
+                    field.appendChild(label);
+
+                    // Create popup information.
+                    let newDiv = document.createElement("div");
+                    newDiv.className = "popup";
+                    newDiv.onclick = function () { popupInformation(id_info); };
+
+                    let newImage = document.createElement("img");
+                    newImage.src = "../../static/Images/information_icon.png";
+                    newImage.width = "20";
+                    newImage.height = "20";
+
+                    newDiv.appendChild(newImage);
+
+                    let newSpan = document.createElement("span");
+                    newSpan.style = "white-space: pre-wrap";
+                    newSpan.className = "popuptext";
+                    newSpan.id = id_info;
+                    newSpan.textContent = data[Parameter]["Definition"];
+
+                    newDiv.appendChild(newSpan);
+
+                    field.appendChild(newDiv);
+
+                    // Create choices and options to edit the parameter
+
+                    fillSection(field, data, Parameter, ID_Parameters, 0)
+                }
+            }
+            var divElement = document.createElement("div");
+                    divElement.className = "flex items-center";
+
+                    // Create the first horizontal line
+                    var hrElement1 = document.createElement("hr");
+                    hrElement1.className = "flex-grow border-t border-green-500 border-3";
+                    hrElement1.style.borderWidth = "1px";
+
+                    // Create a span element with text
+                    var spanElement = document.createElement("span");
+                    spanElement.className = "px-3 text-green-500";
+                    spanElement.textContent = algorithm_name;
+
+                    // Create the second horizontal line
+                    var hrElement2 = document.createElement("hr");
+                    hrElement2.className = "flex-grow border-t border-green-500 border-3";
+                    hrElement2.style.borderWidth = "1px";
+
+                    // Append these elements to the div in the desired order
+                    divElement.appendChild(hrElement1);
+                    divElement.appendChild(spanElement);
+                    divElement.appendChild(hrElement2);
+
+                // add field to div section
+                html_section.appendChild(divElement)
+                // add field to div section
+                html_section.appendChild(field)
+
+            html_section.appendChild(field)
+        }
+    })
+}
 function changeAlgorithm(algorithms, ID_Parameters) {
     var algorithms_selection = document.getElementById(algorithms)
     var algorithm_name = algorithms_selection.value
@@ -559,7 +661,7 @@ function getData(files, fileSelected, choice) {
     if(choice === "Choose uploaded file") {
         const foundFile = files.find(f => f.filename === fileSelected);
         const data = JSON.parse(JSON.stringify(foundFile.content));
-        console.log("data: ", data, );
+        // generatePDF
 
         // Create CSV content
         const csvContent = createCSV(data);
@@ -570,7 +672,7 @@ function getData(files, fileSelected, choice) {
         csvFileName = fileSelected;
         csvFile = csvBlob;
 
-        console.log("get csv: ", csvFile, csvBlob)
+        // console.log("get csv: ", csvFile, csvBlob)
     } else {
         csvFileName = document.getElementById("csvFile").files[0].name;
         csvFile = document.getElementById("csvFile").files[0];
@@ -1408,7 +1510,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Copyright © CyCon 2023 version 2.01.15", pdf.internal.pageSize.getWidth() - 70, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Copyright © CyCon 2023 version 2.01.24", pdf.internal.pageSize.getWidth() - 70, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
@@ -2566,7 +2668,7 @@ function fillSection(section, data, Parameter, Location, counter) {
 
     var default_opt = data[Parameter]["Default_option"];
     var default_value = data[Parameter]["Default_value"];
-
+    
     var Parameter_Name = data[Parameter]["Name"];
 
     if (Location == "Preopt") {
