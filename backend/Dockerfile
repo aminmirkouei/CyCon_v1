@@ -7,6 +7,8 @@ COPY requirements.txt /backend
 
 RUN pip install --upgrade pip
 
+RUN apt-get update && apt-get install -y libgomp1
+
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip3 install -r requirements.txt
 

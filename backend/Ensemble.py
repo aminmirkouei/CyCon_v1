@@ -16,6 +16,8 @@ from sklearn.cluster import KMeans
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import Perceptron
 from xgboost import XGBClassifier
+from lightgbm import LGBMClassifier
+
 
 class Ensemble:
     def __init__(self, name, definition, parameters):
@@ -89,47 +91,31 @@ XGBClassifier_algorithm = Ensemble(Name, Definition, Parameters)
 
 list_Ensembles.append(XGBClassifier_algorithm)
 
-# # SVM
-# Name = "SVM"
-# Definition = ["SVM info"]
-# Parameter_0 = {"Name":"C", "Type": ["float"], "Default_option":1.0, "Default_value":1.0, "Possible":["float"], 
-#                "Definition":"Regularization parameter. The strength of the regularization is inversely proportional to C. Must be strictly positive. The penalty is a squared l2 penalty."}
-# Parameter_1 = {"Name":"kernel", "Type": ["option"], "Default_option":"rbf", "Default_value":"rbf", "Possible":["linear","poly","rbf","sigmoid","precomputed"], 
-#                 "Definition":"Specifies the kernel type to be used in the algorithm. If none is given, ‘rbf’ will be used. If a callable is given it is used to pre-compute the kernel matrix from data matrices; that matrix should be an array of shape (n_samples, n_samples)."}
-# Parameter_2 = {"Name":"degree", "Type": ["int"], "Default_option":3, "Default_value":3, "Possible":["int"],
-#               "Definition":"Degree of the polynomial kernel function (‘poly’). Must be non-negative. Ignored by all other kernels."}
-# Parameter_3 = {"Name":"gamma", "Type": ["option_float"], "Default_option":"scale", "Default_value":"scale", "Possible":["scale","auto","float"],
-#               "Definition":"Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’.\n\nif gamma='scale' (default) is passed then it uses 1 / (n_features * X.var()) as value of gamma,\nif ‘auto’, uses 1 / n_features\nif float, must be non-negative."}
-# Parameter_4 = {"Name":"coef0", "Type": ["float"], "Default_option":0.0, "Default_value":0.0, "Possible":["float"],
-#               "Definition":"Independent term in kernel function. It is only significant in ‘poly’ and ‘sigmoid’."}
-# Parameter_5 = {"Name":"shrinking", "Type": ["bool"], "Default_option":True, "Default_value":True, "Possible":[True,False],
-#               "Definition":"Whether to use the shrinking heuristic."}
-# Parameter_6 = {"Name":"probability", "Type": ["bool"], "Default_option":False, "Default_value":False, "Possible":[True,False],
-#               "Definition":"Whether to enable probability estimates. This must be enabled prior to calling fit, will slow down that method as it internally uses 5-fold cross-validation, and predict_proba may be inconsistent with predict."}
-# Parameter_7 = {"Name":"tol", "Type": ["float"], "Default_option": 0.003, "Default_value":0.003, "Possible":["float"],
-#               "Definition":"Tolerance for stopping criterion."}
-# Parameter_8 = {"Name":"cache_size", "Type": ["float"], "Default_option":200, "Default_value":200, "Possible":["float"],
-#               "Definition":"Specify the size of the kernel cache (in MB)."}
-# Parameter_9 = {"Name":"cache_weight", "Type": ["option"], "Default_option":None, "Default_value":None, "Possible":["balanced", None],
-#               "Definition":"Specify the size of the kernel cache (in MB)."}
-# Parameter_10 = {"Name":"verbose", "Type": ["bool"], "Default_option":False, "Default_value":False, "Possible":[True,False],
-#               "Definition":"Enable verbose output. Note that this setting takes advantage of a per-process runtime setting in libsvm that, if enabled, may not work properly in a multithreaded context."}
-# Parameter_11 = {"Name":"max_iter", "Type": ["int"], "Default_option":-1, "Default_value":-1, "Possible":["int"],
-#               "Definition":"Hard limit on iterations within solver, or -1 for no limit."}
-# Parameter_12 = {"Name":"decision_function_shape", "Type": ["option"], "Default_option":"ovr", "Default_value":"ovr", "Possible":["ovo","ovr"],
-#               "Definition":"Whether to return a one-vs-rest (‘ovr’) decision function of shape (n_samples, n_classes) as all other classifiers, or the original one-vs-one (‘ovo’) decision function of libsvm which has shape (n_samples, n_classes * (n_classes - 1) / 2). However, note that internally, one-vs-one (‘ovo’) is always used as a multi-class strategy to train models; an ovr matrix is only constructed from the ovo matrix. The parameter is ignored for binary classification."}
-# Parameter_13 = {"Name":"break_ties", "Type": ["bool"], "Default_option":False, "Default_value":False, "Possible":[True,False],
-#               "Definition":"If true, decision_function_shape='ovr', and number of classes > 2, predict will break ties according to the confidence values of decision_function; otherwise the first class among the tied classes is returned. Please note that breaking ties comes at a relatively high computational cost compared to a simple predict."}
-# Parameter_14 = {"Name":"random_state", "Type": ["int_or_null"], "Default_option":None, "Default_value":None, "Possible":["int"],
-#               "Definition":"Controls the pseudo random number generation for shuffling the data for probability estimates. Ignored when probability is False. Pass an int for reproducible output across multiple function calls."}
+# SVM
+Name = "LGBMClassifier"
+Definition = ["LightGBM gradient boosting framework for classification tasks."]
+Parameter_0 = {"Name":"boosting_type", "Type": ["option"], "Default_option":"gbdt", "Default_value":"gbdt", "Possible":["gbdt","dart","goss"], 
+                "Definition":"The boosting type to be used"}
+Parameter_1 = {"Name":"num_leaves", "Type": ["int"], "Default_option":31, "Default_value":31, "Possible":["int"],
+              "Definition":"The maximum number of leaves in one tree."}
 
+Parameter_2 = {"Name":"learning_rate", "Type": ["float"], "Default_option":0.1, "Default_value":0.1, "Possible":["float"], 
+               "Definition":"The learning rate or shrinkage rate for boosting."}
+Parameter_3 = {"Name":"n_estimators", "Type": ["int"], "Default_option":100, "Default_value":100, "Possible":["int"],
+              "Definition":"The number of boosting iterations or the number of trees to build."}
+Parameter_4 = {"Name":"objective", "Type": ["option"], "Default_option":"None", "Default_value":"None", "Possible":["None","binary","multiclass"], 
+                "Definition":"The objective function to be optimized."}
+Parameter_5 = {"Name":"reg_alpha", "Type": ["float"], "Default_option":0.0, "Default_value":0.0, "Possible":["float"], 
+               "Definition":"L1 regularization term on weights. "}
 
-# Parameters = {"Parameter_0":Parameter_0, "Parameter_1":Parameter_1,"Parameter_2":Parameter_2,"Parameter_3":Parameter_3,
-#              "Parameter_4":Parameter_4,"Parameter_5":Parameter_5,"Parameter_6":Parameter_6,
-#              "Parameter_7":Parameter_7,"Parameter_8":Parameter_8,"Parameter_9":Parameter_9,
-#              "Parameter_10":Parameter_10,"Parameter_11":Parameter_11,"Parameter_12":Parameter_12,
-#              "Parameter_13":Parameter_13, "Parameter_14":Parameter_14}
+Parameter_6 = {"Name":"reg_lambda", "Type": ["float"], "Default_option":0.0, "Default_value":0.0, "Possible":["float"], 
+               "Definition":"L2 regularization term on weights."}
 
+Parameters = {"Parameter_0":Parameter_0, "Parameter_1":Parameter_1,"Parameter_2":Parameter_2,"Parameter_3":Parameter_3,
+             "Parameter_4":Parameter_4,"Parameter_5":Parameter_5,"Parameter_6":Parameter_6}
+
+LGBMClassifier_algorithm = Ensemble(Name, Definition, Parameters)
+list_Ensembles.append(LGBMClassifier_algorithm)
 # svm_algorithm = MLA(Name, Definition, Parameters)
 
 # list_MLAs.append(svm_algorithm)
@@ -816,6 +802,16 @@ def createModel(data):
                               learning_rate=settings["Parameter_3"],
                               objective=settings['Parameter_4'],
                               booster=settings['Parameter_5']
+                                     )
+    elif data["EnsembleAlgorithm"] == "LGBMClassifier": 
+       # Fill the model information, note that the parameters are in the same order as writen above.
+        model = LGBMClassifier(boosting_type=settings['Parameter_0'],
+                              num_leaves=settings['Parameter_1'],
+                              learning_rate=settings['Parameter_2'],
+                              n_estimators=settings["Parameter_3"],
+                              objective=settings['Parameter_4'],
+                              reg_alpha=settings['Parameter_5'],
+                              reg_lambda=settings['Parameter_6']
                                      )
         
 

@@ -1510,7 +1510,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Copyright © CyCon 2023 version 2.01.24", pdf.internal.pageSize.getWidth() - 70, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Copyright © CyCon 2024 version. Last updated: 02/01/2024", pdf.internal.pageSize.getWidth() - 70, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
@@ -2715,6 +2715,7 @@ function fillSection(section, data, Parameter, Location, counter) {
                 radio.type = "radio";
                 radio.name = radio_name;
                 radio.id = option;
+                radio.style.marginLeft = "10px";
                 radio.value = option;
                 cardDiv.appendChild(radio);
                 if (option == default_opt) {
@@ -2764,12 +2765,15 @@ function fillSection(section, data, Parameter, Location, counter) {
                 // create radio button
                 var radio_name = Parameter_Name + "_Input";
                 var option = data[Parameter]["Possible"][Option_Int];
+
+                var cardDiv = document.createElement("div");
+                cardDiv.style.marginLeft = "0.3rem";
                 var radio = document.createElement("input");
                 radio.type = "radio";
                 radio.name = radio_name;
                 radio.id = option;
                 radio.value = option;
-                section.appendChild(radio);
+                section.appendChild(radio)
                 if (option == default_opt) {
                     radio.checked = true;
                 }
@@ -2779,7 +2783,7 @@ function fillSection(section, data, Parameter, Location, counter) {
                 var label = document.createElement('label')
                 label.htmlFor = name_label;
                 label.appendChild(document.createTextNode(name_label));
-
+                
                 section.appendChild(label);
 
                 // set default.
@@ -2876,6 +2880,7 @@ function fillSection(section, data, Parameter, Location, counter) {
                 radio.type = "radio";
                 radio.name = radio_name;
                 radio.id = option;
+                radio.style.marginLeft = "10px";
                 radio.value = option;
                 section.appendChild(radio);
 
@@ -2924,6 +2929,7 @@ function fillSection(section, data, Parameter, Location, counter) {
                 var radio = document.createElement("input");
                 radio.type = "radio";
                 radio.name = radio_name;
+                radio.style.marginLeft = "10px";
                 radio.id = option;
                 radio.value = option;
                 section.appendChild(radio);
@@ -3029,12 +3035,17 @@ function fillSection(section, data, Parameter, Location, counter) {
                 // create radio button
                 var radio_name = Parameter_Name + "_Input";
                 var option = data[Parameter]["Possible"][Option_Int];
+
+                var cardDiv = document.createElement("div");
+                cardDiv.style.marginLeft = "8px";
+                cardDiv.style.display = "inline-block";
                 var radio = document.createElement("input");
                 radio.type = "radio";
                 radio.name = radio_name;
                 radio.id = option;
                 radio.value = option;
-                section.appendChild(radio);
+                cardDiv.appendChild(radio);
+                
 
                 if (option == default_opt) {
                     radio.checked = true;
@@ -3045,8 +3056,8 @@ function fillSection(section, data, Parameter, Location, counter) {
                 var label = document.createElement('label')
                 label.htmlFor = name_label;
                 label.appendChild(document.createTextNode(name_label));
-
-                section.appendChild(label);
+                cardDiv.appendChild(label);
+                section.appendChild(cardDiv);
             }
         }
 
