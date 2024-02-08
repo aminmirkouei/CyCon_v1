@@ -196,7 +196,7 @@ def K_Fold(data):
             df_act = pd.read_csv(data['csvFile'], index_col=None)
         
         # df_act = pd.read_csv(data['csvFile'], index_col=None)
-        logging.debug(df_act)
+        # logging.debug(df_act)
         # Cycle through the choices of preotimization
         for i in range(int(data["preoptCounter"])):
             # Get the choice of preoptimization.
@@ -247,25 +247,26 @@ def K_Fold(data):
             y_train = y[train_index]
             x_test = X[test_index]
             y_test = y[test_index]
-            
+            logging.debug("Not__Trainnnmmmmmed")
             model, settings = Ensemble.createModel(data)
 
             model.fit(X[train_index], y[train_index])
-    
+            logging.debug("Trainnnmmmmmed")
             y_pred = model.predict(X[test_index])
-    
+            logging.debug("Trainnnmmmmmed(22), %s", y_pred)
             acc = accuracy_score(y[test_index], y_pred)
+            logging.debug("Trainnnmmmmmed(33)")
             prec = precision_score(y[test_index], y_pred, average=None)
             prec_micro = precision_score(y[test_index], y_pred, average='micro')
             prec_macro = precision_score(y[test_index], y_pred, average='macro')
             f1 = f1_score(y[test_index], y_pred, average=None)
             f1_micro = f1_score(y[test_index], y_pred, average='micro')
             f1_macro = f1_score(y[test_index], y_pred, average='macro')
-
+            logging.debug("Trainnnmmmmmed(44)")
             recall = recall_score(y[test_index], y_pred, average=None)
             recall_micro = recall_score(y[test_index], y_pred, average='micro')
             recall_macro = recall_score(y[test_index], y_pred, average='macro')
-    
+            logging.debug("Trainnnmmmmmed(55)")
             acc_list.append(acc)
             prec_list.append(prec)
             prec_micro_list.append(prec_micro)
@@ -273,25 +274,30 @@ def K_Fold(data):
             f1_list.append(f1)
             f1_micro_list.append(f1_micro)
             f1_macro_list.append(f1_macro)
-
+            
             recall_list.append(recall)
             recall_micro_list.append(recall_micro)
             recall_macro_list.append(recall_macro)
-
+            logging.debug("Trainnnmmmmmed(66)")
             y_test_list = np.concatenate((y_test_list, y[test_index]))
+            logging.debug("Trainnnmmmmmed(77)")
             y_predict_list = np.concatenate((y_predict_list, y_pred))
-    
+            logging.debug("Trainnnmmmmmed(88)")
             cm = confusion_matrix(y[test_index], y_pred, labels=model.classes_)
+            logging.debug("Trainnnmmmmmed(99)")
             color = 'white'
+
             disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
+            
             disp.plot()
             my_stringIObytes = io.BytesIO()
             plt.savefig(my_stringIObytes, format='jpg')
             my_stringIObytes.seek(0)
             my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode()
             cm_list.append(my_base64_jpgData)
+            
 
-    
+        logging.debug("Trainnnmmmmmed(66)")
         acc_list = np.array(acc_list)
         prec_list = np.array(prec_list)
         prec_micro_list = np.array(prec_micro_list)
@@ -321,7 +327,7 @@ def K_Fold(data):
         recall_average = np.average(recall_list, axis = 0)
         recall_micro_average = np.average(recall_micro_list)
         recall_macro_average = np.average(recall_macro_list)
-
+        logging.debug("Trainnnmmmmmed(77)")
         cm = confusion_matrix(y_test_list, y_predict_list, labels=model.classes_)
         color = 'white'
         disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
@@ -330,6 +336,7 @@ def K_Fold(data):
         plt.savefig(my_stringIObytes, format='jpg')
         my_stringIObytes.seek(0)
         my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode()
+        logging.debug("Trainnnmmmmmed(88)")
 
         # Send the Metrics
         Metrics = {"Validation": "K-Fold",
@@ -386,13 +393,15 @@ def K_Fold(data):
 
         status = "worked"
         msg = ""
-
+        logging.debug("Trainnnmmmmmed(99)")
         return status, msg, Metrics
 
     except Exception as e:
+        line_number = traceback.extract_tb(e.__traceback__)[-1].lineno
         Metrics = ""
-        msg = str(e)
+        msg = str(e) + str(line_number)
         status = "error"
+        
 
         return status, msg, Metrics
 

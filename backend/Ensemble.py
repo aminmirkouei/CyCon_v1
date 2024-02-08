@@ -17,7 +17,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import Perceptron
 from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
-
+from catboost import CatBoostClassifier
 
 class Ensemble:
     def __init__(self, name, definition, parameters):
@@ -36,7 +36,7 @@ class Ensemble:
 
 list_Ensembles = []
 
-# KNN
+
 Name = "XGBClassifier"
 Definition = ["KXGBClassifier info"]
 Parameter_0 = {"Name":"n_estimators", 
@@ -91,7 +91,7 @@ XGBClassifier_algorithm = Ensemble(Name, Definition, Parameters)
 
 list_Ensembles.append(XGBClassifier_algorithm)
 
-# SVM
+# LGBMClassifier
 Name = "LGBMClassifier"
 Definition = ["LightGBM gradient boosting framework for classification tasks."]
 Parameter_0 = {"Name":"boosting_type", "Type": ["option"], "Default_option":"gbdt", "Default_value":"gbdt", "Possible":["gbdt","dart","goss"], 
@@ -116,6 +116,41 @@ Parameters = {"Parameter_0":Parameter_0, "Parameter_1":Parameter_1,"Parameter_2"
 
 LGBMClassifier_algorithm = Ensemble(Name, Definition, Parameters)
 list_Ensembles.append(LGBMClassifier_algorithm)
+
+
+
+# CatBoost
+Name = "CatBoost"
+Definition = ["CatBoost is a machine learning algorithm that uses gradient boosting on decision trees."]
+Parameter_0 = {"Name":"loss_function", "Type": ["option"], "Default_option":"Logloss", "Default_value":"Logloss", "Possible":["Logloss","MultiClass","CrossEntropy","MAE"], 
+                "Definition":"Determines the metric used during training and the machine learning problem to solve."}
+Parameter_1 = {"Name":"iterations", "Type": ["int"], "Default_option":100, "Default_value":100, "Possible":["int"],
+              "Definition":"The maximum number of boosting iterations to perform."}
+
+Parameter_2 = {"Name":"learning_rate", "Type": ["float"], "Default_option":0.03, "Default_value":0.03, "Possible":["float"], 
+               "Definition":"The step size shrinkage used in update to prevent overfitting. Lower values make the model more robust but require more iterations."}
+
+Parameter_3 = {"Name":"depth", "Type": ["int"], "Default_option":6, "Default_value":6, "Possible":["int"],
+              "Definition":"The depth of the trees in the model. A higher value can lead to more complex models but also increases the risk of overfitting."}
+
+Parameter_4 = {"Name":"l2_leaf_reg", "Type": ["float"], "Default_option":3.0, "Default_value":3.0, "Possible":["float"], 
+               "Definition":"Coefficient at the L2 regularization term of the cost function. It helps to avoid overfitting."}
+
+Parameter_5 = {"Name":"random_strength", "Type": ["int"], "Default_option":1, "Default_value":1, "Possible":["int"],
+              "Definition":"Controls the level of randomness in the model."}
+
+Parameter_6 = {"Name":"border_count", "Type": ["int"], "Default_option":254, "Default_value":254, "Possible":["int"],
+              "Definition":"Specifies the number of splits for numerical features."}
+
+Parameter_7 = {"Name":"bagging_temperature", "Type": ["int"], "Default_option":1, "Default_value":1, "Possible":["int"],
+              "Definition":"Controls the strength of the Bayesian bagging. "}
+
+
+Parameters = {"Parameter_0":Parameter_0, "Parameter_1":Parameter_1,"Parameter_2":Parameter_2,"Parameter_3":Parameter_3,
+             "Parameter_4":Parameter_4, "Parameter_5":Parameter_5, "Parameter_6":Parameter_6, "Parameter_7":Parameter_7}
+
+CatBoost_algorithm = Ensemble(Name, Definition, Parameters)
+list_Ensembles.append(CatBoost_algorithm)
 # svm_algorithm = MLA(Name, Definition, Parameters)
 
 # list_MLAs.append(svm_algorithm)
@@ -814,6 +849,17 @@ def createModel(data):
                               reg_lambda=settings['Parameter_6']
                                      )
         
+    elif data["EnsembleAlgorithm"] == "CatBoost":
+        model = CatBoostClassifier(loss_function=settings['Parameter_0'],
+                                   iterations=settings["Parameter_1"],
+                                   learning_rate=settings["Parameter_2"],
+                                   depth = settings["Parameter_3"],
+                                   l2_leaf_reg= settings["Parameter_4"], 
+                                   random_strength = settings["Parameter_5"],
+                                   border_count = settings["Parameter_6"],
+                                   bagging_temperature=settings["Parameter_7"]
+                                   )
+    
 
     # elif data["MLalgorithm"] == "SVM": 
     #     model = SVC(C=settings['Parameter_0'],
