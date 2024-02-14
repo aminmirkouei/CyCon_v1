@@ -91,6 +91,7 @@ function changePreoptCategory(category, ID_Preopts) {
         async: false,
         dataType: 'json',
         success: function (data) {
+            console.log(data)
             // data from getCataforyPropts() function returns the optimizer for that catagory
             // data include Name, Display_Name, Definition, Parameters
             select = document.getElementById(ID_Preopts); // the id for the optimizer drop down
@@ -543,6 +544,29 @@ function updateMetrics(){
     }
   }
 
+}
+
+
+function changeDataType(selectId){
+   
+    var DataType_selection = document.getElementById(selectId)
+    var DataTypwe_name = DataType_selection.value
+
+    
+    var selectElement = document.getElementById(selectId);
+    var selectedValue = selectElement.value;
+    console.log(selectedValue)
+    var previewTextInput = document.getElementById("previewTextInput");
+    var previewTableInput = document.getElementById("previewTableInput");
+
+    if (selectedValue === "Text") {
+        console.log("Hellp")
+        previewTextInput.style.display = "inline-block";        
+        previewTableInput.style.display = "none";
+    } else {
+        previewTextInput.style.display = "none";
+        previewTableInput.style.display = "block";
+    }
 }
 
 function getData(files, fileSelected, choice) {
@@ -1510,7 +1534,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Copyright © CyCon 2024 version. Last updated: 02/08/2024", pdf.internal.pageSize.getWidth() - 70, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Copyright © CyCon 2024 version. Last updated: 02/14/2024", pdf.internal.pageSize.getWidth() - 70, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
