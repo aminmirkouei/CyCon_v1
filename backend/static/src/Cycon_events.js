@@ -1534,7 +1534,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Copyright © CyCon 2024 version. Last updated: 02/14/2024", pdf.internal.pageSize.getWidth() - 70, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Copyright © CyCon 2024 version. Last updated: 02/21/2024", pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
@@ -1589,7 +1589,7 @@ function checkCSV(files, fileSelected, choice) {
     const form = document.getElementById("csvForm");
     document.getElementById("csv_Error").innerHTML = "";
     document.getElementById("csv_Results").innerHTML = "";
-
+    console.log('Ki')
     var formData = new FormData(form);
 
     var dict_data = {};
@@ -1720,11 +1720,82 @@ function checkCSV(files, fileSelected, choice) {
         }
     });
 }
+function check_Text(form){
 
+    document.getElementById("csv_Error_Preopt").innerHTML = "";
+    document.getElementById("csv_Results_Preopt").innerHTML = "";
+    
+    var formData = new FormData(form);
+    var previewTextValue = document.getElementById("previewText").value;
+    
+    var dict_data = {};
+     // Create the request body
+    var requestBody = {
+        previewText: previewTextValue
+    };
+    
+    dict_data["previewText"] = previewTextValue
+
+    const projectName = document.getElementById("projectName").value;
+    formData.append("projectName", projectName);
+
+
+    
+
+    // const class_column = document.getElementById("class_col").value;
+    // formData.append("class_col", class_column);
+
+    // formData.append("Perform_Preopt", "Yes")
+
+    // formData.append("preoptCounter", preoptCounter)
+    
+    // iterate through entries...
+    for (var pair of formData.entries()) {
+        dict_data[pair[0]] = pair[1]
+    }
+
+    console.log(dict_data)
+    // for (var pair of textData.entries()) {
+    //     console.log(pair[0] + ": " + pair[1]);  
+    //     dict_data[pair[0]] = pair[1]
+    // }
+
+    // Send information to run model experiment.
+    // will save into a json file tilted the "projectName".json
+
+    $("#csv_Title_Preopt").hide();
+    $("#csv_Null_Title_Preopt").hide();
+    $("#csv_Null_Results_Preopt").hide();
+    $("#csv_Class_Balance_Title_Preopt").hide();
+    $("#csv_Class_Balance_Results_Preopt").hide();
+    $("#csv_Scale_Title_Preopt").hide();
+    $("#csv_Scale_Results_Preopt").hide();
+
+    // const csvFileName = document.getElementById("csvFile").files[0].name;
+    // const csvFile = document.getElementById("csvFile").files[0];
+
+    // const data = new FormData();
+    // data.append("processes", JSON.stringify(dict_data))
+    // data.append("csvFileName", csvFileName)
+   
+    // document.getElementById("Results").innerHTML += data;   
+
+    // $.ajax({
+    //     url: "/experiments/getTextResults",
+    //     data: data,
+    //     type: "POST",
+    //     dataType: 'json',
+    //     processData: false, // important
+    //     contentType: false, // important,
+    //     success: function (Results) {
+            
+    //     });
+}
 
 // Checks that the CSV file is able to load and displays the csv information after all selected preoptimizations with additional pdf graphs
 // such as balance and distibution of data to help the user make informed desitions when preoptimizing.
 function checkCSV_Preopt(form) {
+    console.log("HElllooo li")
     document.getElementById("csv_Error_Preopt").innerHTML = "";
     document.getElementById("csv_Results_Preopt").innerHTML = "";
     console.log(form)
@@ -1849,7 +1920,19 @@ function checkCSV_Preopt(form) {
 document.getElementById("preoptForm").addEventListener("submit", function (e) {
     e.preventDefault();
     if (preoptSubmit == 'Check') {
+        const selectElement = document.getElementById('types');
+        console.log("HIii")
         checkCSV_Preopt(e.target);
+        // if (selectElement.value === 'Tabular') {
+        //     checkCSV_Preopt(e.target);
+        //   }
+        // else if (selectElement.value === 'Text') {
+        //     console.log(e.target)
+        //     check_Text(e.target)
+        // }
+        
+          
+       
     } else if (preoptSubmit == 'Download') {
         downloadCSV(e.target);
     } else {

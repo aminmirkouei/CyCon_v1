@@ -534,6 +534,21 @@ def results():
 
 
 
+# Inputs contains process, CSVfileName, CSVfile
+   # Output the result in PDF
+# @bp.route("/getTextResults", methods=["POST"]) 
+# def getTextResults():
+#     # the request contains process, CSVfileName, CSVfile
+    
+#     status, msg, info = Preoptimization.getCSV_PDF(data)
+
+#     Results = [status, msg, info]
+
+#     return json.dumps(Results)
+
+
+
+
    # Inputs contains process, CSVfileName, CSVfile
    # Output the result in PDF
 @bp.route("/getCSVResults", methods=["POST"]) 
