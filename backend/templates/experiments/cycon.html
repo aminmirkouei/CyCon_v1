@@ -151,6 +151,22 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
              });
          });
 
+        // Get references to the radio button and checkboxes container
+//   const regressionRadio = document.getElementById("regressionRadio");
+//   const checkboxesContainer = document.getElementById("checkboxesContainer");
+
+//   // Add event listener to the radio button
+//   regressionRadio.addEventListener("change", function() {
+//     // Check if the radio button is selected
+//     if (regressionRadio.checked) {
+//       // Uncheck all checkboxes within the checkboxes container
+//       const checkboxes = checkboxesContainer.querySelectorAll('input[type="checkbox"]');
+//       checkboxes.forEach(function(checkbox) {
+//         checkbox.checked = false;
+//       });
+//     }
+//   });
+
         </script>
 
 
@@ -485,7 +501,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                             <input type="text" class="input-text" id="Split_Input" name="Split_Input">
                             <br><br>
 
-                            <p><b>Optional Options:</b></p>
+                            <p><b>Other Options:</b></p>
                             <label for=Random_State>Random State </label>
                             <div class="popup" onclick="popupInformation('Random_State_Info')">
                                 <img src="../../static/Images/information_icon.png"
@@ -502,18 +518,18 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                                      height="20" />
                                 <span style="white-space: pre-wrap" class="popuptext" id="Random_State_Info" }>When shuffle is True, random_state affects the ordering of the indices, which controls the randomness of each fold. Otherwise, this parameter has no effect. Pass an int for reproducible output across multiple function calls.</span>
                             </div>
-                            <input type="radio" id="Shuffle_True" name="Shuffle" value=True> <label for="Shuffle_True">True</label>
-                            <input type="radio" id="Shuffle_False" name="Shuffle" value=False checked> <label for="Shuffle_False">False</label><br>
+                            <input type="radio" id="Shuffle_True" name="Shuffle" value=True> <label for="Shuffle_True">true</label>
+                            <input type="radio" id="Shuffle_False" name="Shuffle" value=False checked> <label for="Shuffle_False">false</label><br>
 
-                            <label for=Shuffle>Stratify. </label>
+                            <label for=Shuffle>Stratify </label>
                             <div class="popup" onclick="popupInformation('Stratify_Info')">
                                 <img src="../../static/Images/information_icon.png"
                                      width="20"
                                      height="20" />
                                 <span style="white-space: pre-wrap" class="popuptext" id="Stratify_Info" }>If not None, data is split in a stratified fashion, using this as the class labels.<br><br>When using split validation, set to true will statify on the class column information.<br>When usng k-fold, the method will use stratify k-fold.</span>
                             </div>
-                            <input type="radio" id="Stratify_True" name="Stratify" value=True> <label for="Stratify_True">True</label>
-                            <input type="radio" id="Stratify_False" name="Stratify" value=False checked> <label for="Stratify_False">False</label><br>
+                            <input type="radio" id="Stratify_True" name="Stratify" value=True> <label for="Stratify_True">true</label>
+                            <input type="radio" id="Stratify_False" name="Stratify" value=False checked> <label for="Stratify_False">false</label><br>
                         </div>
                     </form>
                 </div>
@@ -587,7 +603,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                         <form id="Model_Validation_Form">
                             <div id="Validation_Selection"></div>
 
-                            <p><b>Optional Options:</b></p>
+                            <p><b>Options:</b></p>
                             Callback:
                             {% if g.callbacks %}
                             <select id="callbacks"
@@ -629,23 +645,58 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                     <h1 class="mb-2 font-bold text-xl">Metrics</h1>
 
                     <form id="resultForm">  <!-- Takes you to displayResults function-->
+                        <input type="radio" name="regression" id="classificationRadio" value="false" checked> Classification<br>
+                        <!-- <h2 class="mb-2 text-lg">Classification</h2> -->
+                        <div id="checkboxesContainer">
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1 m-3">
+                        <input type="checkbox" id=Met_ACC name="Met_ACC" value=Met_ACC checked> <label for=Met_ACC>Accuracy</label>
+                        </div>
+                        
+                        <br>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_Precision name="Met_Precision" value=Met_Precision checked> <label for=Met_Precision>Precision</label>
+                        </div>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_Precision_Micro name="Met_Precision_Micro" value=Met_Precision_Micro checked> <label for=Met_Precision_Micro>Precision (Micro)</label>
+                        </div>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_Precision_Macro name="Met_Precision_Macro" value=Met_Precision_Macro checked> <label for=Met_Precision_Macro>Precision (Macro)</label></div><br>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_F1 name="Met_F1" value=Met_F1 checked> <label for=Met_F1>F1</label></div>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_F1_Micro name="Met_F1_Micro" value=Met_F1_Micro checked> <label for=Met_F1_Micro>F1 (Micro)</label></div>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_F1_Macro name="Met_F1_Macro" value=Met_F1_Macro checked> <label for=Met_F1_Macro>F1 (Macro)</label></div><br>
+                        
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_Recall name="Met_Recall" value=Met_Recall checked> <label for=Met_Recall>Recall</label></div>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_Recall_Micro name="Met_Recall_Micro" value=Met_Recall_Micro checked> <label for=Met_Recall_Micro>Recall (Micro)</label></div>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_Recall_Macro name="Met_Recall_Macro" value=Met_Recall_Macro checked> <label for=Met_Recall_Macro>Recall (Macro)</label></div><br>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_CM name="Met_CM" value=Met_CM checked> <label for=Met_CM>Confusion Matrix</label></div><br>
+                    </div>
 
-                        <input type="checkbox" id=Met_ACC name="Met_ACC" value=Met_ACC checked> <label for=Met_ACC>Accuracy</label><br>
-                        <input type="checkbox" id=Met_Precision name="Met_Precision" value=Met_Precision checked> <label for=Met_Precision>Precision</label><br>
-                        <input type="checkbox" id=Met_Precision_Micro name="Met_Precision_Micro" value=Met_Precision_Micro checked> <label for=Met_Precision_Micro>Precision (Micro)</label><br>
-                        <input type="checkbox" id=Met_Precision_Macro name="Met_Precision_Macro" value=Met_Precision_Macro checked> <label for=Met_Precision_Macro>Precision (Macro)</label><br>
-                        <input type="checkbox" id=Met_F1 name="Met_F1" value=Met_F1 checked> <label for=Met_F1>F1</label><br>
-                        <input type="checkbox" id=Met_F1_Micro name="Met_F1_Micro" value=Met_F1_Micro checked> <label for=Met_F1_Micro>F1 (Micro)</label><br>
-                        <input type="checkbox" id=Met_F1_Macro name="Met_F1_Macro" value=Met_F1_Macro checked> <label for=Met_F1_Macro>F1 (Macro)</label><br>
+                        <input type="radio" name="regression" id="regressionRadio" value="true"> Regression<br>
                         
-                        
-                        <input type="checkbox" id=Met_Recall name="Met_Recall" value=Met_Recall checked> <label for=Met_Recall>Recall</label><br>
-                        <input type="checkbox" id=Met_Recall_Micro name="Met_Recall_Micro" value=Met_Recall_Micro checked> <label for=Met_Recall_Micro>Recall (Micro)</label><br>
+                        <!-- <h2 class="mb-2 text-lg">Regression</h2> -->
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_MSE name="Met_MSE" value=Met_MSE checked> <label for=Met_MSE>MSE</label></div>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                            <input type="checkbox" id=Met_RMSE name="Met_RMSE" value=Met_RMSE checked> <label for=Met_RMSE>RMSE</label></div><br>
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                        <input type="checkbox" id=Met_MAE name="Met_MAE" value=Met_MAE checked> <label for=Met_MAE>MAE</label></div><br>
+
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                            <input type="checkbox" id=Met_R2 name="Met_R2" value=Met_R2 checked> <label for=Met_R2>R^2</label></div><br>
+
+                        <!-- <input type="checkbox" id=Met_Recall_Micro name="Met_Recall_Micro" value=Met_Recall_Micro checked> <label for=Met_Recall_Micro>Recall (Micro)</label><br>
                         <input type="checkbox" id=Met_Recall_Macro name="Met_Recall_Macro" value=Met_Recall_Macro checked> <label for=Met_Recall_Macro>Recall (Macro)</label><br>
-                        <input type="checkbox" id=Met_CM name="Met_CM" value=Met_CM checked> <label for=Met_CM>Confusion Matrix</label><br>
+                        <input type="checkbox" id=Met_CM name="Met_CM" value=Met_CM checked> <label for=Met_CM>Confusion Matrix</label><br> -->
                         
                         <button class="px-2 px-1.5 rounded-lg bg-white border border-gray-400" onclick="updateMetrics()">
-                            Update displayed metrics
+                            Update metrics
                         </button>
 
                     </form>
@@ -658,7 +709,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
 
                     <p id="Results" style="background-color: white;"></p>
 
-                    Generated a PDF report
+                    PDF report
                     <button type="button"
                             class="px-2 px-1.5 rounded-lg bg-white border border-gray-400"
                             id="generateReport" onclick="generatePDF()">

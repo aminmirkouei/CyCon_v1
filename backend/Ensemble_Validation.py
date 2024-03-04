@@ -22,8 +22,10 @@ from sklearn.metrics import confusion_matrix
 
 from sklearn.model_selection import KFold
 from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 from backend.Classes.PreoptimizationFiles import Preoptimization
+import xgboost as xgb
 import traceback
 import logging
 
@@ -64,9 +66,11 @@ def Split(data):
             df_act = Preoptimization.perform_Preopt(data, i, df_act)
 
         
-        df = df_act.to_numpy()
-        y = df[:, -1]
-      
+        # df = df_act.to_numpy()
+        # y = df[:, -1]
+        
+        X = df_act.drop(data["class_col"], axis=1)  # Features
+        y = df_act[data["class_col"]]  # Target variable
         # logging.debug("Testing_11111111111")
         # Split dataset to training and testing set
         random_state = None
@@ -78,27 +82,44 @@ def Split(data):
         stratify = None
         if data["Stratify"] == "True":
             stratify = df_act[data["class_col"]]
-    
-        train_set, test_set = train_test_split(df, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
 
-        length = train_set.shape[1] -1
+        
+        # train_set, test_set = train_test_split(df, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
+
+        # length = train_set.shape[1] -1
        
-        x_train = train_set[:,0:length]
-        y_train = train_set[:,length]
-        x_test = test_set[:,0:length]
-        y_test = test_set[:,length]
+        # x_train = train_set[:,0:length]
+        # y_train = train_set[:,length]
+        # x_test = test_set[:,0:length]
+        # y_test = test_set[:,length]
         # logging.debug("Testing_6666666")
         #model = KNeighborsClassifier(n_neighbors=3)
+        x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
+
         model, settings = Ensemble.createModel(data)
        
-        
+        # logging.debug("X-train values", x_train)
+        # logging.debug("y-train values", y_train)
         # Perform the Method.
+
         model.fit(x_train, y_train)
         
         # Predict the testset
         y_pred = model.predict(x_test)
+        # Evaluate the model using regression metrics
+        # mse = mean_squared_error(y_test, y_pred)
+        # mae = mean_absolute_error(y_test, y_pred)
+        # r2 = r2_score(y_test, y_pred)
 
+        
         # Obtain the Metrics
+      
+        mse = "This metric is for Regression"
+        rmse = "This metric is for Regression"
+        mae = "This metric is for Regression"
+        r2 = "This metric is for Regression"
+
+
         Accuracy = accuracy_score(y_test, y_pred)
         F1 = f1_score(y_test, y_pred, average=None)
         F1_micro = f1_score(y_test, y_pred, average='micro')
@@ -109,6 +130,8 @@ def Split(data):
         recall = recall_score(y_test, y_pred, average=None)
         recall_micro = recall_score(y_test, y_pred, average='micro')
         recall_macro = recall_score(y_test, y_pred, average='macro')
+
+    
         # create a confusion matrix
         #def fig_to_base64(fig):
         #    img = io.BytesIO()
@@ -117,7 +140,7 @@ def Split(data):
         #    img.seek(0)
 
         #    return base64.b64encode(img.getvalue())
-
+    
         confusion_matrix(y_test, y_pred)
 
         cm = confusion_matrix(y_test, y_pred, labels=model.classes_)
@@ -129,6 +152,7 @@ def Split(data):
         plt.close()
         my_stringIObytes.seek(0) # moves the stream's position to the beginning, preparing it for reading.
         my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode() # reads the content of the stream, encodes it in Base64 format, and converts it to a string.
+
         #temp = os.getcwd()
         #plt.savefig(temp + '\\backend\\static\\Images\\' + data['projectName'] + '.png')
 
@@ -140,6 +164,8 @@ def Split(data):
 
         # logging.debug("Testing_3333333333")
         # Send the Metrics
+
+    
         Metrics = {"Validation": "Split",
 
                    "Accuracy_Intro": 'Accuracy: ',
@@ -163,12 +189,12 @@ def Split(data):
                     "recall" : recall.tolist(),
                     "recall_macro": recall_macro,
                     "recall_micro": recall_micro,
-
                     "cm_overall": my_base64_jpgData,
-                
                     "Val_Random_State": random_state,
-                    "Val_Shuffle": shuffle}
-
+                    "Val_Shuffle": shuffle
+                    }
+    
+        
         Metrics.update(settings)
 
         status = "worked"

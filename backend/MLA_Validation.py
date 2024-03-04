@@ -21,6 +21,7 @@ from sklearn.metrics import confusion_matrix
 
 from sklearn.model_selection import KFold
 from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 from backend.Classes.PreoptimizationFiles import Preoptimization
 import traceback
@@ -96,18 +97,54 @@ def Split(data):
         
         # Predict the testset
         y_pred = model.predict(x_test)
+        Accuracy = "This metric is for classification"
+        F1 = "This metric is for classification"
+        F1_micro = "This metric is for classification"
+        F1_macro = "This metric is for classification"
+        Precision = "This metric is for classification"
+        Precision_micro = "This metric is for classification"
+        Precision_macro = "This metric is for classification"
+        recall = "This metric is for classification"
+        recall_micro = "This metric is for classification"
+        recall_macro = "This metric is for classification"
+        my_base64_jpgData = "This metric is for classification"
 
+        mse = "This metric is for Regression"
+        rmse = "This metric is for Regression"
+        mae = "This metric is for Regression"
+        r2 = "This metric is for Regression"
         # Obtain the Metrics
-        Accuracy = accuracy_score(y_test, y_pred)
-        F1 = f1_score(y_test, y_pred, average=None)
-        F1_micro = f1_score(y_test, y_pred, average='micro')
-        F1_macro = f1_score(y_test, y_pred, average='macro')
-        Precision = precision_score(y_test, y_pred, average=None)
-        Precision_micro = precision_score(y_test, y_pred, average='micro')
-        Precision_macro = precision_score(y_test, y_pred, average='macro')
-        recall = recall_score(y_test, y_pred, average=None)
-        recall_micro = recall_score(y_test, y_pred, average='micro')
-        recall_macro = recall_score(y_test, y_pred, average='macro')
+        if data["regression"] == "false":
+            Accuracy = accuracy_score(y_test, y_pred)
+            F1 = f1_score(y_test, y_pred, average=None)
+            F1 = F1.tolist()
+            F1_micro = f1_score(y_test, y_pred, average='micro')
+            F1_macro = f1_score(y_test, y_pred, average='macro')
+            Precision = precision_score(y_test, y_pred, average=None)
+            Precision = Precision.tolist()
+            Precision_micro = precision_score(y_test, y_pred, average='micro')
+            Precision_macro = precision_score(y_test, y_pred, average='macro')
+            recall = recall_score(y_test, y_pred, average=None)
+            recall_micro = recall_score(y_test, y_pred, average='micro')
+            recall_macro = recall_score(y_test, y_pred, average='macro')
+            recall = recall.tolist()
+            confusion_matrix(y_test, y_pred)
+
+            cm = confusion_matrix(y_test, y_pred, labels=model.classes_)
+            color = 'white'
+            disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
+            disp.plot()  # generates the plot of the confusion matrix using matplotlib.
+            my_stringIObytes = io.BytesIO()  # creates an in-memory binary stream to store the plot image.
+            plt.savefig(my_stringIObytes, format='jpg')  # saves the plot image to the my_stringIObytes stream in JPEG format.
+            plt.close()
+            my_stringIObytes.seek(0) # moves the stream's position to the beginning, preparing it for reading.
+            my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode() # reads the content of the stream, encodes it in Base64 format, and converts it to a string.
+        else:
+            logging.debug("Regressionnnnnnnnnnnnn")
+            mse = mean_squared_error(y_test, y_pred)
+            rmse = np.sqrt(mse)
+            mae = mean_absolute_error(y_test, y_pred)
+            r2 = r2_score(y_test, y_pred)
         # create a confusion matrix
         #def fig_to_base64(fig):
         #    img = io.BytesIO()
@@ -117,17 +154,7 @@ def Split(data):
 
         #    return base64.b64encode(img.getvalue())
 
-        confusion_matrix(y_test, y_pred)
-
-        cm = confusion_matrix(y_test, y_pred, labels=model.classes_)
-        color = 'white'
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
-        disp.plot()  # generates the plot of the confusion matrix using matplotlib.
-        my_stringIObytes = io.BytesIO()  # creates an in-memory binary stream to store the plot image.
-        plt.savefig(my_stringIObytes, format='jpg')  # saves the plot image to the my_stringIObytes stream in JPEG format.
-        plt.close()
-        my_stringIObytes.seek(0) # moves the stream's position to the beginning, preparing it for reading.
-        my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode() # reads the content of the stream, encodes it in Base64 format, and converts it to a string.
+       
         #temp = os.getcwd()
         #plt.savefig(temp + '\\backend\\static\\Images\\' + data['projectName'] + '.png')
 
@@ -153,17 +180,21 @@ def Split(data):
                    "Recall_macro_Intro": "Recall (Macro): ",
 
                     "Accuracy": Accuracy,
-                    "Precision": Precision.tolist(),
+                    "Precision": Precision,
                     "Precision_micro": Precision_micro,
                     "Precision_macro": Precision_macro,
-                    "F1": F1.tolist(),
+                    "F1": F1,
                     "F1_micro": F1_micro,
                     "F1_macro": F1_macro,
-                    "recall" : recall.tolist(),
+                    "recall" : recall,
                     "recall_macro": recall_macro,
                     "recall_micro": recall_micro,
 
                     "cm_overall": my_base64_jpgData,
+                    "MSE": mse,
+                    "RMSE": rmse,
+                    "MAE": mae,
+                    "r2": r2,
                 
                     "Val_Random_State": random_state,
                     "Val_Shuffle": shuffle}

@@ -3,6 +3,7 @@
 
 # Classification
 from sklearn.svm import SVC
+from sklearn.svm import SVR
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import SGDClassifier
@@ -103,6 +104,50 @@ Parameters = {"Parameter_0":Parameter_0, "Parameter_1":Parameter_1,"Parameter_2"
 svm_algorithm = MLA(Name, Definition, Parameters)
 
 list_MLAs.append(svm_algorithm)
+
+# SVR
+Name = "SVR"
+Definition = ["SVR info"]
+
+Parameter_0 = {"Name":"C", "Type": ["float"], "Default_option":1.0, "Default_value":1.0, "Possible":["float"], 
+               "Definition":"Regularization parameter. The strength of the regularization is inversely proportional to C. Must be strictly positive. The penalty is a squared l2 penalty."}
+Parameter_1 = {"Name":"kernel", "Type": ["option"], "Default_option":"rbf", "Default_value":"rbf", "Possible":["linear","poly","rbf","sigmoid","precomputed"], 
+                "Definition":"Specifies the kernel type to be used in the algorithm. If none is given, ‘rbf’ will be used. If a callable is given it is used to precompute the kernel matrix."}
+
+Parameter_2 = {"Name":"degree", "Type": ["int"], "Default_option":3, "Default_value":3, "Possible":["int"],
+              "Definition":"Degree of the polynomial kernel function (‘poly’). Must be non-negative. Ignored by all other kernels."}
+
+Parameter_3 = {"Name":"gamma", "Type": ["option_float"], "Default_option":"scale", "Default_value":"scale", "Possible":["scale","auto","float"],
+              "Definition":"Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’.\n\nif gamma='scale' (default) is passed then it uses 1 / (n_features * X.var()) as value of gamma,\nif ‘auto’, uses 1 / n_features\nif float, must be non-negative."}
+
+Parameter_4 = {"Name":"coef0", "Type": ["float"], "Default_option":0.0, "Default_value":0.0, "Possible":["float"],
+              "Definition":"Independent term in kernel function. It is only significant in ‘poly’ and ‘sigmoid’."}
+
+Parameter_5 = {"Name":"tol", "Type": ["float"], "Default_option":0.001, "Default_value":0.001, "Possible":["float"],
+              "Definition":"Tolerance for stopping criterion."}
+
+Parameter_6 = {"Name":"epsilon", "Type": ["float"], "Default_option":0.1, "Default_value":0.1, "Possible":["float"],
+              "Definition":"Epsilon in the epsilon-SVR model. It specifies the epsilon-tube within which no penalty is associated in the training loss function with points predicted within a distance epsilon from the actual value. Must be non-negative."}
+
+Parameter_7 = {"Name":"shrinking", "Type": ["bool"], "Default_option":True, "Default_value":True, "Possible":[True,False],
+              "Definition":"Whether to use the shrinking heuristic."}
+
+Parameter_8 = {"Name":"cache_size", "Type": ["float"], "Default_option":200, "Default_value":200, "Possible":["float"],
+              "Definition":"Specify the size of the kernel cache (in MB)."}
+
+Parameter_9 = {"Name":"verbose", "Type": ["bool"], "Default_option":False, "Default_value":False, "Possible":[True,False],
+              "Definition":"Enable verbose output. Note that this setting takes advantage of a per-process runtime setting in libsvm that, if enabled, may not work properly in a multithreaded context."}
+Parameter_10 = {"Name":"max_iter", "Type": ["int"], "Default_option":-1, "Default_value":-1, "Possible":["int"],
+              "Definition":"Hard limit on iterations within solver, or -1 for no limit."}
+
+Parameters = {"Parameter_0":Parameter_0, "Parameter_1":Parameter_1,"Parameter_2":Parameter_2,"Parameter_3":Parameter_3,
+             "Parameter_4":Parameter_4,"Parameter_5":Parameter_5,"Parameter_6":Parameter_6,
+             "Parameter_7":Parameter_7,"Parameter_8":Parameter_8,"Parameter_9":Parameter_9,
+             "Parameter_10":Parameter_10}
+
+svr_algorithm = MLA(Name, Definition, Parameters)
+
+list_MLAs.append(svr_algorithm)
 
 # Decision Trees
 Name = "DecisionTreeClassifier"
@@ -804,6 +849,21 @@ def createModel(data):
                     decision_function_shape=settings['Parameter_12'],
                     break_ties=settings['Parameter_13'],
                     random_state=settings['Parameter_14'])
+        
+    elif data["MLalgorithm"] == "SVR": 
+        model = SVR(C=settings['Parameter_0'],
+                    kernel=settings['Parameter_1'],
+                    degree=settings['Parameter_2'],
+                    gamma=settings['Parameter_3'],
+                    coef0=settings['Parameter_4'],
+                    tol=settings['Parameter_5'],
+                    epsilon=settings['Parameter_6'],
+                    shrinking=settings['Parameter_7'],
+                    cache_size=settings['Parameter_8'],
+                    verbose=settings['Parameter_9'],
+                    max_iter=settings['Parameter_10'])
+
+    
 
     elif data["MLalgorithm"] == "K-Means":
         model = KMeans(n_clusters=settings['Parameter_0'],

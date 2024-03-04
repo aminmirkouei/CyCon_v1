@@ -544,6 +544,21 @@ function updateMetrics(){
     }
   }
 
+
+//   var Met_MSE_Data = document.getElementsByClassName('Met_MSE_Data');
+//     if (document.getElementById('Met_MSE').checked) {
+//         for (var i = 0; i < Met_MSE_Data.length; i++) {
+//         Met_MSE_Data[i].style.visibility = 'visible';
+//         Met_MSE_Data[i].style.position = 'static';
+//         }
+//     }
+//     else if (!document.getElementById('Met_ACC').checked){
+//         for (var i = 0; i < Met_MSE_Data.length; i++) {
+//         Met_MSE_Data[i].style.visibility = 'hidden';
+//         Met_MSE_Data[i].style.position = 'fixed';
+//         }
+//     }
+
 }
 
 
@@ -573,6 +588,9 @@ function getData(files, fileSelected, choice) {
     const form = document.getElementById("MLAI_Form");
     // console.log("get form :", form, files, fileSelected, choice);
     // Copy over information from element outside of form to the copy inside form
+    // Get the selected radio button value
+    
+
     document.getElementById("projectName_copy").value = document.getElementById("projectName").value;
     document.getElementById("phase1Text_copy").value = document.getElementById("phase1Text").value;
     document.getElementById("csvFile_copy").value = document.getElementById("csvFile").value;
@@ -582,7 +600,19 @@ function getData(files, fileSelected, choice) {
 
     var dict_data = {};
 
+    var classificationRadio = document.getElementById('classificationRadio');
+    var regressionRadio = document.getElementById('regressionRadio');
+
+    var selectedValue;
+    if (classificationRadio.checked) {
+      selectedValue = classificationRadio.value;
+    } else if (regressionRadio.checked) {
+      selectedValue = regressionRadio.value;
+    }
+
+    dict_data["regression"] = selectedValue
     const class_column = document.getElementById("class_col").value;
+    console.log("Selected-value: ", selectedValue)
     formData.append("class_col", class_column);
 
     formData.append("preoptCounter", preoptCounter)
@@ -783,6 +813,7 @@ function getData(files, fileSelected, choice) {
                         Precision_micro = Results["Precision_micro"]
                         Precision_macro = Results["Precision_macro"]
                         Conf_Matrix = Results["cm_overall"]
+                        MSE = Results["MSE"]
 
 
                         // display the metrics
@@ -798,6 +829,39 @@ function getData(files, fileSelected, choice) {
                             }
                         else if (!document.getElementById('Met_ACC').checked) {
                             writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data" style="visibility: hidden; position: fixed;">' + Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_MSE').checked){
+                            writeData.paragraph += '<span id="Met_MSE_Data" class="Met_MSE_Data"><b>Mean Squared Error: </b>' + Results["MSE"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_MSE').checked) {
+                            writeData.paragraph += '<span id="Met_MSE_Data" class="Met_MSE_Data" style="visibility: hidden; position: fixed;">' + "Mean Squared Error:" + Results["MSE"] + '<br\>' + '</span>'
+                        }
+
+                        
+                        if (document.getElementById('Met_RMSE').checked){
+                            writeData.paragraph += '<span id="Met_RMSE_Data" class="Met_RMSE_Data"><b>Root Mean Squared Error: </b>' + Results["RMSE"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_RMSE').checked) {
+                            writeData.paragraph += '<span id="Met_RMSE_Data" class="Met_RMSE_Data" style="visibility: hidden; position: fixed;">' + "Root Mean Squared Error:" + Results["RMSE"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_MAE').checked){
+                            writeData.paragraph += '<span id="Met_MAE_Data" class="Met_MAE_Data"><b>Mean Absolute Error:</b>' + Results["MAE"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_MAE').checked) {
+                            writeData.paragraph += '<span id="Met_MAE_Data" class="Met_MAE_Data" style="visibility: hidden; position: fixed;">' + "Mean Absolute Error:" + Results["MAE"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_MAE').checked){
+                            writeData.paragraph += '<span id="Met_R2_Data" class="Met_R2_Data"><b>R-squared Score:</b>' + Results["r2"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_MAE').checked) {
+                            writeData.paragraph += '<span id=Met_R2_Data" class=Met_R2_Data" style="visibility: hidden; position: fixed;">' + "R-squared Score:" + Results["r2"] + '<br\>' + '</span>'
                         }
 
                         /* Met_ACC_Data[i].style.visibility = 'hidden';
@@ -2379,7 +2443,7 @@ function getCompilerOptions(ID_Compiler) {
             // create title for the field.
             var legend = document.createElement('legend');
             legend_text = document.createTextNode("Compiler");
-            legend.appendChild(legend_text);
+            // legend.appendChild(legend_text);
             field.appendChild(legend);
 
             // Create option to edit the parameter for the NN layer option.
