@@ -389,17 +389,17 @@ def run_experiment():
     if data['methodology'] == "MLA":
         # Split
         if data['validation'] == "Split":
-            if data['MLalgorithm'] != "":
+            if 'MLalgorithm' in data and data['MLalgorithm'] != "":
                 status, msg, Metrics = MLA_Validation.Split(data)
-            elif data["EnsembleAlgorithm"] != "":
+            elif 'EnsembleAlgorithm' in data and data["EnsembleAlgorithm"] != "":
                 status, msg, Metrics = Ensemble_Validation.Split(data)
             
 
         # K-Fold
         elif data['validation'] == "K-Fold":
-            if data['MLalgorithm'] != "":
+            if 'MLalgorithm' in data and data['MLalgorithm'] != "":
                 status, msg, Metrics = MLA_Validation.K_Fold(data)
-            elif data["EnsembleAlgorithm"] != "":
+            elif "EnsembleAlgorithm" in data and data["EnsembleAlgorithm"] != "":
                 status, msg, Metrics = Ensemble_Validation.K_Fold(data)
 
 

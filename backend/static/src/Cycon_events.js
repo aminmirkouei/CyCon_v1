@@ -165,6 +165,12 @@ function changeLayerCategory(category, ID_Layers) {
 }
 
 function changeEnsemble(algorithms, ID_Parameters) { 
+    var mlAlgorithmDropdown = document.getElementById('MLalgorithm');
+    var ensembleDropdown = document.getElementById('EnsembleAlgorithm');
+    mlAlgorithmDropdown.disabled = ensembleDropdown.value !== '';
+     // Set the ensemble dropdown to an empty value
+     mlAlgorithmDropdown.value = '';
+
     var algorithms_selection = document.getElementById(algorithms)
     var algorithm_name = algorithms_selection.value
     //document.getElementById("Results").innerHTML = method_name
@@ -267,6 +273,15 @@ function changeEnsemble(algorithms, ID_Parameters) {
     })
 }
 function changeAlgorithm(algorithms, ID_Parameters) {
+    // Disable the ensemble dropdown if a ML algorithm is selected
+    var mlAlgorithmDropdown = document.getElementById('MLalgorithm');
+    var ensembleDropdown = document.getElementById('EnsembleAlgorithm');
+    ensembleDropdown.disabled = mlAlgorithmDropdown.value !== '';
+
+     // Set the ensemble dropdown to an empty value
+     ensembleDropdown.value = '';
+
+
     var algorithms_selection = document.getElementById(algorithms)
     var algorithm_name = algorithms_selection.value
     //document.getElementById("Results").innerHTML = method_name
@@ -1598,7 +1613,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Copyright © CyCon 2024 version. Last updated: 02/21/2024", pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Copyright © CyCon 2024 version. Last updated: 03/06/2024", pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
