@@ -399,6 +399,20 @@ function readTextFile(file, callback) {
 
 function updateMetrics(){
 
+    var Met_WEIGHT_Data = document.getElementsByClassName('Met_WEIGHT_Data');
+    if (document.getElementById('Met_WEIGHT').checked) {
+        for (var i = 0; i < Met_WEIGHT_Data.length; i++) {
+        Met_WEIGHT_Data[i].style.visibility = 'visible';
+        Met_WEIGHT_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_WEIGHT').checked){
+        for (var i = 0; i < Met_WEIGHT_Data.length; i++) {
+        Met_WEIGHT_Data[i].style.visibility = 'hidden';
+        Met_WEIGHT_Data[i].style.position = 'fixed';
+        }
+    }
+
     var Met_ACC_Data = document.getElementsByClassName('Met_ACC_Data');
     if (document.getElementById('Met_ACC').checked) {
         for (var i = 0; i < Met_ACC_Data.length; i++) {
@@ -560,19 +574,64 @@ function updateMetrics(){
   }
 
 
-//   var Met_MSE_Data = document.getElementsByClassName('Met_MSE_Data');
-//     if (document.getElementById('Met_MSE').checked) {
-//         for (var i = 0; i < Met_MSE_Data.length; i++) {
-//         Met_MSE_Data[i].style.visibility = 'visible';
-//         Met_MSE_Data[i].style.position = 'static';
-//         }
-//     }
-//     else if (!document.getElementById('Met_ACC').checked){
-//         for (var i = 0; i < Met_MSE_Data.length; i++) {
-//         Met_MSE_Data[i].style.visibility = 'hidden';
-//         Met_MSE_Data[i].style.position = 'fixed';
-//         }
-//     }
+  var Met_MSE_Data = document.getElementsByClassName('Met_MSE_Data');
+    if (document.getElementById('Met_MSE').checked) {
+        for (var i = 0; i < Met_MSE_Data.length; i++) {
+        Met_MSE_Data[i].style.visibility = 'visible';
+        Met_MSE_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_MSE').checked){
+        for (var i = 0; i < Met_MSE_Data.length; i++) {
+        Met_MSE_Data[i].style.visibility = 'hidden';
+        Met_MSE_Data[i].style.position = 'fixed';
+        }
+    }
+
+
+    var Met_RMSE_Data = document.getElementsByClassName('Met_RMSE_Data');
+    if (document.getElementById('Met_RMSE').checked) {
+        for (var i = 0; i < Met_RMSE_Data.length; i++) {
+        Met_RMSE_Data[i].style.visibility = 'visible';
+        Met_RMSE_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_RMSE').checked){
+        for (var i = 0; i < Met_RMSE_Data.length; i++) {
+        Met_RMSE_Data[i].style.visibility = 'hidden';
+        Met_RMSE_Data[i].style.position = 'fixed';
+        }
+    }
+
+
+    var Met_MAE_Data = document.getElementsByClassName('Met_MAE_Data');
+    if (document.getElementById('Met_MAE').checked) {
+        for (var i = 0; i < Met_MAE_Data.length; i++) {
+        Met_MAE_Data[i].style.visibility = 'visible';
+        Met_MAE_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_MAE').checked){
+        for (var i = 0; i < Met_MAE_Data.length; i++) {
+        Met_MAE_Data[i].style.visibility = 'hidden';
+        Met_MAE_Data[i].style.position = 'fixed';
+        }
+    }
+
+
+    var Met_R2_Data = document.getElementsByClassName('Met_R2_Data');
+    if (document.getElementById('Met_R2').checked) {
+        for (var i = 0; i < Met_R2_Data.length; i++) {
+        Met_R2_Data[i].style.visibility = 'visible';
+        Met_R2_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_R2').checked){
+        for (var i = 0; i < Met_R2_Data.length; i++) {
+        Met_R2_Data[i].style.visibility = 'hidden';
+        Met_R2_Data[i].style.position = 'fixed';
+        }
+    }
 
 }
 
@@ -854,7 +913,14 @@ function getData(files, fileSelected, choice) {
                             writeData.paragraph += '<span id="Met_MSE_Data" class="Met_MSE_Data" style="visibility: hidden; position: fixed;">' + "Mean Squared Error:" + Results["MSE"] + '<br\>' + '</span>'
                         }
 
-                        
+                        if (document.getElementById('Met_WEIGHT').checked){
+                            writeData.paragraph += '<span id="Met_WEIGHT_Data" class="Met_WEIGHT_Data"><b>Weights: </b>' + Results["weights"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_WEIGHT').checked) {
+                            writeData.paragraph += '<span id="Met_WEIGHT_Data" class="Met_WEIGHT_Data" style="visibility: hidden; position: fixed;">' + "Weights:" + Results["weights"] + '<br\>' + '</span>'
+                        }
+
                         if (document.getElementById('Met_RMSE').checked){
                             writeData.paragraph += '<span id="Met_RMSE_Data" class="Met_RMSE_Data"><b>Root Mean Squared Error: </b>' + Results["RMSE"] + '<br\>' + '</span>'
                             

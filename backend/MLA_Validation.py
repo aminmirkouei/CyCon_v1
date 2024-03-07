@@ -64,8 +64,11 @@ def Split(data):
             df_act = Preoptimization.perform_Preopt(data, i, df_act)
 
         
-        df = df_act.to_numpy()
-        y = df[:, -1]
+        X = df_act.drop(data["class_col"], axis=1)  # Features
+        y = df_act[data["class_col"]] 
+
+        # df = df_act.to_numpy()
+        # y = df[:, -1]
       
         # logging.debug("Testing_11111111111")
         # Split dataset to training and testing set
@@ -78,94 +81,155 @@ def Split(data):
         stratify = None
         if data["Stratify"] == "True":
             stratify = df_act[data["class_col"]]
-    
-        train_set, test_set = train_test_split(df, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
-
-        length = train_set.shape[1] -1
-       
-        x_train = train_set[:,0:length]
-        y_train = train_set[:,length]
-        x_test = test_set[:,0:length]
-        y_test = test_set[:,length]
-        # logging.debug("Testing_6666666")
-        #model = KNeighborsClassifier(n_neighbors=3)
-        model, settings = MLA.createModel(data)
-       
         
-        # Perform the Method.
-        model.fit(x_train, y_train)
+        if data[data['validation'] + "_Input"] == "0.0":
+            x_train = X
         
-        # Predict the testset
-        y_pred = model.predict(x_test)
-        Accuracy = "This metric is for classification"
-        F1 = "This metric is for classification"
-        F1_micro = "This metric is for classification"
-        F1_macro = "This metric is for classification"
-        Precision = "This metric is for classification"
-        Precision_micro = "This metric is for classification"
-        Precision_macro = "This metric is for classification"
-        recall = "This metric is for classification"
-        recall_micro = "This metric is for classification"
-        recall_macro = "This metric is for classification"
-        my_base64_jpgData = "This metric is for classification"
+            y_train = y.to_numpy()
+            model, settings = MLA.createModel(data)
+            # Perform the Method.
+            model.fit(x_train, y_train)
+            weight = "weight not available"
+            try:
+                if data['MLalgorithm'] == "RandomForestClassifier":
+                    weight = model.feature_importances_
+                elif data['MLalgorithm'] == "SVR":
+                    dual_coefficients = model.dual_coef_
+                    support_vectors = model.support_vectors_
+                    weights = np.abs(dual_coefficients) @ support_vectors
+                    weight = weights*0.73
+                    logging.debug("SVRRRRRRRR")
+                elif hasattr(model, 'coef_'):
+                    weight = model.coef_
+                else:
+                    weight = "weight not available"
+            except Exception as e:
+                weight = "weight not available"
+                
+            logging.debug(data['MLalgorithm'] )
+            Accuracy = "This metric needs split more than 0.0"
+            F1 = "This metric needs split more than 0.0"
+            F1_micro = "This metric needs split more than 0.0"
+            F1_macro = "This metric needs split more than 0.0"
+            Precision = "This metric needs split more than 0.0"
+            Precision_micro = "This metric needs split more than 0.0"
+            Precision_macro = "This metric needs split more than 0.0"
+            recall = "This metric needs split more than 0.0"
+            recall_micro = "This metric needs split more than 0.0"
+            recall_macro = "This metric needs split more than 0.0"
+            my_base64_jpgData = "This metric needs split more than 0.0"
 
-        mse = "This metric is for Regression"
-        rmse = "This metric is for Regression"
-        mae = "This metric is for Regression"
-        r2 = "This metric is for Regression"
-        # Obtain the Metrics
-        if data["regression"] == "false":
-            Accuracy = accuracy_score(y_test, y_pred)
-            F1 = f1_score(y_test, y_pred, average=None)
-            F1 = F1.tolist()
-            F1_micro = f1_score(y_test, y_pred, average='micro')
-            F1_macro = f1_score(y_test, y_pred, average='macro')
-            Precision = precision_score(y_test, y_pred, average=None)
-            Precision = Precision.tolist()
-            Precision_micro = precision_score(y_test, y_pred, average='micro')
-            Precision_macro = precision_score(y_test, y_pred, average='macro')
-            recall = recall_score(y_test, y_pred, average=None)
-            recall_micro = recall_score(y_test, y_pred, average='micro')
-            recall_macro = recall_score(y_test, y_pred, average='macro')
-            recall = recall.tolist()
-            confusion_matrix(y_test, y_pred)
+            mse = "This metric needs split more than 0.0"
+            rmse = "This metric needs split more than 0.0"
+            mae = "This metric needs split more than 0.0"
+            r2 = "This metric needs split more than 0.0"
 
-            cm = confusion_matrix(y_test, y_pred, labels=model.classes_)
-            color = 'white'
-            disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
-            disp.plot()  # generates the plot of the confusion matrix using matplotlib.
-            my_stringIObytes = io.BytesIO()  # creates an in-memory binary stream to store the plot image.
-            plt.savefig(my_stringIObytes, format='jpg')  # saves the plot image to the my_stringIObytes stream in JPEG format.
-            plt.close()
-            my_stringIObytes.seek(0) # moves the stream's position to the beginning, preparing it for reading.
-            my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode() # reads the content of the stream, encodes it in Base64 format, and converts it to a string.
         else:
-            logging.debug("Regressionnnnnnnnnnnnn")
-            mse = mean_squared_error(y_test, y_pred)
-            rmse = np.sqrt(mse)
-            mae = mean_absolute_error(y_test, y_pred)
-            r2 = r2_score(y_test, y_pred)
-        # create a confusion matrix
-        #def fig_to_base64(fig):
-        #    img = io.BytesIO()
-        #    fig.savefig(img, format='png',
-        #            bbox_inches='tight')
-        #    img.seek(0)
+            # train_set, test_set = train_test_split(df, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
+            x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
+            # length = train_set.shape[1] -1
+        
+            # x_train = train_set[:,0:length]
+            # y_train = train_set[:,length]
+            # x_test = test_set[:,0:length]
+            # y_test = test_set[:,length]
+            # logging.debug("Testing_6666666")
+            #model = KNeighborsClassifier(n_neighbors=3)
+            model, settings = MLA.createModel(data)
+        
+            
+            # Perform the Method.
+            model.fit(x_train, y_train)
+            
+            # Predict the testset
+            y_pred = model.predict(x_test)
+            Accuracy = "This metric is for classification"
+            F1 = "This metric is for classification"
+            F1_micro = "This metric is for classification"
+            F1_macro = "This metric is for classification"
+            Precision = "This metric is for classification"
+            Precision_micro = "This metric is for classification"
+            Precision_macro = "This metric is for classification"
+            recall = "This metric is for classification"
+            recall_micro = "This metric is for classification"
+            recall_macro = "This metric is for classification"
+            my_base64_jpgData = "This metric is for classification"
 
-        #    return base64.b64encode(img.getvalue())
+            mse = "This metric is for Regression"
+            rmse = "This metric is for Regression"
+            mae = "This metric is for Regression"
+            r2 = "This metric is for Regression"
+            # Obtain the Metrics
+            if data["regression"] == "false":
+                Accuracy = accuracy_score(y_test, y_pred)
+                F1 = f1_score(y_test, y_pred, average=None)
+                F1 = F1.tolist()
+                F1_micro = f1_score(y_test, y_pred, average='micro')
+                F1_macro = f1_score(y_test, y_pred, average='macro')
+                Precision = precision_score(y_test, y_pred, average=None)
+                Precision = Precision.tolist()
+                Precision_micro = precision_score(y_test, y_pred, average='micro')
+                Precision_macro = precision_score(y_test, y_pred, average='macro')
+                recall = recall_score(y_test, y_pred, average=None)
+                recall_micro = recall_score(y_test, y_pred, average='micro')
+                recall_macro = recall_score(y_test, y_pred, average='macro')
+                recall = recall.tolist()
+                confusion_matrix(y_test, y_pred)
 
-       
-        #temp = os.getcwd()
-        #plt.savefig(temp + '\\backend\\static\\Images\\' + data['projectName'] + '.png')
+                cm = confusion_matrix(y_test, y_pred, labels=model.classes_)
+                color = 'white'
+                disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
+                disp.plot()  # generates the plot of the confusion matrix using matplotlib.
+                my_stringIObytes = io.BytesIO()  # creates an in-memory binary stream to store the plot image.
+                plt.savefig(my_stringIObytes, format='jpg')  # saves the plot image to the my_stringIObytes stream in JPEG format.
+                plt.close()
+                my_stringIObytes.seek(0) # moves the stream's position to the beginning, preparing it for reading.
+                my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode() # reads the content of the stream, encodes it in Base64 format, and converts it to a string.
+                if data['MLalgorithm'] == "RandomForestClassifier":
+                    weight = model.feature_importances_
+                elif hasattr(model, 'coef_'):
+                    weight = model.coef_
+                else:
+                    weight = "weight not available"
 
-        #data_uri = base64.b64encode(open('conf_matrix.png', 'rb').read()).decode('utf-8')
-        #img_tag = '<img src="data:image/png;base64,{0}">'.format(data_uri)
+            else:
+                mse = mean_squared_error(y_test, y_pred)
+                rmse = np.sqrt(mse)
+                mae = mean_absolute_error(y_test, y_pred)
+                r2 = r2_score(y_test, y_pred)
+                if data['MLalgorithm'] == "RandomForestClassifier":
+                    weight = model.feature_importances_
+                elif data['MLalgorithm'] == "SVR":
+                    dual_coefficients = model.dual_coef_
+                    support_vectors = model.support_vectors_
+                    weights = np.abs(dual_coefficients) @ support_vectors
+                    weight = weights*0.73
+                elif hasattr(model, 'coef_'):
+                    weight = model.coef_
+                else:
+                    weight = "weight not available"
+                
+            # create a confusion matrix
+            #def fig_to_base64(fig):
+            #    img = io.BytesIO()
+            #    fig.savefig(img, format='png',
+            #            bbox_inches='tight')
+            #    img.seek(0)
 
-        #encoded = fig_to_base64(fig)
-        #my_html = '<img src="data:image/png;base64, {}">'.format(encoded.decode('utf-8'))
+            #    return base64.b64encode(img.getvalue())
 
-        # logging.debug("Testing_3333333333")
-        # Send the Metrics
+        
+            #temp = os.getcwd()
+            #plt.savefig(temp + '\\backend\\static\\Images\\' + data['projectName'] + '.png')
+
+            #data_uri = base64.b64encode(open('conf_matrix.png', 'rb').read()).decode('utf-8')
+            #img_tag = '<img src="data:image/png;base64,{0}">'.format(data_uri)
+
+            #encoded = fig_to_base64(fig)
+            #my_html = '<img src="data:image/png;base64, {}">'.format(encoded.decode('utf-8'))
+
+            # logging.debug("Testing_3333333333")
+            # Send the Metrics
         Metrics = {"Validation": "Split",
 
                    "Accuracy_Intro": 'Accuracy: ',
@@ -189,6 +253,7 @@ def Split(data):
                     "recall" : recall,
                     "recall_macro": recall_macro,
                     "recall_micro": recall_micro,
+                    "weights": str(weight),
 
                     "cm_overall": my_base64_jpgData,
                     "MSE": mse,
