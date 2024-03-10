@@ -91,7 +91,8 @@ def Split(data):
             model.fit(x_train, y_train)
             weight = "weight not available"
             try:
-                if data['MLalgorithm'] == "RandomForestClassifier":
+                
+                if data['MLalgorithm'] == "RandomForestClassifier" or data['MLalgorithm'] == "RandomForestRegression":
                     weight = model.feature_importances_
                 elif data['MLalgorithm'] == "SVR":
                     dual_coefficients = model.dual_coef_
@@ -185,7 +186,7 @@ def Split(data):
                 plt.close()
                 my_stringIObytes.seek(0) # moves the stream's position to the beginning, preparing it for reading.
                 my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode() # reads the content of the stream, encodes it in Base64 format, and converts it to a string.
-                if data['MLalgorithm'] == "RandomForestClassifier":
+                if data['MLalgorithm'] == "RandomForestClassifier" or data['MLalgorithm'] == "RandomForestRegression":
                     weight = model.feature_importances_
                 elif hasattr(model, 'coef_'):
                     weight = model.coef_
@@ -197,7 +198,7 @@ def Split(data):
                 rmse = np.sqrt(mse)
                 mae = mean_absolute_error(y_test, y_pred)
                 r2 = r2_score(y_test, y_pred)
-                if data['MLalgorithm'] == "RandomForestClassifier":
+                if data['MLalgorithm'] == "RandomForestClassifier" or data['MLalgorithm'] == "RandomForestRegression":
                     weight = model.feature_importances_
                 elif data['MLalgorithm'] == "SVR":
                     dual_coefficients = model.dual_coef_

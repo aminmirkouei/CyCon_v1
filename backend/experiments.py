@@ -387,6 +387,7 @@ def run_experiment():
 
     # Perform MLA if chosen
     if data['methodology'] == "MLA":
+        
         # Split
         if data['validation'] == "Split":
             if 'MLalgorithm' in data and data['MLalgorithm'] != "":

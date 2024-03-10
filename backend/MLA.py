@@ -4,6 +4,7 @@
 # Classification
 from sklearn.svm import SVC
 from sklearn.svm import SVR
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import SGDClassifier
@@ -308,6 +309,58 @@ Parameters = {"Parameter_0":Parameter_0, "Parameter_1":Parameter_1,"Parameter_2"
 RandomForestClassifier_algorithm = MLA(Name, Definition, Parameters)
 
 list_MLAs.append(RandomForestClassifier_algorithm)
+
+# Randomforest regression
+
+# Random Forest Classifyer
+Name = "RandomForestRegression"
+Definition = ["A random forest classifier.\n\nA random forest is a meta estimator that fits a number of decision tree classifiers on various sub-samples of the dataset and uses averaging to improve the predictive accuracy and control over-fitting. The sub-sample size is controlled with the max_samples parameter if bootstrap=True (default), otherwise the whole dataset is used to build each tree."]
+Parameter_0 = {"Name":"n_estimators", "Type": ["int"], "Default_option":100, "Default_value":100, "Possible":["int"],
+              "Definition":"The number of trees in the forest."}
+Parameter_1 = {"Name":"criterion", "Type": ["option"], "Default_option":"squared_error", "Default_value":"squared_error", "Possible":['squared_error', 'absolute_error', 'friedman_mse', 'poisson'],
+              "Definition":"The function to measure the quality of a split. Supported criteria are “squared_error” for the mean squared error, which is equal to variance reduction as feature selection criterion and minimizes the L2 loss using the mean of each terminal node, “friedman_mse”, which uses mean squared error with Friedman’s improvement score for potential splits, “absolute_error” for the mean absolute error, which minimizes the L1 loss using the median of each terminal node, and “poisson” which uses reduction in Poisson deviance to find splits. Training using “absolute_error” is significantly slower than when using 'squared_error'"}
+Parameter_2 = {"Name":"max_depth", "Type": ["int_or_null"], "Default_option":None, "Default_value":None, "Possible":["int"],
+              "Definition":"The maximum depth of the tree. If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples."}
+Parameter_3 = {"Name":"min_smaples_split", "Type": ["int"], "Default_option":2, "Default_value":2, "Possible":["int"],
+              "Definition":"The minimum number of samples required to split an internal node: If int, then consider min_samples_split as the minimum number. If float, then min_samples_split is a fraction and ceil(min_samples_split * n_samples) are the minimum number of samples for each split."}
+Parameter_4 = {"Name":"min_samples_leaf", "Type": ["int"], "Default_option":1, "Default_value":1, "Possible":["int"],
+              "Definition":"The minimum number of samples required to be at a leaf node. A split point at any depth will only be considered if it leaves at least min_samples_leaf training samples in each of the left and right branches. This may have the effect of smoothing the model, especially in regression. Consider min_samples_leaf as the minimum number."}
+Parameter_5 = {"Name":"min_weight_fraction_leaf", "Type": ["float"], "Default_option":0.0, "Default_value":0.0, "Possible":["float"],
+              "Definition":"The minimum weighted fraction of the sum total of weights (of all the input samples) required to be at a leaf node. Samples have equal weight when sample_weight is not provided."}
+Parameter_6 = {"Name":"max_features", "Type": ["option"], "Default_option":"sqrt", "Default_value":"sqrt", "Possible":["sqrt","log2",None],
+              "Definition":"The number of features to consider when looking for the best split:\n\nIf None, then max_features=n_features.\n\nIf “log2”, then max_features=log2(n_features).\n\nIf “sqrt”, then max_features=sqrt(n_features)."}
+Parameter_7 = {"Name":"max_leaf_nodes", "Type": ["int_or_null"], "Default_option":None, "Default_value":None, "Possible":["int"],
+              "Definition":"Grow trees with max_leaf_nodes in best-first fashion. Best nodes are defined as relative reduction in impurity. If None then unlimited number of leaf nodes."}
+Parameter_8 = {"Name":"min_impurity_decrease", "Type": ["float"], "Default_option":0.0, "Default_value":0.0, "Possible":["float"],
+              "Definition":"A node will be split if this split induces a decrease of the impurity greater than or equal to this value.\n\nThe weighted impurity decrease equation is the following:\n\nN_t / N * (impurity - N_t_R / N_t * right_impurity - Nt_L / N_t * left_impurity)\n\nwhere N is the total number of samples, N_t is the number of samples at the current node, N_t_L is the number of samples in the left child, and N_t_R is the number of samples in the right child.\n\nN, N_t, N_t_R and N_t_L all refer to the weighted sum, if sample_weight is passed."}
+Parameter_9 = {"Name":"bootstrap", "Type": ["bool"], "Default_option":True, "Default_value":True, "Possible":[True,False],
+              "Definition":"Whether bootstrap samples are used when building trees. If False, the whole dataset is used to build each tree."}
+Parameter_10 = {"Name":"oob_score", "Type": ["bool"], "Default_option":False, "Default_value":False, "Possible":[True,False],
+              "Definition":"Whether to use out-of-bag samples to estimate the generalization score. Only available if bootstrap=True."}
+Parameter_11 = {"Name":"n_jobs", "Type": ["int_or_null"], "Default_option":None, "Default_value":None, "Possible":["int"],
+              "Definition":"The number of jobs to run in parallel. fit, predict, decision_path and apply are all parallelized over the trees. None means 1 unless in a joblib.parallel_backend context. -1 means using all processors."}
+Parameter_12 = {"Name":"random_state", "Type": ["int_or_null"], "Default_option":None, "Default_value":None, "Possible":[""],
+              "Definition":"Controls both the randomness of the bootstrapping of the samples used when building trees (if bootstrap=True) and the sampling of the features to consider when looking for the best split at each node (if max_features < n_features)."}
+Parameter_13 = {"Name":"verbose", "Type": ["int"], "Default_option":0, "Default_value":0, "Possible":["int"],
+              "Definition":"Controls the verbosity when fitting and predicting."}
+Parameter_14 = {"Name":"warm_start", "Type": ["bool"], "Default_option":False, "Default_value":False, "Possible":[True,False],
+              "Definition":"When set to True, reuse the solution of the previous call to fit and add more estimators to the ensemble, otherwise, just fit a whole new forest. See Glossary and Fitting additional weak-learners for details."}
+
+Parameter_15 = {"Name":"ccp_alpha", "Type": ["float"], "Default_option":0.0, "Default_value":0.0, "Possible":["float"],
+              "Definition":"Complexity parameter used for Minimal Cost-Complexity Pruning. The subtree with the largest cost complexity that is smaller than ccp_alpha will be chosen. By default, no pruning is performed."}
+Parameter_16 = {"Name":"max_samples", "Type": ["int_or_null"], "Default_option":None, "Default_value":None, "Possible":["int"],
+              "Definition":"If bootstrap is True, the number of samples to draw from X to train each base estimator.\n\n If None (default), then draw X.shape[0] samples.\n\nIf int, then draw max_samples samples."}
+
+Parameters = {"Parameter_0":Parameter_0, "Parameter_1":Parameter_1,"Parameter_2":Parameter_2,"Parameter_3":Parameter_3,
+             "Parameter_4":Parameter_4,"Parameter_5":Parameter_5,"Parameter_6":Parameter_6,
+             "Parameter_7":Parameter_7,"Parameter_8":Parameter_8,"Parameter_9":Parameter_9,
+             "Parameter_10":Parameter_10,"Parameter_11":Parameter_11, "Parameter_12":Parameter_12,
+             "Parameter_13":Parameter_13,"Parameter_14":Parameter_14, "Parameter_15":Parameter_15,
+             "Parameter_16":Parameter_16}
+
+RandomForestRegression_algorithm = MLA(Name, Definition, Parameters)
+
+list_MLAs.append(RandomForestRegression_algorithm)
 
 # Gaussian Process Classifier
 Name = "GaussianProcessClassifier"
@@ -937,6 +990,25 @@ def createModel(data):
                     ccp_alpha=settings['Parameter_16'],
                     max_samples=settings['Parameter_17'])
 
+
+    elif data["MLalgorithm"] == "RandomForestRegression":
+        model = RandomForestRegressor(n_estimators=settings['Parameter_0'],
+                    criterion=settings['Parameter_1'],
+                    max_depth=settings['Parameter_2'],
+                    min_samples_split=settings['Parameter_3'],
+                    min_samples_leaf=settings['Parameter_4'],
+                    min_weight_fraction_leaf=settings['Parameter_5'],
+                    max_features=settings['Parameter_6'],
+                    max_leaf_nodes=settings['Parameter_7'],
+                    min_impurity_decrease=settings['Parameter_8'],
+                    bootstrap=settings['Parameter_9'],
+                    oob_score=settings['Parameter_10'],
+                    n_jobs=settings['Parameter_11'],
+                    random_state=settings['Parameter_12'],
+                    verbose=settings['Parameter_13'],
+                    warm_start=settings['Parameter_14'],
+                    ccp_alpha=settings['Parameter_15'],
+                    max_samples=settings['Parameter_16'])
 
 
     elif data["MLalgorithm"] == "GaussianProcessClassifier":
