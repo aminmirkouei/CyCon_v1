@@ -491,14 +491,14 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                             <input type="text" class="input-text" id="K-Fold_Input" name="K-Fold_Input">
                             <br>
 
-                            <input type="radio" id=Split name="validation" value=Split> <label for=Split>Split</label>
+                            <input type="radio" id=Split name="validation" value=Split checked> <label for=Split>Split</label>
                             <div class="popup" onclick="popupInformation('Split_Info')">
                                 <img src="../../static/Images/information_icon.png"
                                      width="20"
                                      height="20" />
                                 <span style="white-space: pre-wrap" class="popuptext" id="Split_Info" }>Split arrays or matrices into random train and test subsets.<br><br>Quick utility that wraps input validation, next(ShuffleSplit().split(X, y)), and application to input data into a single call for splitting (and optionally subsampling) data into a one-liner.<br><br>Input value is the percent set for the testing dataset given as a decimal.</span>
                             </div>
-                            <input type="text" class="input-text" id="Split_Input" name="Split_Input">
+                            <input type="text" class="input-text" id="Split_Input" name="Split_Input" required>
                             <br><br>
 
                             <p><b>Other Options:</b></p>

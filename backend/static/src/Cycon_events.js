@@ -659,6 +659,40 @@ function changeDataType(selectId){
 }
 
 function getData(files, fileSelected, choice) {
+    
+        let input = document.getElementById("Split_Input");
+        let K_fold_input = document.getElementById("K-Fold_Input");
+        let DLANN_value = document.getElementById("DLANN")
+        console.log("input.value", input.value, input.length)
+        console.log("K_fold_input", K_fold_input.value, K_fold_input.length, )
+        if (input.value === "") {
+            console.log("Input value")
+        }
+
+        if (K_fold_input === "") {
+            console.log("K_fold value")
+        }
+        if (input.value === "" && K_fold_input.value === "" && !DLANN_value.checked) {
+          console.log("Alert Preview")
+          alert("Error: Fill in split input or K-fold Input!");
+          event.preventDefault();
+        }
+
+        let MLA_value = document.getElementById("MLalgorithm").value
+        let ENSEMBLE_value = document.getElementById("EnsembleAlgorithm").value
+        
+        console.log(MLA_value, ENSEMBLE_value, !DLANN_value.checked)
+        if (!MLA_value && !ENSEMBLE_value && !DLANN_value.checked){
+            alert("Error: Choose one of the methods!");
+        }
+        // let K_fold_input = document.getElementById("K-Fold_Input");
+        // if (K_fold_input.value === "") {
+        
+        //   alert("Error: Split Input field is empty!");
+        //   event.preventDefault();
+        // }
+     
+
     const form = document.getElementById("MLAI_Form");
     // console.log("get form :", form, files, fileSelected, choice);
     // Copy over information from element outside of form to the copy inside form
@@ -668,6 +702,10 @@ function getData(files, fileSelected, choice) {
     document.getElementById("projectName_copy").value = document.getElementById("projectName").value;
     document.getElementById("phase1Text_copy").value = document.getElementById("phase1Text").value;
     document.getElementById("csvFile_copy").value = document.getElementById("csvFile").value;
+    csv_value = document.getElementById("csvFile").value;
+    if (!csv_value){
+        alert("Error: Upload a dataset");
+    }
 
     // Collect all form data instances
     var formData = new FormData(form);
@@ -687,6 +725,8 @@ function getData(files, fileSelected, choice) {
     dict_data["regression"] = selectedValue
     const class_column = document.getElementById("class_col").value;
     console.log("Selected-value: ", selectedValue)
+
+
     formData.append("class_col", class_column);
 
     formData.append("preoptCounter", preoptCounter)
@@ -731,12 +771,12 @@ function getData(files, fileSelected, choice) {
 
     // MLA form
     const mla_form = document.getElementById("MLA_Form");
-
+    
     var mla_Form = new FormData(mla_form);
-
+    // console.log(mla_Form)
     // iterate through entries...
     for (var pair of mla_Form.entries()) {
-        // console.log(pair[0] + ": " + pair[1]);
+        console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -745,7 +785,14 @@ function getData(files, fileSelected, choice) {
     const dlann_form = document.getElementById("DLANN_Form");
 
     var dlann_Form = new FormData(dlann_form);
+    
+    const dlann_form_value = document.getElementById("DLANN_Form").value;
+    
+    
 
+    // if (!dlann_form_value){
+
+    // }
     // iterate through entries...
     for (var pair of dlann_Form.entries()) {
         // console.log(pair[0] + ": " + pair[1]);
@@ -1940,7 +1987,7 @@ function check_Text(form){
 // Checks that the CSV file is able to load and displays the csv information after all selected preoptimizations with additional pdf graphs
 // such as balance and distibution of data to help the user make informed desitions when preoptimizing.
 function checkCSV_Preopt(form) {
-    console.log("HElllooo li")
+    // console.log("HElllooo li")
     document.getElementById("csv_Error_Preopt").innerHTML = "";
     document.getElementById("csv_Results_Preopt").innerHTML = "";
     console.log(form)
@@ -2066,7 +2113,7 @@ document.getElementById("preoptForm").addEventListener("submit", function (e) {
     e.preventDefault();
     if (preoptSubmit == 'Check') {
         const selectElement = document.getElementById('types');
-        console.log("HIii")
+        // console.log("HIii")
         checkCSV_Preopt(e.target);
         // if (selectElement.value === 'Tabular') {
         //     checkCSV_Preopt(e.target);
