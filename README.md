@@ -1,4 +1,4 @@
-# lca-tool
+# CyCon tool
 
 ## Overview 
 The application uses docker compose to orchestrate three containers or services:  a MYSQL database (db), a Flask application (backend) an NGINX proxy to route the request to the backend. The services communicate internally using docker networking and only the proxy is exposed to the internet. When a user sends a request, it is routed from the proxy to the backend.

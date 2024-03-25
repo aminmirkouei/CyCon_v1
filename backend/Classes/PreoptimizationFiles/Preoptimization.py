@@ -21,6 +21,7 @@ from backend.Classes.PreoptimizationFiles import NonLinearTransformation
 from backend.Classes.PreoptimizationFiles import Normalization
 from backend.Classes.PreoptimizationFiles import RemoveData
 from backend.Classes.PreoptimizationFiles import Standardization
+from backend.Classes.PreoptimizationFiles import Tokenization
 
 from urllib.parse import quote
 import logging
@@ -97,6 +98,13 @@ Definition = ["Often it’s useful to add complexity to a model by considering n
 
 list_Preopt_Categories.append(Preopt_Category(Name, Display_Name, Definition))
 
+
+# Generating Polynomial Features
+Name = "Tokenization"
+Display_Name = "Tokenization"
+Definition = ["Utility class that automatically selects and loads the appropriate tokenizer based on the provided model."]
+
+list_Preopt_Categories.append(Preopt_Category(Name, Display_Name, Definition))
 # This may be implemented later, but is currently to complex for initial implementation of preoptimization
 # What is does is allow the user to create a custom function for preoptimization.
 # Custom Transformers
@@ -122,6 +130,7 @@ list_NonLT = NonLinearTransformation.getNonLT()
 list_Normalization = Normalization.getNormalization()
 list_RemoveData = RemoveData.getRemoveData()
 list_Standardization = Standardization.getStandardization()
+list_tokenization = Tokenization.getTokenization()
 
 # get settings to fill the model parameters.
 def getSettings(data, Parameters):
@@ -247,6 +256,8 @@ def getCategoryPreopts(Category_Name):
         preopts = list_RemoveData
     if Category_Name == "Standardization":
         preopts = list_Standardization
+    if Category_Name == "Tokenization":
+        preopts = list_tokenization
 
     for preopt in preopts:
         preopt_info = {"Name": preopt.getName(), "Display_Name": preopt.getDisplayName()}
@@ -414,6 +425,11 @@ def getParameters(Preopt_Name):
             return Parameters
 
     for preopt in list_Standardization:
+        if preopt.getName() == Preopt_Name:
+            Parameters = preopt.getParameters()
+            return Parameters
+        
+    for preopt in list_tokenization:
         if preopt.getName() == Preopt_Name:
             Parameters = preopt.getParameters()
             return Parameters

@@ -8,6 +8,9 @@
         <a class="hover:text-slate-200"
            :class="{'text-slate-100': selected === '/auth/register'}"
            href="{{ url_for('auth.register') }}">Register</a>
+         <a class="hover:text-slate-200"
+           :class="{'text-slate-100': selected === '/gallery'}"
+           href="https://cycon-document.readthedocs.io/en/latest/" target="_blank">Manuals</a>
         <a class="hover:text-slate-200"
            :class="{'text-slate-100': selected === '/auth/login'}"
            href="{{ url_for('auth.login') }}">Log In</a>
@@ -27,6 +30,9 @@
            href="{{ url_for('auth.activation') }}">Activation</a>
         {% else %}
         <a class="hover:text-slate-200"
+           :class="{'text-slate-100': selected === '/'}"
+           href="{{ url_for('index') }}">Home</a>
+        <a class="hover:text-slate-200"
            :class="{'text-slate-100': selected === '/modules'}"
            href="{{ url_for('modules.index') }}">Modules</a>
         <a class="hover:text-slate-200"
@@ -35,6 +41,9 @@
         <a class="hover:text-slate-200"
            :class="{'text-slate-100': selected === '/experiments/cycon'}"
            href="{{ url_for('experiments.cycon') }}">ML/AI</a>
+         <a class="hover:text-slate-200"
+           :class="{'text-slate-100': selected === '/gallery'}"
+           href="https://cycon-document.readthedocs.io/en/latest/" target="_blank">Manuals</a>
         <a class="hover:text-slate-200"
            :class="{'text-slate-100': selected === '/experiments/lca'}"
            href="{{ url_for('experiments.lca') }}">LCA</a>
@@ -47,6 +56,7 @@
            <a class="hover:text-slate-200"
            :class="{'text-slate-100': selected === '/gallery'}"
            href="{{ url_for('gallery.index') }}">Gallery</a>
+         
         <a class="hover:text-slate-200" href="{{ url_for('auth.logout') }}">Log Out</a>
         {% endif %}
         {% endif %}

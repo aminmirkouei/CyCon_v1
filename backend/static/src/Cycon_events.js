@@ -91,6 +91,7 @@ function changePreoptCategory(category, ID_Preopts) {
         async: false,
         dataType: 'json',
         success: function (data) {
+            console.log(data)
             // data from getCataforyPropts() function returns the optimizer for that catagory
             // data include Name, Display_Name, Definition, Parameters
             select = document.getElementById(ID_Preopts); // the id for the optimizer drop down
@@ -163,7 +164,124 @@ function changeLayerCategory(category, ID_Layers) {
     });
 }
 
+function changeEnsemble(algorithms, ID_Parameters) { 
+    var mlAlgorithmDropdown = document.getElementById('MLalgorithm');
+    var ensembleDropdown = document.getElementById('EnsembleAlgorithm');
+    mlAlgorithmDropdown.disabled = ensembleDropdown.value !== '';
+     // Set the ensemble dropdown to an empty value
+     mlAlgorithmDropdown.value = '';
+
+    var algorithms_selection = document.getElementById(algorithms)
+    var algorithm_name = algorithms_selection.value
+    //document.getElementById("Results").innerHTML = method_name
+
+    dict_values = { Algorithm: algorithm_name };
+
+    const sent_data = JSON.stringify(dict_values)
+
+    $.ajax({
+        url: "/experiments/getEnsembleParameters",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(sent_data),
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            //document.getElementById("Results").innerHTML = "";
+            var html_section = document.getElementById(ID_Parameters);
+            html_section.innerHTML = "";
+
+            // create the field box for the new preopt option.
+            var field = document.createElement('fieldset');
+            // create title for the field.
+            var legend = document.createElement('legend');
+            legend_text = document.createTextNode(algorithm_name);
+            // legend.appendChild(legend_text);
+            // field.appendChild(legend);
+
+            for (var Parameter in data) {
+                //document.getElementById("Results").innerHTML += data[Parameter]["Name"] + " ";
+                var Parameter_Name = data[Parameter]["Name"];
+
+                if (data.hasOwnProperty(Parameter)) {
+                    // Create a label, which will be the parameter Name followed by the default value.
+                    var name_label = Parameter_Name + " (Default: " + data[Parameter]["Default_value"] + ") ";
+                    var label = document.createElement('label');
+                    label.htmlFor = name_label;
+                    label.appendChild(document.createTextNode(name_label));
+                    let id_info = data[Parameter]["Name"] + "_Info";
+
+                    field.appendChild(label);
+
+                    // Create popup information.
+                    let newDiv = document.createElement("div");
+                    newDiv.className = "popup";
+                    newDiv.onclick = function () { popupInformation(id_info); };
+
+                    let newImage = document.createElement("img");
+                    newImage.src = "../../static/Images/information_icon.png";
+                    newImage.width = "20";
+                    newImage.height = "20";
+
+                    newDiv.appendChild(newImage);
+
+                    let newSpan = document.createElement("span");
+                    newSpan.style = "white-space: pre-wrap";
+                    newSpan.className = "popuptext";
+                    newSpan.id = id_info;
+                    newSpan.textContent = data[Parameter]["Definition"];
+
+                    newDiv.appendChild(newSpan);
+
+                    field.appendChild(newDiv);
+
+                    // Create choices and options to edit the parameter
+
+                    fillSection(field, data, Parameter, ID_Parameters, 0)
+                }
+            }
+            var divElement = document.createElement("div");
+                    divElement.className = "flex items-center";
+
+                    // Create the first horizontal line
+                    var hrElement1 = document.createElement("hr");
+                    hrElement1.className = "flex-grow border-t border-green-500 border-3";
+                    hrElement1.style.borderWidth = "1px";
+
+                    // Create a span element with text
+                    var spanElement = document.createElement("span");
+                    spanElement.className = "px-3 text-green-500";
+                    spanElement.textContent = algorithm_name;
+
+                    // Create the second horizontal line
+                    var hrElement2 = document.createElement("hr");
+                    hrElement2.className = "flex-grow border-t border-green-500 border-3";
+                    hrElement2.style.borderWidth = "1px";
+
+                    // Append these elements to the div in the desired order
+                    divElement.appendChild(hrElement1);
+                    divElement.appendChild(spanElement);
+                    divElement.appendChild(hrElement2);
+
+                // add field to div section
+                html_section.appendChild(divElement)
+                // add field to div section
+                html_section.appendChild(field)
+
+            html_section.appendChild(field)
+        }
+    })
+}
 function changeAlgorithm(algorithms, ID_Parameters) {
+    // Disable the ensemble dropdown if a ML algorithm is selected
+    var mlAlgorithmDropdown = document.getElementById('MLalgorithm');
+    var ensembleDropdown = document.getElementById('EnsembleAlgorithm');
+    ensembleDropdown.disabled = mlAlgorithmDropdown.value !== '';
+
+     // Set the ensemble dropdown to an empty value
+     ensembleDropdown.value = '';
+
+
     var algorithms_selection = document.getElementById(algorithms)
     var algorithm_name = algorithms_selection.value
     //document.getElementById("Results").innerHTML = method_name
@@ -280,6 +398,20 @@ function readTextFile(file, callback) {
 
 
 function updateMetrics(){
+
+    var Met_WEIGHT_Data = document.getElementsByClassName('Met_WEIGHT_Data');
+    if (document.getElementById('Met_WEIGHT').checked) {
+        for (var i = 0; i < Met_WEIGHT_Data.length; i++) {
+        Met_WEIGHT_Data[i].style.visibility = 'visible';
+        Met_WEIGHT_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_WEIGHT').checked){
+        for (var i = 0; i < Met_WEIGHT_Data.length; i++) {
+        Met_WEIGHT_Data[i].style.visibility = 'hidden';
+        Met_WEIGHT_Data[i].style.position = 'fixed';
+        }
+    }
 
     var Met_ACC_Data = document.getElementsByClassName('Met_ACC_Data');
     if (document.getElementById('Met_ACC').checked) {
@@ -441,22 +573,160 @@ function updateMetrics(){
     }
   }
 
+
+  var Met_MSE_Data = document.getElementsByClassName('Met_MSE_Data');
+    if (document.getElementById('Met_MSE').checked) {
+        for (var i = 0; i < Met_MSE_Data.length; i++) {
+        Met_MSE_Data[i].style.visibility = 'visible';
+        Met_MSE_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_MSE').checked){
+        for (var i = 0; i < Met_MSE_Data.length; i++) {
+        Met_MSE_Data[i].style.visibility = 'hidden';
+        Met_MSE_Data[i].style.position = 'fixed';
+        }
+    }
+
+
+    var Met_RMSE_Data = document.getElementsByClassName('Met_RMSE_Data');
+    if (document.getElementById('Met_RMSE').checked) {
+        for (var i = 0; i < Met_RMSE_Data.length; i++) {
+        Met_RMSE_Data[i].style.visibility = 'visible';
+        Met_RMSE_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_RMSE').checked){
+        for (var i = 0; i < Met_RMSE_Data.length; i++) {
+        Met_RMSE_Data[i].style.visibility = 'hidden';
+        Met_RMSE_Data[i].style.position = 'fixed';
+        }
+    }
+
+
+    var Met_MAE_Data = document.getElementsByClassName('Met_MAE_Data');
+    if (document.getElementById('Met_MAE').checked) {
+        for (var i = 0; i < Met_MAE_Data.length; i++) {
+        Met_MAE_Data[i].style.visibility = 'visible';
+        Met_MAE_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_MAE').checked){
+        for (var i = 0; i < Met_MAE_Data.length; i++) {
+        Met_MAE_Data[i].style.visibility = 'hidden';
+        Met_MAE_Data[i].style.position = 'fixed';
+        }
+    }
+
+
+    var Met_R2_Data = document.getElementsByClassName('Met_R2_Data');
+    if (document.getElementById('Met_R2').checked) {
+        for (var i = 0; i < Met_R2_Data.length; i++) {
+        Met_R2_Data[i].style.visibility = 'visible';
+        Met_R2_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_R2').checked){
+        for (var i = 0; i < Met_R2_Data.length; i++) {
+        Met_R2_Data[i].style.visibility = 'hidden';
+        Met_R2_Data[i].style.position = 'fixed';
+        }
+    }
+
+}
+
+
+function changeDataType(selectId){
+   
+    var DataType_selection = document.getElementById(selectId)
+    var DataTypwe_name = DataType_selection.value
+
+    
+    var selectElement = document.getElementById(selectId);
+    var selectedValue = selectElement.value;
+    console.log(selectedValue)
+    var previewTextInput = document.getElementById("previewTextInput");
+    var previewTableInput = document.getElementById("previewTableInput");
+
+    if (selectedValue === "Text") {
+        console.log("Hellp")
+        previewTextInput.style.display = "inline-block";        
+        previewTableInput.style.display = "none";
+    } else {
+        previewTextInput.style.display = "none";
+        previewTableInput.style.display = "block";
+    }
 }
 
 function getData(files, fileSelected, choice) {
+    
+        let input = document.getElementById("Split_Input");
+        let K_fold_input = document.getElementById("K-Fold_Input");
+        let DLANN_value = document.getElementById("DLANN")
+        console.log("input.value", input.value, input.length)
+        console.log("K_fold_input", K_fold_input.value, K_fold_input.length, )
+        if (input.value === "") {
+            console.log("Input value")
+        }
+
+        if (K_fold_input === "") {
+            console.log("K_fold value")
+        }
+        if (input.value === "" && K_fold_input.value === "" && !DLANN_value.checked) {
+          console.log("Alert Preview")
+          alert("Error: Fill in split input or K-fold Input!");
+          event.preventDefault();
+        }
+
+        let MLA_value = document.getElementById("MLalgorithm").value
+        let ENSEMBLE_value = document.getElementById("EnsembleAlgorithm").value
+        
+        console.log(MLA_value, ENSEMBLE_value, !DLANN_value.checked)
+        if (!MLA_value && !ENSEMBLE_value && !DLANN_value.checked){
+            alert("Error: Choose one of the methods!");
+        }
+        // let K_fold_input = document.getElementById("K-Fold_Input");
+        // if (K_fold_input.value === "") {
+        
+        //   alert("Error: Split Input field is empty!");
+        //   event.preventDefault();
+        // }
+     
+
     const form = document.getElementById("MLAI_Form");
     // console.log("get form :", form, files, fileSelected, choice);
     // Copy over information from element outside of form to the copy inside form
+    // Get the selected radio button value
+    
+
     document.getElementById("projectName_copy").value = document.getElementById("projectName").value;
     document.getElementById("phase1Text_copy").value = document.getElementById("phase1Text").value;
     document.getElementById("csvFile_copy").value = document.getElementById("csvFile").value;
+    csv_value = document.getElementById("csvFile").value;
+    if (!csv_value){
+        alert("Error: Upload a dataset");
+    }
 
     // Collect all form data instances
     var formData = new FormData(form);
 
     var dict_data = {};
 
+    var classificationRadio = document.getElementById('classificationRadio');
+    var regressionRadio = document.getElementById('regressionRadio');
+
+    var selectedValue;
+    if (classificationRadio.checked) {
+      selectedValue = classificationRadio.value;
+    } else if (regressionRadio.checked) {
+      selectedValue = regressionRadio.value;
+    }
+
+    dict_data["regression"] = selectedValue
     const class_column = document.getElementById("class_col").value;
+    console.log("Selected-value: ", selectedValue)
+
+
     formData.append("class_col", class_column);
 
     formData.append("preoptCounter", preoptCounter)
@@ -501,12 +771,12 @@ function getData(files, fileSelected, choice) {
 
     // MLA form
     const mla_form = document.getElementById("MLA_Form");
-
+    
     var mla_Form = new FormData(mla_form);
-
+    // console.log(mla_Form)
     // iterate through entries...
     for (var pair of mla_Form.entries()) {
-        // console.log(pair[0] + ": " + pair[1]);
+        console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -515,10 +785,17 @@ function getData(files, fileSelected, choice) {
     const dlann_form = document.getElementById("DLANN_Form");
 
     var dlann_Form = new FormData(dlann_form);
+    
+    const dlann_form_value = document.getElementById("DLANN_Form").value;
+    
+    
 
+    // if (!dlann_form_value){
+
+    // }
     // iterate through entries...
     for (var pair of dlann_Form.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
+        // console.log(pair[0] + ": " + pair[1]);
         document.getElementById("Results").innerHTML += pair[0] + ": " + pair[1] + "<br\>";
         dict_data[pair[0]] = pair[1]
     }
@@ -559,7 +836,7 @@ function getData(files, fileSelected, choice) {
     if(choice === "Choose uploaded file") {
         const foundFile = files.find(f => f.filename === fileSelected);
         const data = JSON.parse(JSON.stringify(foundFile.content));
-        console.log("data: ", data, );
+        // generatePDF
 
         // Create CSV content
         const csvContent = createCSV(data);
@@ -570,7 +847,7 @@ function getData(files, fileSelected, choice) {
         csvFileName = fileSelected;
         csvFile = csvBlob;
 
-        console.log("get csv: ", csvFile, csvBlob)
+        // console.log("get csv: ", csvFile, csvBlob)
     } else {
         csvFileName = document.getElementById("csvFile").files[0].name;
         csvFile = document.getElementById("csvFile").files[0];
@@ -582,6 +859,7 @@ function getData(files, fileSelected, choice) {
     data.append("processes", JSON.stringify(dict_data))
     data.append("csvFileName", csvFileName)
     data.append("csvFile", csvFile)
+    console.log(dict_data)
 
     $.ajax({
         url: "/experiments/run_experiment",
@@ -591,6 +869,7 @@ function getData(files, fileSelected, choice) {
         processData: false, // important
         contentType: false, // important,
         success: function (Results) {
+            console.log(Results)
             document.getElementById("Results").innerHTML += "Hello?";
             if (Results[0] == "worked") {
                 Results = Results[2]
@@ -655,6 +934,7 @@ function getData(files, fileSelected, choice) {
                         Precision_micro = Results["Precision_micro"]
                         Precision_macro = Results["Precision_macro"]
                         Conf_Matrix = Results["cm_overall"]
+                        MSE = Results["MSE"]
 
 
                         // display the metrics
@@ -670,6 +950,46 @@ function getData(files, fileSelected, choice) {
                             }
                         else if (!document.getElementById('Met_ACC').checked) {
                             writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data" style="visibility: hidden; position: fixed;">' + Results["Accuracy_Intro"].bold() + Results["Accuracy"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_MSE').checked){
+                            writeData.paragraph += '<span id="Met_MSE_Data" class="Met_MSE_Data"><b>Mean Squared Error: </b>' + Results["MSE"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_MSE').checked) {
+                            writeData.paragraph += '<span id="Met_MSE_Data" class="Met_MSE_Data" style="visibility: hidden; position: fixed;">' + "Mean Squared Error:" + Results["MSE"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_WEIGHT').checked){
+                            writeData.paragraph += '<span id="Met_WEIGHT_Data" class="Met_WEIGHT_Data"><b>Weights: </b>' + Results["weights"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_WEIGHT').checked) {
+                            writeData.paragraph += '<span id="Met_WEIGHT_Data" class="Met_WEIGHT_Data" style="visibility: hidden; position: fixed;">' + "Weights:" + Results["weights"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_RMSE').checked){
+                            writeData.paragraph += '<span id="Met_RMSE_Data" class="Met_RMSE_Data"><b>Root Mean Squared Error: </b>' + Results["RMSE"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_RMSE').checked) {
+                            writeData.paragraph += '<span id="Met_RMSE_Data" class="Met_RMSE_Data" style="visibility: hidden; position: fixed;">' + "Root Mean Squared Error:" + Results["RMSE"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_MAE').checked){
+                            writeData.paragraph += '<span id="Met_MAE_Data" class="Met_MAE_Data"><b>Mean Absolute Error:</b>' + Results["MAE"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_MAE').checked) {
+                            writeData.paragraph += '<span id="Met_MAE_Data" class="Met_MAE_Data" style="visibility: hidden; position: fixed;">' + "Mean Absolute Error:" + Results["MAE"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_MAE').checked){
+                            writeData.paragraph += '<span id="Met_R2_Data" class="Met_R2_Data"><b>R-squared Score:</b>' + Results["r2"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_MAE').checked) {
+                            writeData.paragraph += '<span id=Met_R2_Data" class=Met_R2_Data" style="visibility: hidden; position: fixed;">' + "R-squared Score:" + Results["r2"] + '<br\>' + '</span>'
                         }
 
                         /* Met_ACC_Data[i].style.visibility = 'hidden';
@@ -1127,7 +1447,7 @@ function getData(files, fileSelected, choice) {
                 }
 
                 writeData.paragraph += '<FONT COLOR="#ff0000">ERROR: <br>';
-                writeData.paragraph += Results[1];
+                writeData.paragraph += Results;
                 writeData.paragraph += '</FONT >';
 
                 document.getElementById("Results").innerHTML = writeData.paragraph;
@@ -1406,7 +1726,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Copyright © CyCon 2023 version 2.01.04", pdf.internal.pageSize.getWidth() - 70, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Copyright © CyCon 2024 version. Last updated: 03/22/2024", pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
@@ -1461,7 +1781,7 @@ function checkCSV(files, fileSelected, choice) {
     const form = document.getElementById("csvForm");
     document.getElementById("csv_Error").innerHTML = "";
     document.getElementById("csv_Results").innerHTML = "";
-
+    console.log('Ki')
     var formData = new FormData(form);
 
     var dict_data = {};
@@ -1592,11 +1912,82 @@ function checkCSV(files, fileSelected, choice) {
         }
     });
 }
+function check_Text(form){
 
+    document.getElementById("csv_Error_Preopt").innerHTML = "";
+    document.getElementById("csv_Results_Preopt").innerHTML = "";
+    
+    var formData = new FormData(form);
+    var previewTextValue = document.getElementById("previewText").value;
+    
+    var dict_data = {};
+     // Create the request body
+    var requestBody = {
+        previewText: previewTextValue
+    };
+    
+    dict_data["previewText"] = previewTextValue
+
+    const projectName = document.getElementById("projectName").value;
+    formData.append("projectName", projectName);
+
+
+    
+
+    // const class_column = document.getElementById("class_col").value;
+    // formData.append("class_col", class_column);
+
+    // formData.append("Perform_Preopt", "Yes")
+
+    // formData.append("preoptCounter", preoptCounter)
+    
+    // iterate through entries...
+    for (var pair of formData.entries()) {
+        dict_data[pair[0]] = pair[1]
+    }
+
+    console.log(dict_data)
+    // for (var pair of textData.entries()) {
+    //     console.log(pair[0] + ": " + pair[1]);  
+    //     dict_data[pair[0]] = pair[1]
+    // }
+
+    // Send information to run model experiment.
+    // will save into a json file tilted the "projectName".json
+
+    $("#csv_Title_Preopt").hide();
+    $("#csv_Null_Title_Preopt").hide();
+    $("#csv_Null_Results_Preopt").hide();
+    $("#csv_Class_Balance_Title_Preopt").hide();
+    $("#csv_Class_Balance_Results_Preopt").hide();
+    $("#csv_Scale_Title_Preopt").hide();
+    $("#csv_Scale_Results_Preopt").hide();
+
+    // const csvFileName = document.getElementById("csvFile").files[0].name;
+    // const csvFile = document.getElementById("csvFile").files[0];
+
+    // const data = new FormData();
+    // data.append("processes", JSON.stringify(dict_data))
+    // data.append("csvFileName", csvFileName)
+   
+    // document.getElementById("Results").innerHTML += data;   
+
+    // $.ajax({
+    //     url: "/experiments/getTextResults",
+    //     data: data,
+    //     type: "POST",
+    //     dataType: 'json',
+    //     processData: false, // important
+    //     contentType: false, // important,
+    //     success: function (Results) {
+            
+    //     });
+}
 
 // Checks that the CSV file is able to load and displays the csv information after all selected preoptimizations with additional pdf graphs
 // such as balance and distibution of data to help the user make informed desitions when preoptimizing.
 function checkCSV_Preopt(form) {
+    // console.log("HElllooo li")
     document.getElementById("csv_Error_Preopt").innerHTML = "";
     document.getElementById("csv_Results_Preopt").innerHTML = "";
     console.log(form)
@@ -1721,7 +2112,19 @@ function checkCSV_Preopt(form) {
 document.getElementById("preoptForm").addEventListener("submit", function (e) {
     e.preventDefault();
     if (preoptSubmit == 'Check') {
+        const selectElement = document.getElementById('types');
+        // console.log("HIii")
         checkCSV_Preopt(e.target);
+        // if (selectElement.value === 'Tabular') {
+        //     checkCSV_Preopt(e.target);
+        //   }
+        // else if (selectElement.value === 'Text') {
+        //     console.log(e.target)
+        //     check_Text(e.target)
+        // }
+        
+          
+       
     } else if (preoptSubmit == 'Download') {
         downloadCSV(e.target);
     } else {
@@ -2168,7 +2571,7 @@ function getCompilerOptions(ID_Compiler) {
             // create title for the field.
             var legend = document.createElement('legend');
             legend_text = document.createTextNode("Compiler");
-            legend.appendChild(legend_text);
+            // legend.appendChild(legend_text);
             field.appendChild(legend);
 
             // Create option to edit the parameter for the NN layer option.
@@ -2452,8 +2855,8 @@ function selectLayers(Layer, ID_Layer) {
                             
                             originalName = key
                                 // Modify the name attribute
-                            console.log(originalName)
-                            const newName = "Layer_" + String(cur_Delete-1) + originalName.slice(7);
+                            console.log(originalName, originalName[6])
+                            const newName = "Layer_" + String(parseInt(originalName[6]) - 1) + originalName.slice(7);
                             // console.log(newName)
                             var nameInput = form.querySelectorAll('[name="'+ key + '"]');
                 
@@ -2564,7 +2967,7 @@ function fillSection(section, data, Parameter, Location, counter) {
 
     var default_opt = data[Parameter]["Default_option"];
     var default_value = data[Parameter]["Default_value"];
-
+    
     var Parameter_Name = data[Parameter]["Name"];
 
     if (Location == "Preopt") {
@@ -2597,12 +3000,23 @@ function fillSection(section, data, Parameter, Location, counter) {
                 // create radio button
                 var radio_name = Parameter_Name + "_Input";
                 var option = data[Parameter]["Possible"][Option_Int];
+
+                var cardDiv = document.createElement("div");
+                cardDiv.style.border = "1px solid #E5E7EB";
+                cardDiv.style.borderRadius = "0.375rem";
+                cardDiv.style.boxShadow = "0 1px 2px 0 rgba(0, 0, 0, 0.05)";
+                cardDiv.style.padding = "0.5rem";
+                cardDiv.style.marginBottom = "0.3rem";
+                cardDiv.style.display = "inline-block";
+                cardDiv.style.marginLeft = "0.1rem";
+
                 var radio = document.createElement("input");
                 radio.type = "radio";
                 radio.name = radio_name;
                 radio.id = option;
+                radio.style.marginLeft = "10px";
                 radio.value = option;
-                section.appendChild(radio);
+                cardDiv.appendChild(radio);
                 if (option == default_opt) {
                     radio.checked = true;
                 }
@@ -2611,9 +3025,11 @@ function fillSection(section, data, Parameter, Location, counter) {
                 var name_label = option;
                 var label = document.createElement('label')
                 label.htmlFor = name_label;
+                label.style.marginLeft = "0.2rem"; 
                 label.appendChild(document.createTextNode(name_label));
 
-                section.appendChild(label);
+                cardDiv.appendChild(label);
+                section.appendChild(cardDiv);
             }
         }
 
@@ -2648,12 +3064,15 @@ function fillSection(section, data, Parameter, Location, counter) {
                 // create radio button
                 var radio_name = Parameter_Name + "_Input";
                 var option = data[Parameter]["Possible"][Option_Int];
+
+                var cardDiv = document.createElement("div");
+                cardDiv.style.marginLeft = "0.3rem";
                 var radio = document.createElement("input");
                 radio.type = "radio";
                 radio.name = radio_name;
                 radio.id = option;
                 radio.value = option;
-                section.appendChild(radio);
+                section.appendChild(radio)
                 if (option == default_opt) {
                     radio.checked = true;
                 }
@@ -2663,7 +3082,7 @@ function fillSection(section, data, Parameter, Location, counter) {
                 var label = document.createElement('label')
                 label.htmlFor = name_label;
                 label.appendChild(document.createTextNode(name_label));
-
+                
                 section.appendChild(label);
 
                 // set default.
@@ -2760,6 +3179,7 @@ function fillSection(section, data, Parameter, Location, counter) {
                 radio.type = "radio";
                 radio.name = radio_name;
                 radio.id = option;
+                radio.style.marginLeft = "10px";
                 radio.value = option;
                 section.appendChild(radio);
 
@@ -2808,6 +3228,7 @@ function fillSection(section, data, Parameter, Location, counter) {
                 var radio = document.createElement("input");
                 radio.type = "radio";
                 radio.name = radio_name;
+                radio.style.marginLeft = "10px";
                 radio.id = option;
                 radio.value = option;
                 section.appendChild(radio);
@@ -2913,12 +3334,17 @@ function fillSection(section, data, Parameter, Location, counter) {
                 // create radio button
                 var radio_name = Parameter_Name + "_Input";
                 var option = data[Parameter]["Possible"][Option_Int];
+
+                var cardDiv = document.createElement("div");
+                cardDiv.style.marginLeft = "8px";
+                cardDiv.style.display = "inline-block";
                 var radio = document.createElement("input");
                 radio.type = "radio";
                 radio.name = radio_name;
                 radio.id = option;
                 radio.value = option;
-                section.appendChild(radio);
+                cardDiv.appendChild(radio);
+                
 
                 if (option == default_opt) {
                     radio.checked = true;
@@ -2929,8 +3355,8 @@ function fillSection(section, data, Parameter, Location, counter) {
                 var label = document.createElement('label')
                 label.htmlFor = name_label;
                 label.appendChild(document.createTextNode(name_label));
-
-                section.appendChild(label);
+                cardDiv.appendChild(label);
+                section.appendChild(cardDiv);
             }
         }
 

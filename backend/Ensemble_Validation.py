@@ -4,6 +4,7 @@ import io
 import base64
 
 from backend import MLA
+from backend import Ensemble
 
 import pandas as pd
 import numpy as np
@@ -24,6 +25,7 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 from backend.Classes.PreoptimizationFiles import Preoptimization
+import xgboost as xgb
 import traceback
 import logging
 
@@ -64,12 +66,11 @@ def Split(data):
             df_act = Preoptimization.perform_Preopt(data, i, df_act)
 
         
-        X = df_act.drop(data["class_col"], axis=1)  # Features
-        y = df_act[data["class_col"]] 
-
         # df = df_act.to_numpy()
         # y = df[:, -1]
-      
+        
+        X = df_act.drop(data["class_col"], axis=1)  # Features
+        y = df_act[data["class_col"]]  # Target variable
         # logging.debug("Testing_11111111111")
         # Split dataset to training and testing set
         random_state = None
@@ -81,156 +82,90 @@ def Split(data):
         stratify = None
         if data["Stratify"] == "True":
             stratify = df_act[data["class_col"]]
-        
-        if data[data['validation'] + "_Input"] == "0.0":
-            x_train = X
-        
-            y_train = y.to_numpy()
-            model, settings = MLA.createModel(data)
-            # Perform the Method.
-            model.fit(x_train, y_train)
-            weight = "weight not available"
-            try:
-                
-                if data['MLalgorithm'] == "RandomForestClassifier" or data['MLalgorithm'] == "RandomForestRegression":
-                    weight = model.feature_importances_
-                elif data['MLalgorithm'] == "SVR":
-                    dual_coefficients = model.dual_coef_
-                    support_vectors = model.support_vectors_
-                    weights = np.abs(dual_coefficients) @ support_vectors
-                    weight = weights*0.73
-                    logging.debug("SVRRRRRRRR")
-                elif hasattr(model, 'coef_'):
-                    weight = model.coef_
-                else:
-                    weight = "weight not available"
-            except Exception as e:
-                weight = "weight not available"
-                
-            logging.debug(data['MLalgorithm'] )
-            Accuracy = "This metric needs split more than 0.0"
-            F1 = "This metric needs split more than 0.0"
-            F1_micro = "This metric needs split more than 0.0"
-            F1_macro = "This metric needs split more than 0.0"
-            Precision = "This metric needs split more than 0.0"
-            Precision_micro = "This metric needs split more than 0.0"
-            Precision_macro = "This metric needs split more than 0.0"
-            recall = "This metric needs split more than 0.0"
-            recall_micro = "This metric needs split more than 0.0"
-            recall_macro = "This metric needs split more than 0.0"
-            my_base64_jpgData = "This metric needs split more than 0.0"
-
-            mse = "This metric needs split more than 0.0"
-            rmse = "This metric needs split more than 0.0"
-            mae = "This metric needs split more than 0.0"
-            r2 = "This metric needs split more than 0.0"
-
-        else:
-            # train_set, test_set = train_test_split(df, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
-            x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
-            # length = train_set.shape[1] -1
-        
-            # x_train = train_set[:,0:length]
-            # y_train = train_set[:,length]
-            # x_test = test_set[:,0:length]
-            # y_test = test_set[:,length]
-            # logging.debug("Testing_6666666")
-            #model = KNeighborsClassifier(n_neighbors=3)
-            model, settings = MLA.createModel(data)
-        
-            
-            # Perform the Method.
-            model.fit(x_train, y_train)
-            
-            # Predict the testset
-            y_pred = model.predict(x_test)
-            Accuracy = "This metric is for classification"
-            F1 = "This metric is for classification"
-            F1_micro = "This metric is for classification"
-            F1_macro = "This metric is for classification"
-            Precision = "This metric is for classification"
-            Precision_micro = "This metric is for classification"
-            Precision_macro = "This metric is for classification"
-            recall = "This metric is for classification"
-            recall_micro = "This metric is for classification"
-            recall_macro = "This metric is for classification"
-            my_base64_jpgData = "This metric is for classification"
-
-            mse = "This metric is for Regression"
-            rmse = "This metric is for Regression"
-            mae = "This metric is for Regression"
-            r2 = "This metric is for Regression"
-            # Obtain the Metrics
-            if data["regression"] == "false":
-                Accuracy = accuracy_score(y_test, y_pred)
-                F1 = f1_score(y_test, y_pred, average=None)
-                F1 = F1.tolist()
-                F1_micro = f1_score(y_test, y_pred, average='micro')
-                F1_macro = f1_score(y_test, y_pred, average='macro')
-                Precision = precision_score(y_test, y_pred, average=None)
-                Precision = Precision.tolist()
-                Precision_micro = precision_score(y_test, y_pred, average='micro')
-                Precision_macro = precision_score(y_test, y_pred, average='macro')
-                recall = recall_score(y_test, y_pred, average=None)
-                recall_micro = recall_score(y_test, y_pred, average='micro')
-                recall_macro = recall_score(y_test, y_pred, average='macro')
-                recall = recall.tolist()
-                confusion_matrix(y_test, y_pred)
-
-                cm = confusion_matrix(y_test, y_pred, labels=model.classes_)
-                color = 'white'
-                disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
-                disp.plot()  # generates the plot of the confusion matrix using matplotlib.
-                my_stringIObytes = io.BytesIO()  # creates an in-memory binary stream to store the plot image.
-                plt.savefig(my_stringIObytes, format='jpg')  # saves the plot image to the my_stringIObytes stream in JPEG format.
-                plt.close()
-                my_stringIObytes.seek(0) # moves the stream's position to the beginning, preparing it for reading.
-                my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode() # reads the content of the stream, encodes it in Base64 format, and converts it to a string.
-                if data['MLalgorithm'] == "RandomForestClassifier" or data['MLalgorithm'] == "RandomForestRegression":
-                    weight = model.feature_importances_
-                elif hasattr(model, 'coef_'):
-                    weight = model.coef_
-                else:
-                    weight = "weight not available"
-
-            else:
-                mse = mean_squared_error(y_test, y_pred)
-                rmse = np.sqrt(mse)
-                mae = mean_absolute_error(y_test, y_pred)
-                r2 = r2_score(y_test, y_pred)
-                if data['MLalgorithm'] == "RandomForestClassifier" or data['MLalgorithm'] == "RandomForestRegression":
-                    weight = model.feature_importances_
-                elif data['MLalgorithm'] == "SVR":
-                    dual_coefficients = model.dual_coef_
-                    support_vectors = model.support_vectors_
-                    weights = np.abs(dual_coefficients) @ support_vectors
-                    weight = weights*0.73
-                elif hasattr(model, 'coef_'):
-                    weight = model.coef_
-                else:
-                    weight = "weight not available"
-                
-            # create a confusion matrix
-            #def fig_to_base64(fig):
-            #    img = io.BytesIO()
-            #    fig.savefig(img, format='png',
-            #            bbox_inches='tight')
-            #    img.seek(0)
-
-            #    return base64.b64encode(img.getvalue())
 
         
-            #temp = os.getcwd()
-            #plt.savefig(temp + '\\backend\\static\\Images\\' + data['projectName'] + '.png')
+        # train_set, test_set = train_test_split(df, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
 
-            #data_uri = base64.b64encode(open('conf_matrix.png', 'rb').read()).decode('utf-8')
-            #img_tag = '<img src="data:image/png;base64,{0}">'.format(data_uri)
+        # length = train_set.shape[1] -1
+       
+        # x_train = train_set[:,0:length]
+        # y_train = train_set[:,length]
+        # x_test = test_set[:,0:length]
+        # y_test = test_set[:,length]
+        # logging.debug("Testing_6666666")
+        #model = KNeighborsClassifier(n_neighbors=3)
+        x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
 
-            #encoded = fig_to_base64(fig)
-            #my_html = '<img src="data:image/png;base64, {}">'.format(encoded.decode('utf-8'))
+        model, settings = Ensemble.createModel(data)
+       
+        # logging.debug("X-train values", x_train)
+        # logging.debug("y-train values", y_train)
+        # Perform the Method.
 
-            # logging.debug("Testing_3333333333")
-            # Send the Metrics
+        model.fit(x_train, y_train)
+        
+        # Predict the testset
+        y_pred = model.predict(x_test)
+        # Evaluate the model using regression metrics
+        # mse = mean_squared_error(y_test, y_pred)
+        # mae = mean_absolute_error(y_test, y_pred)
+        # r2 = r2_score(y_test, y_pred)
+
+        
+        # Obtain the Metrics
+      
+        mse = "This metric is for Regression"
+        rmse = "This metric is for Regression"
+        mae = "This metric is for Regression"
+        r2 = "This metric is for Regression"
+
+
+        Accuracy = accuracy_score(y_test, y_pred)
+        F1 = f1_score(y_test, y_pred, average=None)
+        F1_micro = f1_score(y_test, y_pred, average='micro')
+        F1_macro = f1_score(y_test, y_pred, average='macro')
+        Precision = precision_score(y_test, y_pred, average=None)
+        Precision_micro = precision_score(y_test, y_pred, average='micro')
+        Precision_macro = precision_score(y_test, y_pred, average='macro')
+        recall = recall_score(y_test, y_pred, average=None)
+        recall_micro = recall_score(y_test, y_pred, average='micro')
+        recall_macro = recall_score(y_test, y_pred, average='macro')
+
+    
+        # create a confusion matrix
+        #def fig_to_base64(fig):
+        #    img = io.BytesIO()
+        #    fig.savefig(img, format='png',
+        #            bbox_inches='tight')
+        #    img.seek(0)
+
+        #    return base64.b64encode(img.getvalue())
+    
+        confusion_matrix(y_test, y_pred)
+
+        cm = confusion_matrix(y_test, y_pred, labels=model.classes_)
+        color = 'white'
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
+        disp.plot()  # generates the plot of the confusion matrix using matplotlib.
+        my_stringIObytes = io.BytesIO()  # creates an in-memory binary stream to store the plot image.
+        plt.savefig(my_stringIObytes, format='jpg')  # saves the plot image to the my_stringIObytes stream in JPEG format.
+        plt.close()
+        my_stringIObytes.seek(0) # moves the stream's position to the beginning, preparing it for reading.
+        my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode() # reads the content of the stream, encodes it in Base64 format, and converts it to a string.
+
+        #temp = os.getcwd()
+        #plt.savefig(temp + '\\backend\\static\\Images\\' + data['projectName'] + '.png')
+
+        #data_uri = base64.b64encode(open('conf_matrix.png', 'rb').read()).decode('utf-8')
+        #img_tag = '<img src="data:image/png;base64,{0}">'.format(data_uri)
+
+        #encoded = fig_to_base64(fig)
+        #my_html = '<img src="data:image/png;base64, {}">'.format(encoded.decode('utf-8'))
+
+        # logging.debug("Testing_3333333333")
+        # Send the Metrics
+
+    
         Metrics = {"Validation": "Split",
 
                    "Accuracy_Intro": 'Accuracy: ',
@@ -245,26 +180,21 @@ def Split(data):
                    "Recall_macro_Intro": "Recall (Macro): ",
 
                     "Accuracy": Accuracy,
-                    "Precision": Precision,
+                    "Precision": Precision.tolist(),
                     "Precision_micro": Precision_micro,
                     "Precision_macro": Precision_macro,
-                    "F1": F1,
+                    "F1": F1.tolist(),
                     "F1_micro": F1_micro,
                     "F1_macro": F1_macro,
-                    "recall" : recall,
+                    "recall" : recall.tolist(),
                     "recall_macro": recall_macro,
                     "recall_micro": recall_micro,
-                    "weights": str(weight),
-
                     "cm_overall": my_base64_jpgData,
-                    "MSE": mse,
-                    "RMSE": rmse,
-                    "MAE": mae,
-                    "r2": r2,
-                
                     "Val_Random_State": random_state,
-                    "Val_Shuffle": shuffle}
-
+                    "Val_Shuffle": shuffle
+                    }
+    
+        
         Metrics.update(settings)
 
         status = "worked"
@@ -292,7 +222,7 @@ def K_Fold(data):
             df_act = pd.read_csv(data['csvFile'], index_col=None)
         
         # df_act = pd.read_csv(data['csvFile'], index_col=None)
-        logging.debug(df_act)
+        # logging.debug(df_act)
         # Cycle through the choices of preotimization
         for i in range(int(data["preoptCounter"])):
             # Get the choice of preoptimization.
@@ -343,25 +273,26 @@ def K_Fold(data):
             y_train = y[train_index]
             x_test = X[test_index]
             y_test = y[test_index]
-            
-            model, settings = MLA.createModel(data)
+            logging.debug("Not__Trainnnmmmmmed")
+            model, settings = Ensemble.createModel(data)
 
             model.fit(X[train_index], y[train_index])
-    
+            logging.debug("Trainnnmmmmmed")
             y_pred = model.predict(X[test_index])
-    
+            logging.debug("Trainnnmmmmmed(22), %s", y_pred)
             acc = accuracy_score(y[test_index], y_pred)
+            logging.debug("Trainnnmmmmmed(33)")
             prec = precision_score(y[test_index], y_pred, average=None)
             prec_micro = precision_score(y[test_index], y_pred, average='micro')
             prec_macro = precision_score(y[test_index], y_pred, average='macro')
             f1 = f1_score(y[test_index], y_pred, average=None)
             f1_micro = f1_score(y[test_index], y_pred, average='micro')
             f1_macro = f1_score(y[test_index], y_pred, average='macro')
-
+            logging.debug("Trainnnmmmmmed(44)")
             recall = recall_score(y[test_index], y_pred, average=None)
             recall_micro = recall_score(y[test_index], y_pred, average='micro')
             recall_macro = recall_score(y[test_index], y_pred, average='macro')
-    
+            logging.debug("Trainnnmmmmmed(55)")
             acc_list.append(acc)
             prec_list.append(prec)
             prec_micro_list.append(prec_micro)
@@ -369,25 +300,30 @@ def K_Fold(data):
             f1_list.append(f1)
             f1_micro_list.append(f1_micro)
             f1_macro_list.append(f1_macro)
-
+            
             recall_list.append(recall)
             recall_micro_list.append(recall_micro)
             recall_macro_list.append(recall_macro)
-
+            logging.debug("Trainnnmmmmmed(66)")
             y_test_list = np.concatenate((y_test_list, y[test_index]))
+            logging.debug("Trainnnmmmmmed(77)")
             y_predict_list = np.concatenate((y_predict_list, y_pred))
-    
+            logging.debug("Trainnnmmmmmed(88)")
             cm = confusion_matrix(y[test_index], y_pred, labels=model.classes_)
+            logging.debug("Trainnnmmmmmed(99)")
             color = 'white'
+
             disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
+            
             disp.plot()
             my_stringIObytes = io.BytesIO()
             plt.savefig(my_stringIObytes, format='jpg')
             my_stringIObytes.seek(0)
             my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode()
             cm_list.append(my_base64_jpgData)
+            
 
-    
+        logging.debug("Trainnnmmmmmed(66)")
         acc_list = np.array(acc_list)
         prec_list = np.array(prec_list)
         prec_micro_list = np.array(prec_micro_list)
@@ -417,7 +353,7 @@ def K_Fold(data):
         recall_average = np.average(recall_list, axis = 0)
         recall_micro_average = np.average(recall_micro_list)
         recall_macro_average = np.average(recall_macro_list)
-
+        logging.debug("Trainnnmmmmmed(77)")
         cm = confusion_matrix(y_test_list, y_predict_list, labels=model.classes_)
         color = 'white'
         disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
@@ -426,6 +362,7 @@ def K_Fold(data):
         plt.savefig(my_stringIObytes, format='jpg')
         my_stringIObytes.seek(0)
         my_base64_jpgData = base64.b64encode(my_stringIObytes.read()).decode()
+        logging.debug("Trainnnmmmmmed(88)")
 
         # Send the Metrics
         Metrics = {"Validation": "K-Fold",
@@ -482,13 +419,15 @@ def K_Fold(data):
 
         status = "worked"
         msg = ""
-
+        logging.debug("Trainnnmmmmmed(99)")
         return status, msg, Metrics
 
     except Exception as e:
+        line_number = traceback.extract_tb(e.__traceback__)[-1].lineno
         Metrics = ""
-        msg = str(e)
+        msg = str(e) + str(line_number)
         status = "error"
+        
 
         return status, msg, Metrics
 

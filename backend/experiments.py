@@ -40,8 +40,10 @@ from backend.db import DBManager
 # sys.path.append("Classes")
 # sys.path.insert(1, '/Classes/')
 from backend import MLA
+from backend import Ensemble
 from backend import MLA_Validation
 from backend import DLANN_Validation
+from backend import Ensemble_Validation
 from backend.Classes.PreoptimizationFiles import Preoptimization
 from backend.Classes.PreoptimizationFiles import Standardization
 from backend.Classes.NeuralNetworkFiles import NeuralNetwork
@@ -65,6 +67,7 @@ logger = logging.getLogger()
 @bp.before_app_request
 def load_possible_experiments():
     list_Algorithms = MLA.getMLAs()
+    list_Ensembles = Ensemble.getEnsembles()
     # list for preoptimization options
     list_Preopt_Categories = Preoptimization.getPreopt_Categories()  # Just display name, display_name, definition of all
     list_Standardization = Standardization.getStandardization()      # Name,definition and parameters. for all standardization type
@@ -103,6 +106,20 @@ def load_possible_experiments():
     g.section_algorithm = algorithm_Names
     g.section_Info = algorithm_Definition
     g.Algorithms = zip(g.section_algorithm, g.section_Info)
+
+
+    # Obtain the selection of Ensemble algorithm Names and Definition.
+    Ensemble_Names = []
+    Ensemble_Definition = []
+    Ensemble_Names.append("")
+    Ensemble_Definition.append("")
+
+    for algorithmEnsemble in list_Ensembles:
+        Ensemble_Names.append(algorithmEnsemble.getName())
+        Ensemble_Definition.append(algorithmEnsemble.getDefinition())
+    g.Ensemble_algorithm = Ensemble_Names
+    g.Ensemble_Info = Ensemble_Definition
+    g.Ensembles = zip(g.Ensemble_algorithm, g.Ensemble_Info)
 
     #----------------Preoptimiztion-------------------------->
     # create list of options to choose a category of preoptimization options.
@@ -370,14 +387,24 @@ def run_experiment():
 
     # Perform MLA if chosen
     if data['methodology'] == "MLA":
+        
         # Split
         if data['validation'] == "Split":
-            status, msg, Metrics = MLA_Validation.Split(data)
+            if 'MLalgorithm' in data and data['MLalgorithm'] != "":
+                status, msg, Metrics = MLA_Validation.Split(data)
+            elif 'EnsembleAlgorithm' in data and data["EnsembleAlgorithm"] != "":
+                status, msg, Metrics = Ensemble_Validation.Split(data)
+            
 
         # K-Fold
         elif data['validation'] == "K-Fold":
-            status, msg, Metrics = MLA_Validation.K_Fold(data)
-        logging.debug("statussssss %s", status)
+            if 'MLalgorithm' in data and data['MLalgorithm'] != "":
+                status, msg, Metrics = MLA_Validation.K_Fold(data)
+            elif "EnsembleAlgorithm" in data and data["EnsembleAlgorithm"] != "":
+                status, msg, Metrics = Ensemble_Validation.K_Fold(data)
+
+
+        
         if status == "worked":
             # Open json file for the experiment.
             baseFolder = os.getcwd()
@@ -403,8 +430,9 @@ def run_experiment():
     # Perform Deep Learning Neural Network.
     if data['methodology'] == "DLANN":
         # Split
+    
         status, msg, Metrics = DLANN_Validation.Split(data)
-
+        logging.debug("statussssss %s", status)
         if status == "worked":
             # Open json file for the experiment.
             baseFolder = os.getcwd()
@@ -450,6 +478,17 @@ def getResults():
     
     return json.dumps(Metrics)
 
+# get ensemble method algorithm parameeters
+@bp.route("/getEnsembleParameters", methods=["POST"])
+def getEnsembleParameters():
+    output = request.get_json()
+    data = json.loads(output)
+
+    Parameters = Ensemble.getParameters(data["Algorithm"])
+
+    return json.dumps(Parameters)
+
+
 # Get machine learning algorithms parameters for the algorithm in data that we created in cycon_events
 @bp.route("/getAlgorithmParameters", methods=["POST"])
 def getAlgorithmParameters():
@@ -461,8 +500,7 @@ def getAlgorithmParameters():
     return json.dumps(Parameters)
    
    # Definition ::
-
-   # Inputs it recieves catagoryName 
+   # As an Inputs it recieves catagoryName 
 
    # Output the optimizer in json format
 @bp.route("/getCategoryPreopts", methods=["POST"])
@@ -494,6 +532,21 @@ def getCategoryLayers():
 @bp.route("/results")
 def results():
     return render_template("experiments/results.html")
+
+
+
+# Inputs contains process, CSVfileName, CSVfile
+   # Output the result in PDF
+# @bp.route("/getTextResults", methods=["POST"]) 
+# def getTextResults():
+#     # the request contains process, CSVfileName, CSVfile
+    
+#     status, msg, info = Preoptimization.getCSV_PDF(data)
+
+#     Results = [status, msg, info]
+
+#     return json.dumps(Results)
+
 
 
 
