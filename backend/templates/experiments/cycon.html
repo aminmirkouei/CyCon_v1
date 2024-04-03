@@ -138,15 +138,32 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                  var count = 1
 
                  if (methodology == "MLA") {
-                     $("div.methodology_desc").hide();
+                     $("div.methodology_desc").hide(); // Hidding class div with methodology_desc
+                     $("#metrics").show();
                      $("#MLA_Options").show();
+                     $("#MLAI_Form").show();
+                     $("#NLP_button").hide();
+
                  }
 
                  if (methodology == "DLANN") {
                         $("div.methodology_desc").hide();
                         $("#DLANN_Options").show();
+                        $("#metrics").show();
+                        $("#MLAI_Form").show();
+                        $("#NLP_button").hide();
                         getCompilerOptions("Compile_Selection")
                         getValidationOptions("Validation_Selection")
+                    }
+                
+                    if (methodology == "NLP") {
+                        $("div.methodology_desc").hide();
+                        $("#NLP_Options").show();
+                        $("#metrics").hide();
+                        $("#MLAI_Form").hide();
+                        $("#NLP_button").show();
+                        // getCompilerOptions("Compile_Selection")
+                        // getValidationOptions("Validation_Selection")
                     }
              });
          });
@@ -428,6 +445,15 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                         </div>
                         <br>
                         {% endif %}
+                        {% if "NLP" in choices%}
+                        <div class="popup" onclick="popupInformation('NLP_info')">
+                            <img src="../../static/Images/information_icon.png"
+                                 width="20"
+                                 height="20" />
+                            <span style="white-space: pre-wrap" class="popuptext" id="NLP_info" }>{{ sentence }}</span>
+                        </div>
+                        <br>
+                        {% endif %}
                         {% endif %}
                         {% endfor %}
                         {% endfor %}
@@ -625,6 +651,14 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                     </div>
                 </div>
 
+                <div id="NLP_Options" class="methodology_desc">
+                    <div class="border-b border-gray-400 p-2">
+                        <!--<h1 class="mb-2 font-bold text-xl">Method</h1>-->
+                        <form id="NLP_Form">
+                        </form>
+                    </div>
+                </div>
+                
                 <!-- MLA -->
                 <div class="border-b border-gray-400 p-2">
                     <form id="MLAI_Form" @submit.prevent="getData(files, fileSelected, choice)">
@@ -638,9 +672,17 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                                 name="submit"> Perform Experiment </button>
 
                     </form>
+                <!-- NLP -->
+                    <form id = "NLP_button" @submit.prevent="" style="display: none;">
+                        <button type="submit"
+                                class="px-2 px-1.5 rounded-lg bg-white border border-gray-400"
+                                name="submit"
+                                >Performs Experiment</button>
+                    </form>
                 </div>
 
                 <!-- Metrics section-->
+                <div id="metrics">
                 <div class="border-b border-gray-400 p-2">
                     <h1 class="mb-2 font-bold text-xl">Metrics</h1>
 
@@ -707,7 +749,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
 
                     </form>
                 </div>
-
+            </div>
 
                 <!-- Results section-->
                 <div class="p-2">
