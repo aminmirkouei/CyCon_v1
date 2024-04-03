@@ -25,6 +25,7 @@ from backend.Classes.PreoptimizationFiles import Tokenization
 
 from urllib.parse import quote
 import logging
+import io
 
 class Preopt_Category:
     def __init__(self, name, display_name, definition):
@@ -295,6 +296,14 @@ def getCSV_PDF(data):
 
         number_classes = ""
 
+        # stream = io.StringIO()
+        # df.dtypes.to_string(buf=stream)
+        # df_dtypes = stream.getvalue().replace('\n', '<br>')
+        # data_type = df_dtypes
+        
+        df_dtypes = df.dtypes.to_frame().rename(columns={0: 'Data Type'})
+        data_type = df_dtypes.to_html()
+
         if data["class_col"] != None and data["class_col"] != "": 
             number_classes = df[df.columns[index_of_class_col]].value_counts().rename_axis('Unique Values').reset_index(name='counts')
             number_classes = number_classes.to_html()
@@ -327,7 +336,8 @@ def getCSV_PDF(data):
                 "shape": shape,
                 "null_Count": null_count,
                 "Number_Classes": number_classes,
-                "kde_plots": kde_base64}
+                "kde_plots": kde_base64,
+                "data_type": data_type}
     
         status = "worked"
         msg = ""
