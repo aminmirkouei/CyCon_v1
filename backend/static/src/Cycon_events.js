@@ -1726,7 +1726,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Copyright © CyCon 2024 version. Last updated: 03/22/2024", pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Copyright © CyCon 2024 version. Last updated: 04/3/2024", pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
@@ -1861,8 +1861,10 @@ function checkCSV(files, fileSelected, choice) {
                 }
 
                 document.getElementById("csv_Results").innerHTML = Results['csv_Short'];
-                document.getElementById("csv_Null_Results").innerHTML = Results['null_Count']
-
+                document.getElementById("csv_Null_Results").innerHTML = Results['null_Count'] + "\n";
+                
+                document.getElementById("csv_Null_Results").innerHTML += Results['data_type'];
+                // console.log(Results['data_type'])
                 $("#csv_Title").show();
                 $("#csv_Null_Title").show();
                 $("#csv_Null_Results").show();
