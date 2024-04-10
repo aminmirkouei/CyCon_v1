@@ -111,6 +111,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
 
         <!-- Method to change the visable sections -->
         <script>
+
          $(document).ready(function () {
              $("div.methodology_desc").hide();
 
@@ -167,7 +168,8 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                     }
              });
          });
-
+        
+    
         // Get references to the radio button and checkboxes container
 //   const regressionRadio = document.getElementById("regressionRadio");
 //   const checkboxesContainer = document.getElementById("checkboxesContainer");
@@ -220,7 +222,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                         <img src="../../static/Images/information_icon.png"
                              width="20"
                              height="20" />
-                        <span class="popuptext" id="Experiment_Definition_Info">Project definition. Will be shown for viewer`s understanding when displaying the results.
+                        <span class="popuptext" id="Experiment_Definition_Info">Define the purpose and boundaries of your project or study.
                         </span>
                     </div>
                 </div>
@@ -522,7 +524,7 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
                                 <img src="../../static/Images/information_icon.png"
                                      width="20"
                                      height="20" />
-                                <span style="white-space: pre-wrap" class="popuptext" id="Split_Info" }>Split arrays or matrices into random train and test subsets.<br><br>Quick utility that wraps input validation, next(ShuffleSplit().split(X, y)), and application to input data into a single call for splitting (and optionally subsampling) data into a one-liner.<br><br>Input value is the percent set for the testing dataset given as a decimal.</span>
+                                <span style="white-space: pre-wrap" class="popuptext" id="Split_Info" }>Split arrays or matrices into random train and test subsets.<br><br>Quick utility that wraps input validation, next(ShuffleSplit().split(X, y)), and application to input data into a single call for splitting (and optionally subsampling) data into a one-liner.<br><br>Input value is the percent set for the testing dataset given as a decimal (0.0 - 1).</span>
                             </div>
                             <input type="text" class="input-text" id="Split_Input" name="Split_Input" required>
                             <br><br>
@@ -688,17 +690,21 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
 
                     <form id="resultForm">  <!-- Takes you to displayResults function-->
                             <!-- <h2 class="mb-2 text-lg">Regression</h2> -->
-                            <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
-                                <input type="checkbox" id=Met_WEIGHT name="Met_WEIGHT" value=Met_WEIGHT> <label for=Met_WEIGHT>Weight</label></div><br>
+                            
                                 
                         <input type="radio" name="regression" id="classificationRadio" value="false" checked> Classification<br>
                         <!-- <h2 class="mb-2 text-lg">Classification</h2> -->
                         <div id="checkboxesContainer">
+                            <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                                <input type="checkbox" id=Met_WEIGHT1 name="Met_WEIGHT" value=Met_WEIGHT1 checked> <label for=Met_WEIGHT>Weight</label></div>
+                                <br>
+
                         <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1 m-3">
-                        <input type="checkbox" id=Met_ACC name="Met_ACC" value=Met_ACC checked> <label for=Met_ACC>Accuracy</label>
+                        <input type="checkbox" id=Met_ACC name="Met_ACC" value=Met_ACC checked> <label for=Met_ACC1>Accuracy</label>
                         </div>
-                        
                         <br>
+                        
+
                         <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
                         <input type="checkbox" id=Met_Precision name="Met_Precision" value=Met_Precision checked> <label for=Met_Precision>Precision</label>
                         </div>
@@ -726,6 +732,10 @@ x-data="{fileSelected: '', choice: null, files: {{files}}}"
 
                         <input type="radio" name="regression" id="regressionRadio" value="true"> Regression<br>
                         
+                        <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
+                            <input type="checkbox" id=Met_WEIGHT2 name="Met_WEIGHT2" value=Met_WEIGHT2> <label for=Met_WEIGHT2>Weight</label></div
+                            ><br>
+
                         <!-- <h2 class="mb-2 text-lg">Regression</h2> -->
                         <div class="border border-gray-300 rounded-md shadow-sm p-2 mb-1 inline-block ml-1">
                         <input type="checkbox" id=Met_MSE name="Met_MSE" value=Met_MSE> <label for=Met_MSE>MSE</label></div>
