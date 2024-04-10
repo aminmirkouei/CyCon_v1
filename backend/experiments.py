@@ -90,8 +90,8 @@ def load_possible_experiments():
     # First choice is between various categories of ML 
     g.section_Method = ["MLA", "DLANN", "NLP"]
     g.section_Method_Display_Name = ["Machine Learning Algorithm (MLA)", "Deep Learning Artifical Neural Networks (DLANN)", "Natural Language Processing"]
-    g.section_Info = [["Machine learning algorithms are mathematical model mapping methods. They are used to learn patterns embedded in the existing training dataset in order to perform pattern recognition, classification, and prediction.\n\nCurrently, the only algorithms available on cycon is under the classification objective. Other objectives that will be added later include clustering and regression."],
-                      ["Machine learning that focuses on the development and utilization of artificial neural networks"],
+    g.section_Info = [["Machine learning algorithms are mathematical model mapping methods. They are used to learn patterns embedded in the existing training dataset in order to perform pattern recognition, classification, and prediction.\n\nCurrently, this section include classification and regression machine learning algoritms"],
+                      ["Are a subset of machine learning algorithms that uses    a layered architecture of algorithms called neurons, which are modeled after the human brain."],
                       ["It is a subfield of artificial intelligence (AI) and linguistics that focuses on the interaction between computers and human language."]]
     g.Methodologies = zip(g.section_Method, g.section_Method_Display_Name, g.section_Info)
 
@@ -405,7 +405,7 @@ def run_experiment():
                 status, msg, Metrics = Ensemble_Validation.K_Fold(data)
 
 
-        
+        logging.debug("statussssss %s", status)
         if status == "worked":
             # Open json file for the experiment.
             baseFolder = os.getcwd()
@@ -433,7 +433,7 @@ def run_experiment():
         # Split
     
         status, msg, Metrics = DLANN_Validation.Split(data)
-        logging.debug("statussssss %s", status)
+        
         if status == "worked":
             # Open json file for the experiment.
             baseFolder = os.getcwd()

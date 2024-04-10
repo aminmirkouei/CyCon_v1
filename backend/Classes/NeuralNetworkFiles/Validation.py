@@ -10,7 +10,7 @@ from backend.Classes.NeuralNetworkFiles import Callbacks
 Name = "Validation"
 Display_Name = "Validation"
 Definition = ["Options for the model to fit, validate and train the model."]
-Parameter_0 = {"Name":"test_split", "Type": ["float"], "Default_option":"", "Default_value":"", "Possible":["float"],
+Parameter_0 = {"Name":"test_split", "Type": ["float"], "Default_option":"0.1", "Default_value":"0.1", "Possible":["float"],
              "Definition":"Float number given splits the dateset by the given amount to create the test set. I.E. 0.1 will create a test set containing 10% of the given dataset."}
 Parameter_1 = {"Name":"validation_split", "Type": ["float"], "Default_option":0.0, "Default_value":0.0, "Possible":["float"],
              "Definition":"Float number given splits the remaining training set by the given amount to create a validation set. I.E. 0.1 will create a validation set containing 10% of the given training set."}

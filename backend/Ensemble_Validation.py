@@ -252,7 +252,8 @@ def K_Fold(data):
             kf = StratifiedKFold(n_splits=int(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state)
 
         kf.get_n_splits(X)
-
+        num_folds = int(data[data['validation'] + "_Input"])
+        confusion_matrices = []
         acc_list = []
         prec_list = []
         prec_micro_list = []
@@ -304,12 +305,13 @@ def K_Fold(data):
             recall_list.append(recall)
             recall_micro_list.append(recall_micro)
             recall_macro_list.append(recall_macro)
-            logging.debug("Trainnnmmmmmed(66)")
-            y_test_list = np.concatenate((y_test_list, y[test_index]))
-            logging.debug("Trainnnmmmmmed(77)")
-            y_predict_list = np.concatenate((y_predict_list, y_pred))
+            # logging.debug("Trainnnmmmmmed(66)")
+            # y_test_list = np.concatenate((y_test_list, y[test_index]))
+            # logging.debug("Trainnnmmmmmed(77)", y_predict_list, y_pred)
+            # y_predict_list = np.concatenate((y_predict_list, y_pred))
             logging.debug("Trainnnmmmmmed(88)")
-            cm = confusion_matrix(y[test_index], y_pred, labels=model.classes_)
+            cm = confusion_matrix(y_test, y_pred, labels=model.classes_)
+            confusion_matrices.append(cm)
             logging.debug("Trainnnmmmmmed(99)")
             color = 'white'
 
@@ -336,7 +338,7 @@ def K_Fold(data):
         recall_micro_list = np.array(recall_micro_list)
         recall_macro_list = np.array(recall_macro_list)
 
-        cm_list = np.array(cm_list)
+        # cm_list = np.array(cm_list)
 
 
         y_test_list = np.delete(y_test_list, 0)
@@ -354,7 +356,9 @@ def K_Fold(data):
         recall_micro_average = np.average(recall_micro_list)
         recall_macro_average = np.average(recall_macro_list)
         logging.debug("Trainnnmmmmmed(77)")
-        cm = confusion_matrix(y_test_list, y_predict_list, labels=model.classes_)
+        # cm = confusion_matrix(y_test_list, y_predict_list, labels=model.classes_)
+        cm = sum(confusion_matrices) // num_folds
+
         color = 'white'
         disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
         disp.plot()
@@ -399,7 +403,7 @@ def K_Fold(data):
                     "recall_list": recall_list.tolist(),
                     "recall_micro_list": recall_micro_list.tolist(),
                     "recall_macro_list": recall_macro_list.tolist(),
-                    "cm_list": cm_list.tolist(),
+                    "cm_list": cm_list,
                     "acc_average": acc_average,
                     "prec_average": prec_average.tolist(),
                     "prec_micro_average": prec_micro_average,
@@ -427,6 +431,11 @@ def K_Fold(data):
         Metrics = ""
         msg = str(e) + str(line_number)
         status = "error"
+
+        error_message = str(e)
+        error_type = type(e).__name__
+        error_traceback = traceback.format_exc()
+        logging.debug(error_traceback, "ERRRRRRRROR in ENSEMBE K_Fold")
         
 
         return status, msg, Metrics

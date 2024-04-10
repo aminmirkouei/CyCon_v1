@@ -8,6 +8,49 @@ var Using_EarlyStopping = false;
 var Using_ReduceLROnPlateau = false;
 
 $(document).ready(function () {
+     // Get a reference to the classification radio button
+     var classificationRadio = document.getElementById('classificationRadio');
+
+     // Add an event listener to the classification radio button
+     classificationRadio.addEventListener('click', function() {
+     // Get references to all the input checkboxes
+     var metMSECheckbox = document.getElementById('Met_MSE');
+     var metRMSECheckbox = document.getElementById('Met_RMSE');
+     var metMAECheckbox = document.getElementById('Met_MAE');
+     var metR2Checkbox = document.getElementById('Met_R2');
+     var metWeightCheckbox = document.getElementById('Met_WEIGHT2');
+
+     // Set the checked property to false for all the input checkboxes
+     metMSECheckbox.checked = false;
+     metRMSECheckbox.checked = false;
+     metMAECheckbox.checked = false;
+     metR2Checkbox.checked = false;
+     metWeightCheckbox.checked = false;
+
+     });
+
+// Get a reference to the regression radio button
+    var regressionRadio = document.getElementById('regressionRadio');
+
+    // Add an event listener to the regression radio button
+    regressionRadio.addEventListener('click', function() {
+    // Uncheck each checkbox individually by ID
+    document.getElementById('Met_ACC').checked = false;
+    document.getElementById('Met_Precision').checked = false;
+    document.getElementById('Met_Precision_Micro').checked = false;
+    document.getElementById('Met_Precision_Macro').checked = false;
+    document.getElementById('Met_F1').checked = false;
+    document.getElementById('Met_F1_Micro').checked = false;
+    document.getElementById('Met_F1_Macro').checked = false;
+    document.getElementById('Met_Recall').checked = false;
+    document.getElementById('Met_Recall_Micro').checked = false;
+    document.getElementById('Met_Recall_Macro').checked = false;
+    document.getElementById('Met_CM').checked = false;
+    document.getElementById('Met_WEIGHT1').checked = false;
+    });
+
+
+    
     // Method that reads and processes the selected file
     function upload(evt) {
         if (!browserSupportFileUpload()) {
@@ -399,14 +442,28 @@ function readTextFile(file, callback) {
 
 function updateMetrics(){
 
-    var Met_WEIGHT_Data = document.getElementsByClassName('Met_WEIGHT_Data');
-    if (document.getElementById('Met_WEIGHT').checked) {
+    var Met_WEIGHT_Data = document.getElementsByClassName('Met_WEIGHT_Data1');
+    if (document.getElementById('Met_WEIGHT1').checked) {
         for (var i = 0; i < Met_WEIGHT_Data.length; i++) {
         Met_WEIGHT_Data[i].style.visibility = 'visible';
         Met_WEIGHT_Data[i].style.position = 'static';
         }
     }
-    else if (!document.getElementById('Met_WEIGHT').checked){
+    else if (!document.getElementById('Met_WEIGHT1').checked){
+        for (var i = 0; i < Met_WEIGHT_Data.length; i++) {
+        Met_WEIGHT_Data[i].style.visibility = 'hidden';
+        Met_WEIGHT_Data[i].style.position = 'fixed';
+        }
+    }
+
+    var Met_WEIGHT_Data = document.getElementsByClassName('Met_WEIGHT_Data2');
+    if (document.getElementById('Met_WEIGHT2').checked) {
+        for (var i = 0; i < Met_WEIGHT_Data.length; i++) {
+        Met_WEIGHT_Data[i].style.visibility = 'visible';
+        Met_WEIGHT_Data[i].style.position = 'static';
+        }
+    }
+    else if (!document.getElementById('Met_WEIGHT2').checked){
         for (var i = 0; i < Met_WEIGHT_Data.length; i++) {
         Met_WEIGHT_Data[i].style.visibility = 'hidden';
         Met_WEIGHT_Data[i].style.position = 'fixed';
@@ -960,13 +1017,23 @@ function getData(files, fileSelected, choice) {
                             writeData.paragraph += '<span id="Met_MSE_Data" class="Met_MSE_Data" style="visibility: hidden; position: fixed;">' + "Mean Squared Error:" + Results["MSE"] + '<br\>' + '</span>'
                         }
 
-                        if (document.getElementById('Met_WEIGHT').checked){
-                            writeData.paragraph += '<span id="Met_WEIGHT_Data" class="Met_WEIGHT_Data"><b>Weights: </b>' + Results["weights"] + '<br\>' + '</span>'
+                        if (document.getElementById('Met_WEIGHT1').checked){
+                            writeData.paragraph += '<span id="Met_WEIGHT_Data1" class="Met_WEIGHT_Data"><b>Weights: </b>' + Results["weights"] + '<br\>' + '</span>'
                             
                             }
-                        else if (!document.getElementById('Met_WEIGHT').checked) {
-                            writeData.paragraph += '<span id="Met_WEIGHT_Data" class="Met_WEIGHT_Data" style="visibility: hidden; position: fixed;">' + "Weights:" + Results["weights"] + '<br\>' + '</span>'
+                        else if (!document.getElementById('Met_WEIGHT1').checked) {
+                            writeData.paragraph += '<span id="Met_WEIGHT_Data1" class="Met_WEIGHT_Data" style="visibility: hidden; position: fixed;">' + "Weights:" + Results["weights"] + '<br\>' + '</span>'
                         }
+
+
+                        if (document.getElementById('Met_WEIGHT2').checked){
+                            writeData.paragraph += '<span id="Met_WEIGHT_Data2" class="Met_WEIGHT_Data"><b>Weights: </b>' + Results["weights"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_WEIGHT2').checked) {
+                            writeData.paragraph += '<span id="Met_WEIGHT_Data2" class="Met_WEIGHT_Data" style="visibility: hidden; position: fixed;">' + "Weights:" + Results["weights"] + '<br\>' + '</span>'
+                        }
+
 
                         if (document.getElementById('Met_RMSE').checked){
                             writeData.paragraph += '<span id="Met_RMSE_Data" class="Met_RMSE_Data"><b>Root Mean Squared Error: </b>' + Results["RMSE"] + '<br\>' + '</span>'
@@ -984,11 +1051,11 @@ function getData(files, fileSelected, choice) {
                             writeData.paragraph += '<span id="Met_MAE_Data" class="Met_MAE_Data" style="visibility: hidden; position: fixed;">' + "Mean Absolute Error:" + Results["MAE"] + '<br\>' + '</span>'
                         }
 
-                        if (document.getElementById('Met_MAE').checked){
+                        if (document.getElementById('Met_R2').checked){
                             writeData.paragraph += '<span id="Met_R2_Data" class="Met_R2_Data"><b>R-squared Score:</b>' + Results["r2"] + '<br\>' + '</span>'
                             
                             }
-                        else if (!document.getElementById('Met_MAE').checked) {
+                        else if (!document.getElementById('Met_R2').checked) {
                             writeData.paragraph += '<span id=Met_R2_Data" class=Met_R2_Data" style="visibility: hidden; position: fixed;">' + "R-squared Score:" + Results["r2"] + '<br\>' + '</span>'
                         }
 
@@ -1083,8 +1150,8 @@ function getData(files, fileSelected, choice) {
 
                     else if (Results['Validation'] == "K-Fold") {
 
-
-                        for (let i = 0; i < Results["acc_list"].length; i++) {
+                        
+                        for (let i = 0; i < Results["Number_K_fold"]; i++) {
                             writeData.paragraph += '=========================Results for Fold ' + i + '=========================<br\>'
                             if (document.getElementById('Met_ACC').checked){
                             writeData.paragraph += '<span id="Met_ACC_Data" class="Met_ACC_Data">' + Results["Accuracy_Intro"].bold() + Results["acc_list"][i] + '<br\>' + '</span>' 
@@ -1172,7 +1239,63 @@ function getData(files, fileSelected, choice) {
                                 writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data" style="visibility: hidden; position: fixed;">' + `${img.outerHTML} <br\>` + '</span>'
                             }
 
+                            
+
+
+                            if (document.getElementById('Met_MSE').checked){
+                                writeData.paragraph += '<span id="Met_MSE_Data" class="Met_MSE_Data"><b>Mean Squared Error: </b>' + Results["MSE"][i] + '<br\>' + '</span>'
+                                
+                                }
+                            else if (!document.getElementById('Met_MSE').checked) {
+                                writeData.paragraph += '<span id="Met_MSE_Data" class="Met_MSE_Data" style="visibility: hidden; position: fixed;">' + "Mean Squared Error:" + Results["MSE"][i] + '<br\>' + '</span>'
+                            }
+    
+                            // if (document.getElementById('Met_WEIGHT1').checked){
+                            //     writeData.paragraph += '<span id="Met_WEIGHT_Data1" class="Met_WEIGHT_Data"><b>Weights: </b>' + Results["weights"] + '<br\>' + '</span>'
+                                
+                            //     }
+                            // else if (!document.getElementById('Met_WEIGHT1').checked) {
+                            //     writeData.paragraph += '<span id="Met_WEIGHT_Data1" class="Met_WEIGHT_Data" style="visibility: hidden; position: fixed;">' + "Weights:" + Results["weights"] + '<br\>' + '</span>'
+                            // }
+    
+    
+                            // if (document.getElementById('Met_WEIGHT2').checked){
+                            //     writeData.paragraph += '<span id="Met_WEIGHT_Data2" class="Met_WEIGHT_Data"><b>Weights: </b>' + Results["weights"] + '<br\>' + '</span>'
+                                
+                            //     }
+                            // else if (!document.getElementById('Met_WEIGHT2').checked) {
+                            //     writeData.paragraph += '<span id="Met_WEIGHT_Data2" class="Met_WEIGHT_Data" style="visibility: hidden; position: fixed;">' + "Weights:" + Results["weights"] + '<br\>' + '</span>'
+                            // }
+    
+    
+                            if (document.getElementById('Met_RMSE').checked){
+                                writeData.paragraph += '<span id="Met_RMSE_Data" class="Met_RMSE_Data"><b>Root Mean Squared Error: </b>' + Results["RMSE"][i] + '<br\>' + '</span>'
+                                
+                                }
+                            else if (!document.getElementById('Met_RMSE').checked) {
+                                writeData.paragraph += '<span id="Met_RMSE_Data" class="Met_RMSE_Data" style="visibility: hidden; position: fixed;">' + "Root Mean Squared Error:" + Results["RMSE"][i] + '<br\>' + '</span>'
+                            }
+    
+                            if (document.getElementById('Met_MAE').checked){
+                                writeData.paragraph += '<span id="Met_MAE_Data" class="Met_MAE_Data"><b>Mean Absolute Error:</b>' + Results["MAE"][i] + '<br\>' + '</span>'
+                                
+                                }
+                            else if (!document.getElementById('Met_MAE').checked) {
+                                writeData.paragraph += '<span id="Met_MAE_Data" class="Met_MAE_Data" style="visibility: hidden; position: fixed;">' + "Mean Absolute Error:" + Results["MAE"][i] + '<br\>' + '</span>'
+                            }
+    
+                            if (document.getElementById('Met_R2').checked){
+                                writeData.paragraph += '<span id="Met_R2_Data" class="Met_R2_Data"><b>R-squared Score:</b>' + Results["r2"][i] + '<br\>' + '</span>'
+                                
+                                }
+                            else if (!document.getElementById('Met_R2').checked) {
+                                writeData.paragraph += '<span id=Met_R2_Data" class=Met_R2_Data" style="visibility: hidden; position: fixed;">' + "R-squared Score:" + Results["r2"][i] + '<br\>' + '</span>'
+                            }
+
+                           
                         }
+
+
 
                         writeData.paragraph += '<br\>'
                         writeData.paragraph += '=========================Results Overall=========================<br\>'
@@ -1223,7 +1346,7 @@ function getData(files, fileSelected, choice) {
                         writeData.paragraph += '<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data">' + Results["F1_macro_Intro_Overall"].bold() + Results["f1_macro_average"] + '<br\>'
                         }
                         else if (!document.getElementById('Met_F1_Macro').checked){
-                            writeData.paragraph += '<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["F1_macro_Intro_Overall"].bold() + Results["f1_macro_average"] + '<br\>'
+                            writeData.paragraph += '<span id="Met_F1_Macro_Data" class="Met_F1_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["F1_macro_Intro_Overall"].bold() + Results["f1_macro_average"] + '<br\>' + '</span>'
                         }
 
                         if (document.getElementById('Met_Recall').checked){
@@ -1247,6 +1370,59 @@ function getData(files, fileSelected, choice) {
                             writeData.paragraph += '<span id="recall_Macro_Data" class="recall_Macro_Data" style="visibility: hidden; position: fixed;">' + Results["Recall_macro_Intro_Overall"].bold() + Results["recall_macro_average"] + '<br\>' + '</span>'
                         }
 
+
+                        if (document.getElementById('Met_MSE').checked){
+                            writeData.paragraph += '<span id="Mean_MSE_Data" class="Met_MSE_Data"><b>Total Mean Squared Error: </b>' + Results["mean_mse"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_MSE').checked) {
+                            writeData.paragraph += '<span id="Mean_MSE_Data" class="Met_MSE_Data" style="visibility: hidden; position: fixed;">' + " Total Mean Squared Error:" + Results["mean_mse"] + '<br\>' + '</span>'
+                        }
+
+                        // if (document.getElementById('Met_WEIGHT1').checked){
+                        //     writeData.paragraph += '<span id="Met_WEIGHT_Data1" class="Met_WEIGHT_Data"><b>Weights: </b>' + Results["weights"] + '<br\>' + '</span>'
+                            
+                        //     }
+                        // else if (!document.getElementById('Met_WEIGHT1').checked) {
+                        //     writeData.paragraph += '<span id="Met_WEIGHT_Data1" class="Met_WEIGHT_Data" style="visibility: hidden; position: fixed;">' + "Weights:" + Results["weights"] + '<br\>' + '</span>'
+                        // }
+
+
+                        // if (document.getElementById('Met_WEIGHT2').checked){
+                        //     writeData.paragraph += '<span id="Met_WEIGHT_Data2" class="Met_WEIGHT_Data"><b>Weights: </b>' + Results["weights"] + '<br\>' + '</span>'
+                            
+                        //     }
+                        // else if (!document.getElementById('Met_WEIGHT2').checked) {
+                        //     writeData.paragraph += '<span id="Met_WEIGHT_Data2" class="Met_WEIGHT_Data" style="visibility: hidden; position: fixed;">' + "Weights:" + Results["weights"] + '<br\>' + '</span>'
+                        // }
+
+
+                        if (document.getElementById('Met_RMSE').checked){
+                            writeData.paragraph += '<span id="Mean_RMSE_Data" class="Met_RMSE_Data"><b>Total Root Mean Squared Error: </b>' + Results["mean_rmse"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_RMSE').checked) {
+                            writeData.paragraph += '<span id="Mean_RMSE_Data" class="Met_RMSE_Data" style="visibility: hidden; position: fixed;">' + "Total Root Mean Squared Error:" + Results["mean_rmse"] + '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_MAE').checked){
+                            writeData.paragraph += '<span id="Mean_MAE_Data" class="Met_MAE_Data"><b>Total Mean Absolute Error:</b>' + Results["mean_mae"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_MAE').checked) {
+                            writeData.paragraph += '<span id="Mean_MAE_Data" class="Met_MAE_Data" style="visibility: hidden; position: fixed;">' + "Total Mean Absolute Error:" + Results["mean_mae"]+ '<br\>' + '</span>'
+                        }
+
+                        if (document.getElementById('Met_R2').checked){
+                            writeData.paragraph += '<span id="Mean_R2_Data" class="Met_R2_Data"><b>Total R-squared Score:</b>' + Results["mean_r2"] + '<br\>' + '</span>'
+                            
+                            }
+                        else if (!document.getElementById('Met_R2').checked) {
+                            writeData.paragraph += '<span id=Mean_R2_Data" class=Met_R2_Data" style="visibility: hidden; position: fixed;">' + "total R-squared Score:" + Results["mean_r2"]+ '<br\>' + '</span>'
+                        }
+                        
+                        
+
                         var img = new Image();
                         img.src = 'data:image/jpeg;base64,' + Results['cm_overall'];
 
@@ -1258,7 +1434,11 @@ function getData(files, fileSelected, choice) {
                         }
 
                         // writeData.paragraph += `${img.outerHTML} <br\>`
+                        
 
+
+
+                        
                     document.getElementById("Results").innerHTML = writeData.paragraph;
                     // document.getElementById("Results").innerHTML = writeData.paragraph;
                     //     document.getElementById("Results").innerHTML = writeData.paragraph;
@@ -1446,7 +1626,7 @@ function getData(files, fileSelected, choice) {
                     paragraph: ''
                 }
 
-                writeData.paragraph += '<FONT COLOR="#ff0000">ERROR: <br>';
+                writeData.paragraph += '<FONT COLOR="#ff0000"> <br>';
                 writeData.paragraph += Results;
                 writeData.paragraph += '</FONT >';
 
