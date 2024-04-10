@@ -1906,7 +1906,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Copyright © CyCon 2024 version. Last updated: 04/3/2024", pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Copyright © CyCon 2024 version. Last updated: 04/10/2024", pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
