@@ -90,9 +90,9 @@ def load_possible_experiments():
     # First choice is between various categories of ML 
     g.section_Method = ["MLA", "DLANN", "NLP"]
     g.section_Method_Display_Name = ["Machine Learning Algorithm (MLA)", "Deep Learning Artifical Neural Networks (DLANN)", "Natural Language Processing"]
-    g.section_Info = [["Machine learning algorithms are mathematical model mapping methods. They are used to learn patterns embedded in the existing training dataset in order to perform pattern recognition, classification, and prediction.\n\nCurrently, this section include classification and regression machine learning algoritms"],
-                      ["Are a subset of machine learning algorithms that uses    a layered architecture of algorithms called neurons, which are modeled after the human brain."],
-                      ["It is a subfield of artificial intelligence (AI) and linguistics that focuses on the interaction between computers and human language."]]
+    g.section_Info = [["MLAs are mathematical tools that enable machines to learn from data and make predictions or decisions without explicit programming."],
+                      ["DLANNs imitate the human brain, enabling machines to learn from complex data for various applications."],
+                      ["Natural Language Processing (NLP) enables computers to understand and process human language for various applications."]]
     g.Methodologies = zip(g.section_Method, g.section_Method_Display_Name, g.section_Info)
 
     # Obtain the selection of Algorithm Names and Definition.

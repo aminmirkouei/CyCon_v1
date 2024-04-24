@@ -1,0 +1,201 @@
+{% extends "layout.html" %} {% block content %}
+<div class="ml-6 mt-3">
+<div class="max-w-4xl px-4 py-8">
+
+    <!-- Module Introduction and Learning Objectives -->
+    <section class="mb-8 mt-2">
+      <h2 class="text-2xl font-bold mb-4">2.1 Module Introduction and Learning Objectives</h2>
+      <p class="mb-4">Welcome to Module 2 of our Machine Learning course! In this module, we will dive into the fascinating world of regression. Regression is a powerful method used to predict continuous values based on independent variables. By understanding regression, you'll be equipped to solve a wide range of real-world problems such as predicting CO2 emissions, sales forecasting, income prediction, and more.</p>
+      
+      <p class="mb-4">In this section, we will start by introducing the concept of regression and its key components. We'll explore how regression models relate dependent and independent variables to predict outcomes. By the end of this section, you will understand the difference between simple and multiple regression models and grasp the importance of choosing the right regression algorithm for your problem.</p>
+      
+      <h3 class="text-l font-bold mb-2">Learning Objectives:</h3>
+      <ul class="list-disc list-inside">
+        <li>Understand the purpose and significance of regression in machine learning.</li>
+        <li>Differentiate between dependent and independent variables in regression.</li>
+        <li>Identify the two types of regression models: simple regression and multiple regression.</li>
+        <li>Explore the characteristics of linear and nonlinear regression models.</li>
+        <li>Recognize the applications of regression in various fields.</li>
+        <li>Gain awareness of different regression algorithms and their optimal usage.</li>
+      </ul>
+      
+      <p class="mt-4">By the end of this module, you will have a solid understanding of regression fundamentals and be well-prepared to explore simple linear regression, multiple linear regression, and non-linear regression in detail. So let's get started on this exciting journey of prediction and analysis using regression techniques!</p>
+    </section>
+  
+    <!-- Introduction to Regression -->
+    <section class="mb-8 mt-2">
+      <h2 class="text-2xl font-bold mb-4">2.2 Introduction to Regression: Predicting Continuous Values with Independent Variable</h2>
+      <p class="mb-4">Link of the video: <a href="https://www.youtube.com/watch?v=ULe3dEGi3ZY&t=1s" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+      <p class="mb-4">Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+      
+      <h3 class="text-l font-bold mb-2">Key points of the video:</h3>
+      <ul class="list-disc list-inside">
+        <li>Regression is a method used to predict a continuous value, such as CO2 emission, using independent variables.</li>
+        <li>In regression, there are dependent variables (Y) and independent variables (X).</li>
+        <li>Regression models relate the dependent variable to a function of the independent variables.</li>
+        <li>The dependent variable should be continuous, while the independent variables can be categorical or continuous.</li>
+        <li>Regression can be used to build a model using historical data and predict the expected outcome for a new instance.</li>
+        <li>There are two types of regression models: simple regression (with one independent variable) and multiple regression (with more than one independent variable).</li>
+        <li>Regression models can be linear or nonlinear, depending on the relationship between the dependent and independent variables.</li>
+        <li>Regression has applications in sales forecasting, psychology, real estate, income prediction, and various other fields.</li>
+        <li>Different regression algorithms exist, each with its own importance and conditions for optimal use.</li>
+      </ul>
+    </section>
+  
+    <!-- Simple Linear Regression -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-4">2.3 Simple Linear Regression: Predicting Continuous Values Using a Linear Model</h2>
+      <p class="mb-4">Link of the video: <a href="https://www.youtube.com/watch?v=E7E9TdZ3H8A" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+      <p class="mb-4">Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+      
+      <h3 class="text-l font-bold mb-2">Key points of the video:</h3>
+      <ul class="list-disc list-inside">
+        <li>Linear regression is a method used to approximate a linear model and describe the relationship between variables.</li>
+        <li>In simple linear regression, there is one dependent variable and one independent variable.</li>
+        <li>The dependent variable should be continuous, while the independent variable can be categorical or continuous.</li>
+        <li>Linear regression aims to minimize the Mean Squared Error (MSE) to find the best-fitting line.</li>
+        <li>The coefficients of the line, θ0 and θ1, represent the intercept and slope, respectively.</li>
+        <li>Linear regression allows us to make predictions by plugging the values into the linear model equation.</li>
+        <li>Linear regression is fast, doesn't require parameter tuning, and is easy to understand and interpret.</li>
+      </ul>
+    </section>
+  
+    <!-- Model Evaluation in Trained Models -->
+    <section>
+      <h2 class="text-2xl font-bold mb-4 mt-2">2.4 Model Evaluation in Trained Models</h2>
+      <p class="mb-4">Link of the video: <a href="https://www.youtube.com/watch?v=qf-jf3k4R9k" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+      <p class="mb-4">Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+      
+      <h3 class="text-l font-bold mb-2">Key points of the video:</h3>
+      <ul class="list-disc list-inside">
+        <li>Regression model evaluation is important for accurately predicting unknown cases.</li>
+        <li>Two evaluation approaches are discussed: train and test on the same dataset, and train/test split.</li>
+        <li>Train and test on the same dataset involves training the model on the entire dataset and testing it on a portion of the same dataset.</li>
+        <li>Training accuracy refers to the percentage of correct predictions on the test dataset, while out-of-sample accuracy refers to predictions on data not used for training.</li>
+        <li>Train/test split involves splitting the dataset into training and testing sets, training the model on the training set, and evaluating it on the testing set.</li>
+        <li>Train/test split provides a more accurate evaluation of out-of-sample accuracy and is more realistic for real-world problems.</li>
+        <li>K-fold cross-validation is another evaluation approach that addresses the dependency and variation issues of train/test split.</li>
+        <li>K-fold cross-validation performs multiple train/test splits, averages the results, and provides a more consistent out-of-sample accuracy.</li>
+      </ul>
+    </section>
+    
+    <!-- Accuracy Metrics for Regression Model Evaluation -->
+  <section class="mb-8 mt-2">
+    <h2 class="text-2xl font-bold mb-4">2.5 Accuracy Metrics for Regression Model Evaluation</h2>
+    <p class="mb-4">Link of the video: <a href="https://www.youtube.com/watch?v=N7MzS6U59S4" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+    <p class="mb-4">Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+    
+    <h3 class="text-l font-bold mb-2">Key points of the video:</h3>
+    <ul class="list-disc list-inside">
+      <li>Evaluation metrics are used to measure the performance of a model.</li>
+      <li>In regression, the accuracy of a model can be calculated by comparing actual values and predicted values.</li>
+      <li>Mean absolute error (MAE) is the average of the absolute differences between actual and predicted values.</li>
+      <li>Mean squared error (MSE) is the average of the squared differences between actual and predicted values. It emphasizes larger errors.</li>
+      <li>Root mean squared error (RMSE) is the square root of MSE. It is popular because it is interpretable in the same units as the response variable.</li>
+      <li>Relative absolute error (RAE) normalizes the total absolute error by dividing it by the total absolute error of a simple predictor.</li>
+      <li>Relative squared error (RSE) is similar to RAE and is widely used for calculating R-squared.</li>
+      <li>R-squared represents how well the data values fit the regression line. Higher R-squared indicates a better fit.</li>
+      <li>The choice of evaluation metric depends on the model, data type, and domain of knowledge.</li>
+    </ul>
+  </section>
+
+  <!-- Lab: Simple Linear Regression -->
+  <section class="mb-8 mt-2">
+    <h2 class="text-2xl font-bold mb-4">2.6 Lab: Simple Linear Regression</h2>
+    <p class="mb-4">Link: <a href="https://colab.research.google.com/github/CyConProject/Lab/blob/main/Lab_Simple_Linear_Regression.ipynb" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+  </section>
+
+  <!-- Exploring Multiple Linear Regression -->
+  <section>
+    <h2 class="text-2xl font-bold mb-4">2.7 Exploring Multiple Linear Regression</h2>
+    <p class="mb-4">Link of the video: <a href="https://www.youtube.com/watch?v=m27oY_QFaOY" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+    <p class="mb-4">Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+    
+    <h3 class="text-xl font-bold mb-2">Key points of the video:</h3>
+    <ul class="list-disc list-inside">
+      <li>Multiple linear regression is a type of linear regression that involves multiple independent variables to predict a dependent variable.</li>
+      <li>It can be used to identify the strength of the effect of independent variables on the dependent variable and predict the impact of changes in independent variables.</li>
+      <li>The target value in multiple linear regression is a linear combination of the independent variables.</li>
+      <li>The objective is to find the best-fit hyperplane that minimizes the mean squared error (MSE) between the predicted and actual values.</li>
+      <li>Optimized parameters (coefficients) are those that lead to a model with the fewest errors.</li>
+      <li>Ordinary least squares and optimization algorithms like gradient descent are common methods to estimate the coefficients.</li>
+      <li>Once the parameters are found, predictions can be made by solving the linear equation for specific input values.</li>
+      <li>Overfitting should be avoided by not including too many independent variables without theoretical justification.</li>
+      <li>Categorical independent variables can be incorporated by converting them into numerical variables (e.g., using dummy variables).</li>
+      <li>There needs to be a linear relationship between the dependent variable and each independent variable.</li>
+      <li>Scatter plots can be used to visually check for linearity, and if a non-linear relationship exists, non-linear regression should be considered.</li>
+    </ul>
+  </section>
+  
+
+  
+
+    <!-- Lab: Multiple Linear Regression -->
+    <section class="mb-8 mt-2">
+      <h2 class="text-2xl font-bold mb-4">2.8 Lab: Multiple Linear Regression</h2>
+      <p class="mb-4">Link: <a href="https://colab.research.google.com/github/CyConProject/Lab/blob/main/Lab_Multiple_Linear_Regression.ipynb" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+    </section>
+  
+    <!-- Non-Linear Regression -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-4">2.9 Non-Linear Regression</h2>
+      <p class="mb-4">Link of the video: <a href="https://www.youtube.com/watch?v=3uJaTI7Azrs" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+      <p class="mb-4">Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+      
+      <h3 class="text-xl font-bold mb-2">Key points of the video:</h3>
+      <ul class="list-disc list-inside">
+        <li>Linear regression may not accurately model data with a curvy trend, unlike non-linear regression.</li>
+        <li>Non-linear regression requires special estimation methods to fit models like exponential functions.</li>
+        <li>Polynomial regression is a type of non-linear regression that fits a curve line to the data using polynomial equations.</li>
+        <li>Polynomial regression can be expressed as a linear regression model by transforming variables.</li>
+        <li>Polynomial regression models can be fitted using the least squares method.</li>
+        <li>Non-linear regression models represent non-linear relationships between the dependent variable and parameters.</li>
+        <li>Non-linear regression cannot use ordinary least squares and requires different estimation techniques.</li>
+        <li>Visual inspection and correlation analysis can help determine if a relationship is linear or non-linear.</li>
+        <li>If data displays a non-linear relationship, options include polynomial regression, non-linear regression, or data transformation.</li>
+      </ul>
+    </section>
+  
+    <!-- Lab: Polynomial Regression -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-4">2.10 Lab: Polynomial Regression</h2>
+      <p class="mb-4">Link: <a href="https://colab.research.google.com/github/CyConProject/Lab/blob/main/Lab_Polynomial_Regression.ipynb?authuser=5" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+    </section>
+  
+    <!-- Lab: Non-linear Regression -->
+    <section>
+      <h2 class="text-2xl font-bold mb-4">2.11 Lab: Non-linear Regression</h2>
+      <p class="mb-4">Link: <a href="https://colab.research.google.com/github/CyConProject/Lab/blob/main/Lab_Non_linear_Regression.ipynb?authuser=5" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+    </section>
+  
+    <!-- Module 2 – Quiz -->
+  <section class="mb-8">
+    <h2 class="text-3xl font-bold mb-4">2.12 Module 2 – Quiz</h2>
+    <p class="mb-4">Instructions:<br> Answer the following questions based on your understanding of the concepts covered in Module 2. Choose the most appropriate answer for each question.</p>
+
+    <ol class="list-decimal list-inside">
+      <li><strong>1) Regression is a method used to predict:</strong><br>a) Discrete values<br>b) Continuous values<br>c) Categorical values<br>d) Boolean values</li>
+      <li><strong>2) Which of the following statements is true regarding regression?</strong><br>a) The variable we want to predict is the dependent variable.<br>b) The variable we want to predict is the independent variable.<br>c) The variable we want to predict can be either the dependent or independent variable.<br>d) Regression does not involve predicting variables.</li>
+      <li><strong>3) In regression, the dependent variable is denoted by:</strong><br>a) X<br>b) Y<br>c) Z<br>d) W</li>
+      <li><strong>4) Which type of regression model involves one independent variable?</strong><br>a) Simple regression<br>b) Multiple regression<br>c) Polynomial regression<br>d) Non-linear regression</li>
+      <li><strong>5) The coefficients of the line in a simple linear regression model represent:</strong><br>a) Intercept and slope<br>b) Mean and standard deviation<br>c) Median and range<br>d) Correlation and variance</li>
+      <li><strong>6) Which evaluation approach involves training the model on the entire dataset and testing it on a portion of the same dataset?</strong><br>a) Train and test on the same dataset<br>b) Train/test split<br>c) K-fold cross-validation<br>d) Mean squared error evaluation</li>
+      <li><strong>7) Mean squared error (MSE) is calculated as the average of the:</strong><br>a) Absolute differences between actual and predicted values<br>b) Squared differences between actual and predicted values<br>c) Relative differences between actual and predicted values<br>d) Correlation coefficient between actual and predicted values</li>
+      <li><strong>8) Multiple linear regression involves predicting a dependent variable using:</strong><br>a) Multiple dependent variables<br>b) Multiple independent variables<br>c) Multiple categorical variables<br>d) Multiple Boolean variables</li>
+      <li><strong>9) Polynomial regression is a type of:</strong><br>a) Linear regression<br>b) Non-linear regression<br>c) Simple regression<br>d) Multiple regression</li>
+      <li><strong>10) Which evaluation metric represents how well the data values fit the regression line?</strong><br>a) Mean absolute error (MAE)<br>b) Mean squared error (MSE)<br>c) Root mean squared error (RMSE)<br>d) R-squared</li>
+      <li><strong>11) What is the best way to find the best multiple regression coefficients?</strong><br>a) Using linear algebra techniques<br>b) Using an optimization method<br>c) Randomly selecting coefficients<br>d) Estimating coefficients based on the mean values</li>
+      <li><strong>12) What is the value of Mean Squared Error (MSE) for the given actual and predicted values?</strong><br>Actual Value = [3, 5, 4, 2, 6, 7, 8]<br>Predicted Value = [2.5, 4.7, 4.2, 1.8, 5.5, 6.8, 8.2]<br>a) 0.16<br>b) 0.08<br>c) 0.12<br>d) 0.11</li>
+    </ol>
+
+    <p><strong>Answer Key:</strong><br>b) Continuous values<br>a) The variable we want to predict is the dependent variable.<br>b) Y<br>a) Simple regression<br>a) Intercept and slope<br>a) Train and test on the same dataset<br>b) Squared differences between actual and predicted values<br>b) Multiple independent variables<br>b) Non-linear regression<br>d) R-squared<br>b) Using an optimization method<br>d) 0.11</p>
+  </section>
+
+  <!-- Module 2 - Assignment -->
+  <section>
+    <h2 class="text-3xl font-bold mb-4">2.13 Module 2 - Assignment</h2>
+  </section>
+
+  </div>
+</div>
+{% endblock %}

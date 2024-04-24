@@ -22,6 +22,9 @@ from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import KFold
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.metrics import silhouette_score, calinski_harabasz_score, davies_bouldin_score
+from sklearn.metrics import adjusted_rand_score, homogeneity_score, completeness_score, v_measure_score
+from sklearn.cluster import KMeans
 
 from backend.Classes.PreoptimizationFiles import Preoptimization
 import traceback
@@ -70,6 +73,7 @@ def Split(data):
         
         X = df_act.drop(data["class_col"], axis=1)  # Features
         y = df_act[data["class_col"]] 
+        
 
         # df = df_act.to_numpy()
         # y = df[:, -1]
@@ -86,48 +90,103 @@ def Split(data):
         if data["Stratify"] == "True":
             stratify = df_act[data["class_col"]]
         
-        if data[data['validation'] + "_Input"] == "0.0":
-            x_train = X
-        
-            y_train = y.to_numpy()
-            model, settings = MLA.createModel(data)
-            # Perform the Method.
-            model.fit(x_train, y_train)
-            weight = "weight not available"
-            try:
-                
-                if data['MLalgorithm'] == "RandomForestClassifier" or data['MLalgorithm'] == "RandomForestRegression":
-                    weight = model.feature_importances_
-                elif data['MLalgorithm'] == "SVR":
-                    dual_coefficients = model.dual_coef_
-                    support_vectors = model.support_vectors_
-                    weights = np.abs(dual_coefficients) @ support_vectors
-                    weight = weights*0.73
-                    
-                elif hasattr(model, 'coef_'):
-                    weight = model.coef_
-                else:
-                    weight = "weight not available"
-            except Exception as e:
-                weight = "weight not available"
-                
-            logging.debug(data['MLalgorithm'] )
-            Accuracy = "This metric needs split more than 0.0"
-            F1 = "This metric needs split more than 0.0"
-            F1_micro = "This metric needs split more than 0.0"
-            F1_macro = "This metric needs split more than 0.0"
-            Precision = "This metric needs split more than 0.0"
-            Precision_micro = "This metric needs split more than 0.0"
-            Precision_macro = "This metric needs split more than 0.0"
-            recall = "This metric needs split more than 0.0"
-            recall_micro = "This metric needs split more than 0.0"
-            recall_macro = "This metric needs split more than 0.0"
-            my_base64_jpgData = "This metric needs split more than 0.0"
+        Accuracy = "This is for classification"
+        F1 = "This is for classification"
+        F1_micro = "This is for classification"
+        F1_macro = "This is for classification"
+        Precision = "This is for classification"
+        Precision_micro = "This is for classification"
+        Precision_macro = "This is for classification"
+        recall = "This is for classification"
+        recall_micro = "This is for classification"
+        recall_macro = "This is for classification"
+        my_base64_jpgData = "This is for classification"
 
-            mse = "This metric needs split more than 0.0"
-            rmse = "This metric needs split more than 0.0"
-            mae = "This metric needs split more than 0.0"
-            r2 = "This metric needs split more than 0.0"
+        mse = "This is for regression"
+        rmse = "This is for regression"
+        mae = "This is for regression"
+        r2 = "This is for regression"
+        weight = "weight not available"
+        silhouette = "This is a metrics for clustering and split must be 0.0"
+        calinski_harabasz = "This is a metrics for clustering and split must be 0.0"
+        davies_bouldin = "This is a metrics for clustering and split must be 0.0"
+        ari = "This is a metrics for clustering with true class label (pick a target class) and split must be 0.0"
+        homogeneity = "This is a metrics for clustering with true class label (pick a target class) and split must be 0.0"
+        completeness = "This is a metrics for clustering with true class label (pick a target class) and split must be 0.0"
+        v_measure = "This is a metrics for clustering with true class label (pick a target class) and split must be 0.0"
+        
+        if data[data['validation'] + "_Input"] == "0.0":
+
+            if data["metrics_catagory"] == "clustering":
+                    # Perform clustering using K-means
+                    model, settings = MLA.createModel(data)
+                    # Perform the Method.
+                    kmeans_labels = model.fit_predict(X)
+                
+                    # weight = "weight not available"
+                    # kmeans = KMeans(n_clusters=3, random_state=42)
+                    # kmeans_labels = kmeans.fit_predict(X)
+                    # Evaluate clustering using common metrics
+                    silhouette = silhouette_score(X, kmeans_labels)
+                    calinski_harabasz = calinski_harabasz_score(X, kmeans_labels)
+                    davies_bouldin = davies_bouldin_score(X, kmeans_labels)
+
+                    if data["class_col"] != "":
+                        ari = adjusted_rand_score(y, kmeans_labels)
+                        homogeneity = homogeneity_score(y, kmeans_labels)
+                        completeness = completeness_score(y, kmeans_labels)
+                        v_measure = v_measure_score(y, kmeans_labels)
+                        logging.debug("declared_one")
+            else:
+                x_train = X
+            
+                y_train = y.to_numpy()
+                model, settings = MLA.createModel(data)
+                # Perform the Method.
+                model.fit(x_train, y_train)
+                weight = "weight not available"
+                try:
+                    
+                    if data['MLalgorithm'] == "RandomForestClassifier" or data['MLalgorithm'] == "RandomForestRegression":
+                        weight = model.feature_importances_
+                    elif data['MLalgorithm'] == "SVR":
+                        dual_coefficients = model.dual_coef_
+                        support_vectors = model.support_vectors_
+                        weights = np.abs(dual_coefficients) @ support_vectors
+                        weight = weights*0.73
+                        
+                    elif hasattr(model, 'coef_'):
+                        weight = model.coef_
+                    else:
+                        weight = "weight not available"
+                except Exception as e:
+                    weight = "weight not available"
+                    
+                logging.debug(data['MLalgorithm'] )
+                Accuracy = "This metric needs split more than 0.0"
+                F1 = "This metric needs split more than 0.0"
+                F1_micro = "This metric needs split more than 0.0"
+                F1_macro = "This metric needs split more than 0.0"
+                Precision = "This metric needs split more than 0.0"
+                Precision_micro = "This metric needs split more than 0.0"
+                Precision_macro = "This metric needs split more than 0.0"
+                recall = "This metric needs split more than 0.0"
+                recall_micro = "This metric needs split more than 0.0"
+                recall_macro = "This metric needs split more than 0.0"
+                my_base64_jpgData = "This metric needs split more than 0.0"
+
+                mse = "This metric needs split more than 0.0"
+                rmse = "This metric needs split more than 0.0"
+                mae = "This metric needs split more than 0.0"
+                r2 = "This metric needs split more than 0.0"
+                silhouette = "This is a metrics for clustering and split must be 0.0"
+                calinski_harabasz = "This is a metrics for clustering and split must be 0.0"
+                davies_bouldin = "This is a metrics for clustering and split must be 0.0"
+                ari = "This is a metrics for clustering with true class label (pick a target class) and split must be 0.0"
+                homogeneity = "This is a metrics for clustering with true class label (pick a target class) and split must be 0.0"
+                completeness = "This is a metrics for clustering with true class label (pick a target class) and split must be 0.0"
+                v_measure = "This is a metrics for clustering with true class label (pick a target class) and split must be 0.0"
+                
 
         else:
             # train_set, test_set = train_test_split(df, test_size=float(data[data['validation'] + "_Input"]), shuffle=shuffle, random_state = random_state, stratify = stratify)
@@ -165,7 +224,7 @@ def Split(data):
             mae = "This metric is for Regression"
             r2 = "This metric is for Regression"
             # Obtain the Metrics
-            if data["regression"] == "false":
+            if data["metrics_catagory"] == "classification":
                 Accuracy = accuracy_score(y_test, y_pred)
                 F1 = f1_score(y_test, y_pred, average=None)
                 F1 = F1.tolist()
@@ -197,7 +256,7 @@ def Split(data):
                 else:
                     weight = "weight not available"
 
-            else:
+            elif data["metrics_catagory"] == "regression":
                 mse = mean_squared_error(y_test, y_pred)
                 rmse = np.sqrt(mse)
                 mae = mean_absolute_error(y_test, y_pred)
@@ -213,7 +272,8 @@ def Split(data):
                     weight = model.coef_
                 else:
                     weight = "weight not available"
-                
+
+            
             # create a confusion matrix
             #def fig_to_base64(fig):
             #    img = io.BytesIO()
@@ -265,10 +325,19 @@ def Split(data):
                     "RMSE": rmse,
                     "MAE": mae,
                     "r2": r2,
+                    "silhouette": silhouette,
+                    "calinski": calinski_harabasz,
+                    "davies": davies_bouldin,
+                    "ari": ari,
+                    "homogeneity": homogeneity,
+                    "completeness": completeness,
+                    "v_measure": v_measure,
+
                 
                     "Val_Random_State": random_state,
                     "Val_Shuffle": shuffle}
-
+        
+        
         Metrics.update(settings)
 
         status = "worked"

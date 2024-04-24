@@ -53,7 +53,7 @@ Display_Name = "Power Transformer"
 Definition = ["Apply a power transform featurewise to make data more Gaussian-like.\n\nPower transforms are a family of parametric, monotonic transformations that are applied to make data more Gaussian-like. This is useful for modeling issues related to heteroscedasticity (non-constant variance), or other situations where normality is desired.\n\nCurrently, PowerTransformer supports the Box-Cox transform and the Yeo-Johnson transform. The optimal parameter for stabilizing variance and minimizing skewness is estimated through maximum likelihood.\n\nBox-Cox requires input data to be strictly positive, while Yeo-Johnson supports both positive or negative data.\n\nBy default, zero-mean, unit-variance normalization is applied to the transformed data."]
 
 Parameter_0 =  {"Name":"method", "Type": ["option"], "Default_option":"yeo-johnson", "Default_value":"yeo-johnson", "Possible":["yeo-johnson","box-cox"], 
-               "Definition":"The power transform method. Available methods are:\n\n‘yeo-johnson’, works with positive and negative values\n\n‘box-cox’, only works with strictly positive values"}
+               "Definition":"‘yeo-johnson’, works with positive and negative values\n‘box-cox’, only works with strictly positive values"}
 Parameter_1 =  {"Name":"standardize", "Type": ["bool"], "Default_option":True, "Default_value":True, "Possible":[True,False], 
                "Definition":"Set to True to apply zero-mean, unit-variance normalization to the transformed output."}
 Parameter_2 =  {"Name":"copy", "Type": ["bool"], "Default_option":True, "Default_value":True, "Possible":[True, False], 

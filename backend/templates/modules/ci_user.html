@@ -1,10 +1,153 @@
 {% extends "layout.html" %} {% block content %}
 
 <div id="home" class="container mx-auto px-2 py-4 mt-2">
-    <div class="main mt-4 mb-2" style="width: 70%">
-        Under development.
-        <div class="flex">
-            CI User Resource
+    <div class="main mb-2">
+        <div class="container mx-auto p-4">
+            <a class="hover:text-blue-500 font-bold mt-4 {{ 'text-slate-100' if selected == '/' }}" href="{{ url_for('modules.about') }}">About</a>
+            <!-- <a class="hover:text-blue-500 font-bold mt-4"
+       :class="{'text-slate-100': selected === '/'}"
+       href="{{ url_for('modules.about') }}">
+            About The Course
+        </a> -->
+            <ul class="pl-6">
+                <li>✓ General Information</li>
+                <li>✓ Learning Objectives and Syllabus</li>
+                <li>✓ Grading Scheme → Needs change after finishing the course</li>
+            </ul>
+
+            <a class="hover:text-blue-500 font-bold mt-4 {{ 'text-slate-100' if selected == '/' }}" href="{{ url_for('modules.module_0') }}" style="color: blue !important;" target="_blank">Module 0: Introduction</a>
+            <ul class="pl-6">
+                <li>✓ 0-1- Course Overview</li>
+                <li>✓ 0-2- Prerequisites</li>
+            </ul>
+
+            <div class="font-bold mt-4"><a class="hover:text-blue-500 font-bold mt-4 {{ 'text-slate-100' if selected == '/' }}" href="{{ url_for('modules.module_1') }}" style="color: blue !important;" target="_blank"> Module 1: Introduction to Machine Learning </a> </div>
+            <ul class="pl-6">
+                <li>✓ 1-1- Module Introduction and Learning Objectives</li>
+                <li>✓ 1-2- Introduction to Machine Learning</li>
+                <li>✓ 1-3- Python for Machine Learning: Introduction to Essential Libraries and SciKit Learn</li>
+                <li>✓ 1-4- Supervised vs. Unsupervised Learning: Understanding the Differences and Techniques</li>
+                <li>✓ 1-5- Applications of Machine Learning in Construction Research</li>
+                <li>✓ 1-6- Module 1 – Quiz</li>
+            </ul>
+
+
+            <!--part-->
+            <div class="font-bold mt-4"><a class="hover:text-blue-500 font-bold mt-4 {{ 'text-slate-100' if selected == '/' }}" href="{{ url_for('modules.module_2') }}" style="color: blue !important;" target="_blank"> Module 2: Supervised Learning - Regression </a> </div>
+            <ul class="pl-6">
+                <li>✓ 2-1- Module Introduction and Learning Objectives</li>
+                <li>✓ 2-2- Introduction to Regression: Predicting Continuous Values with Independent Variable</li>
+                <li>✓ 2-3- Simple Linear Regression</li>
+                <li>✓ 2-4- Model Evaluation in Regression Models</li>
+                <li>✓ 2-5- Accuracy Metrics for Regression Model Evaluation</li>
+                <li>✓ 2-6- Lab: Simple Linear Regression</li>
+                <li>✓ 2-7- Exploring Multiple Linear Regression</li>
+                <li>✓ 2-8- Lab: Multiple Linear Regression</li>
+                <li>✓ 2-9- Non-Linear Regression</li>
+                <li>✓ 2-10- Lab: Polynomial Regression</li>
+                <li>✓ 2-11- Lab: Non-linear Regression</li>
+                <li>✓ 2-12- Module 2 – Quiz</li>
+                <li>2-13- Module 2 - Assignment</li>
+            </ul>
+
+
+            <div class="font-bold mt-4"> <a class="hover:text-blue-500 font-bold mt-4 {{ 'text-slate-100' if selected == '/' }}" href="{{ url_for('modules.module_3') }}" style="color: blue !important;" target="_blank"> Module 3: Supervised Learning - Classification </a> </div>
+            <ul class="pl-6">
+                <li>✓ 3-1- Module Introduction and Learning Objectives</li>
+                <li>✓ 3-2- Introduction to Classification: Categorizing Data and Predictive Models</li>
+                <li>✓ 3-3- Exploring the K-Nearest Neighbors Algorithm: Classification and Prediction</li>
+                <li>✓ 3-4- Evaluation Metrics for Classifiers: Jaccard, F1-score, and Log Loss</li>
+                <li>✓ 3-5- Lab: KNN</li>
+                <li>✓ 3-6- Introduction to Decision Trees</li>
+                <li>✓ 3-7- Building Decision Trees: Selecting Attributes for Optimal Classification</li>
+                <li>3-8- Lab: Decision Trees</li>
+                <li>✓ 3-9- Intro to Logistic Regression: Predicting and Understanding Classification Problems</li>
+                <li>✓ 3-10- Understanding the Difference: Linear Regression vs. Logistic Regression</li>
+                <li>✓ 3-11- Mastering Logistic Regression: Optimizing Model Parameters with Gradient Descent</li>
+                <li>3-12- Lab: Logistic Regression</li>
+                <li>✓ 3-13- Understanding Support Vector Machines (might need another video)</li>
+                <li>3-14- Lab: SVM (Support Vector Machines)</li>
+                <li>✓ 3-15- Module 3 – Quiz</li>
+                <li>3-16- Module 3 – Assignment</li>
+            </ul>
+
+            <div class="font-bold mt-4">Module 4: Unsupervised Learning- Clustering</div>
+            <ul class="pl-6">
+                <li>4-1- Module Introduction and Learning Objectives</li>
+                <li>✓ 4-2- Introduction to Clustering: Unleashing Insights from Data</li>
+                <li>✓ 4-3- K-Means Clustering</li>
+                <li>✓ 4-4- Exploring k-Means Accuracy and Characteristics</li>
+                <li>4-5- Lab: k-Means</li>
+                <li>✓ 4-6- Hierarchical Clustering</li>
+                <li>✓ 4-7- Understanding Agglomerative Hierarchical Clustering</li>
+                <li>4-8- Lab: Agglomerative Clustering</li>
+                <li>✓ 4-9- DBSCAN: Density-Based Clustering</li>
+                <li>4-10- Lab: DBSCAN Clustering</li>
+                <li>4-11- Module 4 – Quiz</li>
+                <li>4-12- Module 4 - Assignment</li>
+            </ul>
+
+            <div class="font-bold mt-4">Module 5: Unsupervised Learning- Dimensionality Reduction</div>
+            <ul class="pl-6">
+                <li>• Module Introduction and Learning Objectives</li>
+                <li>• Introduction to Dimensionality Reduction</li>
+                <li>• Principal Component Analysis (PCA)</li>
+                <li>• t-Distributed Stochastic Neighbor Embedding (t-SNE)</li>
+                <li>• Module 5 – Quiz</li>
+                <li>• Module 5 - Assignment</li>
+            </ul>
+
+
+            <div class="font-bold mt-4">Module 6: Model Selection and Evaluation</div>
+            <ul class="pl-6">
+                <li>• Module Introduction and Learning Objectives</li>
+                <li>• Overfitting and Underfitting</li>
+                <li>• Cross-Validation</li>
+                <li>• Module Introduction and Learning Objectives</li>
+                <li>• Module 6 – Quiz</li>
+                <li>• Module 6 - Assignment</li>
+            </ul>
+
+            <div class="font-bold mt-4">Module 7: Feature Engineering</div>
+            <ul class="pl-6">
+                <li>• Module Introduction and Learning Objectives</li>
+                <li>• Feature Selection</li>
+                <li>• Feature Extraction</li>
+                <li>• Module 7 – Quiz</li>
+                <li>• Module 7 - Assignment</li>
+            </ul>
+
+
+            <div class="font-bold mt-4">Module 8: Bias and Fairness in Machine Learning</div>
+            <ul class="pl-6">
+                <li>• Module Introduction and Learning Objectives</li>
+                <li>• Sources of Bias</li>
+                <li>• Mitigating Bias</li>
+                <li>• Module 8 – Quiz</li>
+                <li>• Module 8 – Assignment</li>
+            </ul>
+
+            <div class="font-bold mt-4">Module 9: Introduction to Deep Learning</div>
+            <ul class="pl-6">
+                <li>• Module Introduction and Learning Objectives</li>
+                <li>• Neural Networks</li>
+                <li>• Activation Functions</li>
+                <li>• Backpropagation</li>
+            </ul>
+
+            <div class="font-bold mt-4">Module 10: Applications of Machine Learning in Construction Research</div>
+            <ul class="pl-6">
+                <li>• Predicting Construction Time and Cost</li>
+                <li>• Optimizing Construction Schedules</li>
+                <li>• Predicting Equipment Maintenance</li>
+            </ul>
+
+            <div class="font-bold mt-4">Module 11: Real-World Examples and Case Studies</div>
+            <ul class="pl-6">
+                <li>• Image Recognition in Construction</li>
+                <li>• Predictive Maintenance</li>
+            </ul>
+
         </div>
 
     </div>
