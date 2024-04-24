@@ -233,7 +233,7 @@ def getCSVColumnTitles(data):
         df = pd.read_csv(data['csvFile'], index_col=None)
 
     titles_list = list(df.columns.values)
-
+    # titles_list.append("")
     results = {"Tiltes":titles_list}
 
     return results

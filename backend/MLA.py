@@ -17,6 +17,8 @@ from sklearn.naive_bayes import ComplementNB
 from sklearn.cluster import KMeans
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import Perceptron
+from sklearn.linear_model import LinearRegression
+from sklearn.cluster import AgglomerativeClustering
 
 class MLA:
     def __init__(self, name, definition, parameters):
@@ -405,6 +407,8 @@ Parameter_1 =  {
     "Default_value":"k-means++", 
     "Possible":["k-means++", "random"], 
     "Definition":"Method for initialization:\n\n‘k-means++’ : selects initial cluster centroids using sampling based on an empirical probability distribution of the points’ contribution to the overall inertia. This technique speeds up convergence. The algorithm implemented is “greedy k-means++”. It differs from the vanilla k-means++ by making several trials at each sampling step and choosing the best centroid among them.\n\n‘random’: choose n_clusters observations (rows) at random from data for the initial centroids.\n\nIf an array is passed, it should be of shape (n_clusters, n_features) and gives the initial centers.\n\nIf a callable is passed, it should take arguments X, n_clusters and a random state and return an initialization."}
+
+
 Parameter_2 =  {"Name":"n_int", "Type": ["int"], "Default_option":10, "Default_value":10, "Possible":["int"], 
                "Definition":"Number of times the k-means algorithm is run with different centroid seeds. The final results is the best output of n_init consecutive runs in terms of inertia. Several runs are recommended for sparse high-dimensional problems (see Clustering sparse data with k-means).\n\nWhen n_init='auto', the number of runs depends on the value of init: 10 if using init='random', 1 if using init='k-means++'."}
 Parameter_3 =  {"Name":"max_iter", "Type": ["int"], "Default_option":300, "Default_value":300, "Possible":["int"], 
@@ -426,7 +430,46 @@ Parameters = {"Parameter_0":Parameter_0, "Parameter_1":Parameter_1,"Parameter_2"
 
 k_mean_algorithm = MLA(Name, Definition, Parameters)
 
-#list_MLAs.append(k_mean_algorithm)
+list_MLAs.append(k_mean_algorithm)
+
+
+## This is clustering algorithm not classification.
+# K-Means
+Name = "Hierarchical_clustering"
+Definition = ["Hierarchical_clustering: Recursively merges pair of clusters of sample data; uses linkage distance."]
+Parameter_0 =  {"Name":"n_clusters", "Type": ["int_or_null"], "Default_option":2, "Default_value":2, "Possible":["int"], 
+               "Definition":"The number of clusters to find."}
+Parameter_1 =  {
+    "Name":"metric", 
+    "Type": ["option"], 
+    "Default_option":"euclidean", 
+    "Default_value":"euclidean", 
+    "Possible":["euclidean", "l1", "l2", "manhattan", "cosine"], 
+    "Definition":"Metric used to compute the linkage."}
+
+Parameter_2 =  {
+    "Name":"linkage", 
+    "Type": ["option"], 
+    "Default_option":"ward", 
+    "Default_value":"ward", 
+    "Possible":["ward", "complete", "average", "single"], 
+    "Definition":"Which linkage criterion to use. ‘ward’ minimizes the variance of the clusters being merged. \n ‘average’ uses the average of the distances of each observation of the two sets. \n ‘complete’ or ‘maximum’ linkage uses the maximum distances between all observations of the two sets. \n ‘single’ uses the minimum of the distances between all observations of the two sets."}
+
+Parameter_3 =  {"Name":"distance_threshold", "Type": ["float_or_null"], "Default_option":None, "Default_value":None, "Possible":["float"], 
+               "Definition":"The linkage distance threshold at or above which clusters will not be merged. If not None, n_clusters must be None and compute_full_tree must be True."}
+
+Parameter_4 =  {"Name":"compute_distances", "Type": ["bool"], "Default_option":False, "Default_value":False, "Possible":[True,False], 
+               "Definition":"Computes distances between clusters even if distance_threshold is not used. This can be used to make dendrogram visualization, but introduces a computational and memory overhead."}
+
+
+Parameters = {"Parameter_0":Parameter_0, "Parameter_1":Parameter_1, "Parameter_2":Parameter_2, "Parameter_3":Parameter_3,
+             "Parameter_4":Parameter_4}
+
+Hierarchical_clustering = MLA(Name, Definition, Parameters)
+
+list_MLAs.append(Hierarchical_clustering)
+
+
 
 # Bernoulli Naive Bayes Classifier
 Name = "BernoulliNB"
@@ -791,6 +834,48 @@ Perceptron_algorithm = MLA(Name, Definition, Parameters)
 
 list_MLAs.append(Perceptron_algorithm)
 
+Name = "LinearRegression"
+Definition = ["LinearRegression fits a linear model with coefficients w = (w1, …, wp) to minimize the residual sum of squares between the observed targets in the dataset, and the targets predicted by the linear approximation."]
+Parameter_0 =  {
+    "Name":"fit_intercept", 
+    "Type": ["bool"], 
+    "Default_option":True, 
+    "Default_value":True, 
+    "Possible":[True, False], 
+    "Definition":"Whether to calculate the intercept for this model. \n If set to False, no intercept will be used in calculations (i.e. data is expected to be centered)."
+    }
+
+Parameter_1 =  {"Name":"copy_X", 
+                "Type": ["bool"], 
+                "Default_option": True, 
+                "Default_value": True, 
+                "Possible":[True, False], 
+               "Definition":"If True, X will be copied; else, it may be overwritten."
+               }
+
+
+Parameter_2 =  {"Name":"positive", 
+                "Type": ["bool"], 
+                "Default_option": False, 
+                "Default_value": False, 
+                "Possible":[True, False], 
+               "Definition":"When set to True, forces the coefficients to be positive. This option is only supported for dense arrays."
+               }
+
+Parameter_3 = {"Name":"n_jobs", 
+               "Type": ["int_or_null"],
+                "Default_option":None,
+                "Default_value":None, 
+                "Possible":["int"],
+                "Definition":"The number of jobs to use for the computation. \n This will only provide speedup in case of sufficiently large problems, that is if firstly n_targets > 1 and secondly X is sparse or if positive is set to True. \n None means 1 unless in a joblib.parallel_backend context. -1 means using all processors. See Glossary for more details."}
+
+
+Parameters = {"Parameter_0":Parameter_0, "Parameter_1":Parameter_1, "Parameter_2":Parameter_2, "Parameter_3" : Parameter_3 }
+
+LinearRegression_algorithm = MLA(Name, Definition, Parameters)
+
+list_MLAs.append(LinearRegression_algorithm)
+
 
 def getMLAs():
     return list_MLAs
@@ -928,6 +1013,16 @@ def createModel(data):
                     random_state=settings['Parameter_6'],
                     copy_x=settings['Parameter_7'],
                     algorithm=settings['Parameter_8'])
+    
+    elif data["MLalgorithm"] == "Hierarchical_clustering":
+        model = AgglomerativeClustering(
+            n_clusters = settings["Parameter_0"],
+            metric = settings["Parameter_1"],
+            linkage= settings["Parameter_2"],
+            distance_threshold=settings["Parameter_3"],
+            compute_full_tree=settings["Parameter_4"]
+        )
+
 
     elif data["MLalgorithm"] == "DecisionTreeClassifier":
         model = DecisionTreeClassifier(criterion=settings['Parameter_0'],
@@ -1065,6 +1160,14 @@ def createModel(data):
                                    validation_fraction = settings["Parameter_10"],
                                    n_iter_no_change = settings["Parameter_11"],
                                    warm_start = settings["Parameter_12"])
-          
         
+    elif data["MLalgorithm"] == "LinearRegression":
+        model = LinearRegression(fit_intercept = settings['Parameter_0'],
+                                   copy_X = settings["Parameter_1"],
+                                   positive = settings["Parameter_2"],
+                                   n_jobs = settings["Parameter_3"]
+                                   )
+    
+    
+
     return model, settings

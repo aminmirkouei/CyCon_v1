@@ -1,0 +1,524 @@
+{% extends "layout.html" %} {% block content %}
+<div class="ml-6 mt-3">
+    <div class="p-8 ml">
+
+        <!-- Module Introduction and Learning Objectives -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">3-1 Module Introduction and Learning Objectives</h2>
+            <p>Welcome to Module 3 of our Machine Learning course! In this module, we will delve into the exciting field
+                of classification. Classification is a supervised learning approach that involves categorizing unknown
+                items into discrete classes based on their features. By understanding classification, you'll be equipped
+                to tackle a wide range of classification problems, such as churn detection, traffic flow classification,
+                and soil classification.</p>
+            <p>In this section, we will introduce the concept of classification and its key components. We'll explore
+                different classification algorithms, including decision trees, K-Nearest Neighbors (KNN), logistic
+                regression, and Support Vector Machines (SVM). By the end of this section, you will understand the
+                fundamentals of classification, the evaluation metrics used to assess classifier performance, and the
+                specific use cases of various classification algorithms.</p>
+            <h3 class="text-xl font-bold mt-4">Learning Objectives:</h3>
+            <ul class="list-disc list-inside">
+                <li>Understand the purpose and applications of classification in machine learning.</li>
+                <li>Differentiate between binary and multi-class classification.</li>
+                <li>Explore the K-Nearest Neighbors (KNN) algorithm for classification and prediction.</li>
+                <li>Learn about decision trees and their use in classification.</li>
+                <li>Gain insights into logistic regression and its role in predicting and understanding classification
+                    problems.</li>
+                <li>Understand the principles and applications of Support Vector Machines (SVM) in classification.</li>
+                <li>Discover evaluation metrics such as Jaccard index, F1-score, and Log Loss for assessing classifier
+                    performance.</li>
+            </ul>
+            <p>By the end of this module, you will have a solid understanding of classification techniques and their
+                applications in machine learning. Get ready to dive into the world of categorizing data and predicting
+                outcomes with classification algorithms!</p>
+        </section>
+
+        <!-- Introduction to Classification -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">3-2 Introduction to Classification: Categorizing Data and Predictive
+                Models</h2>
+            <p>Link of the video: <a href="https://www.youtube.com/watch?v=Vz_64jnDGWc" class="text-blue-500 underline"
+                    style="color: blue !important;" target="_blank">Link</a></p>
+            <p>Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a
+                    href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch"
+                    class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <h3 class="text-xl font-bold mt-4">Key points of the video:</h3>
+            <ul class="list-disc list-inside">
+                <li>Classification is a supervised learning approach used to categorize or classify unknown items into
+                    discrete classes.</li>
+                <li>Classification learns the relationship between a set of feature variables and a target variable.
+                </li>
+                <li>Classifiers work by determining the class label for an unlabeled test case based on training data
+                    and target labels.</li>
+                <li>Classification has various business use cases, such as customer categorization, churn detection, and
+                    advertising campaign prediction.</li>
+                <li>Data classification has applications in email filtering, speech recognition, handwriting
+                    recognition, biometric identification, document classification, etc.</li>
+                <li>Common types of classification algorithms include decision trees, naive Bayes, linear discriminant
+                    analysis, k-nearest neighbor, logistic regression, neural networks, and support vector machines.
+                </li>
+            </ul>
+        </section>
+
+        <!-- Exploring the K-Nearest Neighbors Algorithm -->
+        <section>
+            <h2 class="text-2xl font-bold mb-4">3-3 Exploring the K-Nearest Neighbors Algorithm: Classification and
+                Prediction</h2>
+            <p>Link of the video: <a href="https://www.youtube.com/watch?v=xcp8pmfpBN4" class="text-blue-500 underline"
+                    style="color: blue !important;" target="_blank">Link</a></p>
+            <p>Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a
+                    href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch"
+                    class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <h3 class="text-xl font-bold mt-4">Key points of the video:</h3>
+            <ul class="list-disc list-inside">
+                <li>KNN is used to predict the class of a new or unknown case based on its similarity to labeled cases
+                    in a dataset.</li>
+                <li>KNN works by selecting a value for K, calculating the distance between the new case and existing
+                    cases, finding the K-nearest neighbors, and predicting the response based on the majority vote of
+                    the neighbors.</li>
+                <li>The distance between cases can be calculated using measures like Euclidean distance, and
+                    similarity/dissimilarity is based on the proximity of cases.</li>
+                <li>Selecting the correct value for K is important, as a low value may capture noise or anomalies, while
+                    a high value may lead to overgeneralization.</li>
+                <li>KNN has applications in various domains, such as customer segmentation based on demographic data or
+                    predicting home prices based on features.</li>
+            </ul>
+        </section>
+
+
+        <!-- Evaluation Metrics for Classifiers -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">3-4 Evaluation Metrics for Classifiers: Jaccard, F1-score, and Log Loss
+            </h2>
+            <p>Link of the video: <a href="https://www.youtube.com/watch?v=ssX_iz7npnQ" class="text-blue-500 underline"
+                    style="color: blue !important;" target="_blank">Link</a></p>
+            <p>Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a
+                    href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch"
+                    class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <h3 class="text-xl font-bold mt-4">Key points of the video:</h3>
+            <ul class="list-disc list-inside">
+                <li>Evaluation metrics provide insight into the performance of a model and areas that need improvement.
+                </li>
+                <li>The Jaccard index measures the similarity between true and predicted labels using the intersection
+                    and union of the label sets.</li>
+                <li>Confusion matrices help visualize the correctness of predictions and allow the calculation of
+                    precision and recall for each label.</li>
+                <li>Precision is the accuracy of a predicted class label, and recall is the true positive rate.</li>
+                <li>The F1-score is the harmonic average of precision and recall and represents a classifier's
+                    performance in both aspects.</li>
+                <li>Log Loss measures the performance of a classifier when the predicted output is a probability value
+                    between 0 and 1.</li>
+                <li>Lower log loss indicates better accuracy, as ideal classifiers have smaller log loss values.</li>
+                <li>Jaccard index and F1-score can be used for multi-class classifiers as well.</li>
+            </ul>
+        </section>
+
+        <!-- Lab: KNN -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">3-5 Lab: KNN</h2>
+            <p>Link: <a
+                    href="https://colab.research.google.com/github/CyConProject/Lab/blob/main/Lab_KNN.ipynb?authuser=5"
+                    class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+        </section>
+
+        <!-- Introduction to Decision Trees -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">3-6 Introduction to Decision Trees</h2>
+            <p>Link of the video: <a href="https://www.youtube.com/watch?v=W-TOI6LhhTE"
+                    class="text-blue-500 underline">Link</a></p>
+            <p>Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a
+                    href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch"
+                    class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <h3 class="text-xl font-bold mt-4">Key points of the video:</h3>
+            <ul class="list-disc list-inside">
+                <li>Decision trees are used for classification and help determine the appropriate action or outcome
+                    based on given features.</li>
+                <li>Decision trees can be grown by splitting the training set into distinct nodes based on different
+                    attributes.</li>
+                <li>Decision trees test attributes and branch cases based on the results of the tests.</li>
+                <li>Internal nodes represent tests, branches represent test results, and leaf nodes assign cases to
+                    classes.</li>
+                <li>Decision trees are built by considering attributes one by one and determining the significance of
+                    each attribute in splitting the data.</li>
+                <li>Once the decision tree is built, it can be used to predict the class or outcome for unknown cases.
+                </li>
+            </ul>
+        </section>
+
+        <!-- Building Decision Trees: Selecting Attributes for Optimal Classification -->
+        <section>
+            <h2 class="text-2xl font-bold mb-4">3-7 Building Decision Trees: Selecting Attributes for Optimal
+                Classification</h2>
+            <p>Link of the video: <a href="https://www.youtube.com/watch?v=zqkL8nHqC-k"
+                    class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <p>Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a
+                    href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch"
+                    class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <h3 class="text-xl font-bold mt-4">Key points of the video:</h3>
+            <ul class="list-disc list-inside">
+                <li>Decision trees are constructed using recursive partitioning to classify data.</li>
+                <li>The choice of the attribute to split the data on is crucial and depends on its predictiveness and
+                    ability to decrease impurity.</li>
+                <li>The purity of a node is determined by the homogeneity of the samples in that node.</li>
+                <li>Entropy is used to measure the amount of randomness or disorder in the data and is calculated for
+                    each node.</li>
+                <li>Decision trees aim to minimize entropy and maximize information gain, which represents an increase
+                    in certainty after splitting.</li>
+                <li>The entropy and information gain of different attributes are calculated to select the attribute with
+                    the highest information gain as the next splitter.</li>
+                <li>The process of selecting attributes, splitting the data, and calculating entropy and information
+                    gain is repeated for each branch to build a decision tree.</li>
+            </ul>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">3-8 Lab: Decision Trees</h2>
+        </section>
+
+        <!-- Intro to Logistic Regression -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">3-9 Intro to Logistic Regression: Predicting and Understanding
+                Classification Problems</h2>
+            <p>Link of the video: <a href="https://www.youtube.com/watch?v=KCeXGT7gPZQ&t=9s" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <p>Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch"
+                    class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <h3 class="text-xl font-bold mt-4">Key points of the video:</h3>
+            <ul class="list-disc list-inside">
+                <li>Logistic regression is a statistical and machine learning technique used for classification.</li>
+                <li>Logistic regression is used to predict a categorical or discrete target field, such as yes/no or
+                    true/false.</li>
+                <li>Independent variables in logistic regression should be continuous or transformed into continuous
+                    values.</li>
+                <li>Logistic regression can be used for both binary and multi-class classification.</li>
+                <li>Applications of logistic regression include predicting customer churn, probability of a heart
+                    attack, mortality in an injured patient, disease diagnosis, marketing predictions, and more.</li>
+                <li>Logistic regression is suitable when the target field is binary, when probability predictions are
+                    needed, when the data is linearly separable, and when the impact of a feature needs to be
+                    understood.</li>
+                <li>Logistic regression models aim to predict the class of each sample and the probability of each
+                    sample belonging to a class.</li>
+            </ul>
+        </section>
+
+        <!-- Understanding the Difference: Linear Regression vs. Logistic Regression -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">3-10 Understanding the Difference: Linear Regression vs. Logistic
+                Regression</h2>
+            <p>Link of the video: <a href="https://www.youtube.com/watch?v=U1zFHn3uyQg" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <p>Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch"
+                    class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <h3 class="text-xl font-bold mt-4">Key points of the video:</h3>
+            <ul class="list-disc list-inside">
+                <li>Linear regression is not suitable for binary classification problems.</li>
+                <li>Logistic regression is used to predict the class and probability of each sample belonging to a
+                    class.</li>
+                <li>Linear regression can be used to predict continuous values like income, while logistic regression is
+                    used for categorical fields like churn.</li>
+                <li>Linear regression fits a line or polynomial through the data, while logistic regression uses the
+                    sigmoid function.</li>
+                <li>The sigmoid function returns a value between 0 and 1, representing the probability of a point
+                    belonging to a class.</li>
+                <li>Logistic regression aims to model the probability of an input belonging to a particular class.</li>
+                <li>The training process involves initializing parameter values, calculating the model output, comparing
+                    with actual labels, calculating the error, and minimizing the cost using techniques like gradient
+                    descent.</li>
+                <li>The goal is to reduce the cost and improve the model's ability to estimate labels correctly.</li>
+                <li>Iterations continue until the cost is sufficiently low, and stopping criteria can be based on
+                    accuracy.</li>
+            </ul>
+        </section>
+
+        <!-- Mastering Logistic Regression: Optimizing Model Parameters with Gradient Descent -->
+        <section>
+            <h2 class="text-2xl font-bold mb-4">3-11 Mastering Logistic Regression: Optimizing Model Parameters with
+                Gradient Descent</h2>
+            <p>Link of the video: <a href="https://www.youtube.com/watch?v=6UoUvjR2Da4" class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <p>Source course: Machine Learning with Python: A Practical Introduction- by IBM: <a href="https://www.edx.org/learn/machine-learning/ibm-machine-learning-with-python-a-practical-introduction?index=product&queryID=6501ced12b9c363f37fcac83eb10edd4&position=3&search_index=product&results_level=first-level-results&term=machine+learning&campaign=Machine+Learning+with+Python%3A+A+Practical+Introduction&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fsearch"
+                    class="text-blue-500 underline" style="color: blue !important;" target="_blank">Link</a></p>
+            <h3 class="text-xl font-bold mt-4">Key points of the video:</h3>
+            <ul class="list-disc list-inside">
+                <li>The main objective of training in logistic regression is to change the parameters of the model to
+                    best estimate the labels of the samples in the dataset.</li>
+                <li>The cost function measures the difference between the actual values of the target variable and the
+                    predicted values of the model.</li>
+                <li>The cost function is formulated using the sigmoid of the dot product between the parameter vector
+                    theta and the input features.</li>
+                <li>The cost function is typically the mean squared error, denoted as J(theta), and it represents the
+                    average sum of the cost functions of all cases in the training set.</li>
+                <li>The goal is to find the best parameters theta that minimizes the cost function.</li>
+                <li>Gradient descent is an iterative optimization approach used to minimize the cost function by
+                    adjusting the parameter values.</li>
+                <li>Gradient descent calculates the derivative of the cost function with respect to each parameter to
+                    determine the direction and magnitude of the update.</li>
+                <li>The learning rate, denoted as mu, controls the step size taken in the direction of the negative
+                    gradient.</li>
+                <li>The process of gradient descent is repeated until the algorithm converges on an acceptable minimum.
+                </li>
+                <li>The training algorithm involves initializing the parameters, calculating the cost, computing the
+                    gradient, updating the parameters, and iterating until convergence.</li>
+                <li>Once the parameters are found, the logistic regression model can be used to predict the probability
+                    of each label.</li>
+            </ul>
+        </section>
+
+        <!-- Lab: SVM (Support Vector Machines) -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">3-14 Lab: SVM (Support Vector Machines)</h2>
+    <!-- <p class="text-gray-700">Link: <a href="#" class="text-blue-500 underline">Link</a></p> -->
+  </section>
+
+  <!-- Module 3 – Assignment -->
+  <section class="mt-8">
+        <h1 class="text-2xl font-bold mb-6">3-15 Module 3 – Quiz</h1>
+    
+        <div class="mb-6">
+          <h2 class="font-bold">Instructions:</h2>
+          <p class="mb-4">Answer the following questions based on your understanding of the concepts covered in Module 3. Choose the most appropriate answer for each question.</p>
+        </div>
+    
+        <!-- Question 1 -->
+        <div class="mb-6">
+          <p class="mb-2 font-bold">Classification is a supervised learning approach that involves categorizing unknown items into discrete classes based on their features.</p>
+          <ul class="list-disc pl-6 mb-4">
+            <li class="ml-6">a) True</li>
+            <li class="ml-6">b) False</li>
+          </ul>
+        </div>
+    
+        <!-- Question 2 -->
+        <div class="mb-6">
+          <p class="mb-2 font-bold">What are some applications of classification in civil engineering?</p>
+          <ul class="list-disc pl-6 mb-4">
+            <li class="ml-6">a) Soil classification for geotechnical analysis</li>
+            <li class="ml-6">b) Structural health monitoring for identifying potential failure risks</li>
+            <li class="ml-6">c) Construction material categorization for quality control</li>
+            <li class="ml-6">d) All of the above</li>
+          </ul>
+        </div>
+    
+        <!-- Question 3 -->
+        <div class="mb-6">
+          <p class="mb-2 font-bold">K-Nearest Neighbors (KNN) is a classification algorithm that predicts the class of a new case based on its similarity to labeled cases in a dataset.</p>
+          <ul class="list-disc pl-6 mb-4">
+            <li class="ml-6">a) True</li>
+            <li class="ml-6">b) False</li>
+          </ul>
+        </div>
+    
+        <!-- Question 4 -->
+        <div class="mb-6">
+          <p class="mb-2 font-bold">Which evaluation metric measures the similarity between true and predicted labels using the intersection and union of the label sets?</p>
+          <ul class="list-disc pl-6 mb-4">
+            <li class="ml-6">a) Jaccard index</li>
+            <li class="ml-6">b) F1-score</li>
+            <li class="ml-6">c) Log Loss</li>
+          </ul>
+        </div>
+    
+        <!-- Question 5 -->
+        <div class="mb-6">
+          <p class="mb-2 font-bold">Decision trees are used for classification and help determine the appropriate action or outcome based on given features.</p>
+          <ul class="list-disc pl-6 mb-4">
+            <li class="ml-6">a) True</li>
+            <li class="ml-6">b) False</li>
+          </ul>
+        </div>
+    
+        <!-- Question 6 -->
+        <div class="mb-6">
+          <p class="mb-2 font-bold">Logistic regression is used to predict continuous values, such as income.</p>
+          <ul class="list-disc pl-6 mb-4">
+            <li class="ml-6">a) True</li>
+            <li class="ml-6">b) False</li>
+          </ul>
+        </div>
+    
+        <!-- Question 7 -->
+        <div class="mb-6">
+          <p class="mb-2 font-bold">Support Vector Machines (SVM) can handle linearly non-separable data sets by transforming them into higher-dimensional spaces using kernel functions.</p>
+          <ul class="list-disc pl-6 mb-4">
+            <li class="ml-6">a) True</li>
+            <li class="ml-6">b) False</li>
+          </ul>
+        </div>
+    
+        <!-- Question 8 -->
+        <div class="mb-6">
+          <p class="mb-2 font-bold">Which of the following are common types of classification algorithms?</p>
+          <ul class="list-disc pl-6 mb-4">
+            <li class="ml-6">a) Decision trees</li>
+            <li class="ml-6">b) K-Nearest Neighbors (KNN)</li>
+            <li class="ml-6">c) Logistic regression</li>
+            <li class="ml-6">d) All of the above</li>
+          </ul>
+        </div>
+    
+        <!-- Question 9 -->
+        <div class="mb-6">
+          <p class="mb-2 font-bold">The F1-score is the harmonic average of precision and recall and represents a classifier's performance in both aspects.</p>
+          <ul class="list-disc pl-6 mb-4">
+            <li class="ml-6">a) True</li>
+            <li class="ml-6">b) False</li>
+          </ul>
+        </div>
+    
+        <!-- Question 10 -->
+        <div class="mb-6">
+          <p class="mb-2 font-bold">What is the main objective of training in logistic regression?</p>
+          <ul class="list-disc pl-6 mb-4">
+            <li class="ml-6">a) To minimize the cost function</li>
+            <li class="ml-6">b) To maximize the accuracy</li>
+            <li class="ml-6">c) To find the optimal hyperplane</li>
+            <li class="ml-6">d) To identify support vectors</li>
+          </ul>
+        </div>
+        
+        <!-- Question 1 -->
+    <div class="mb-6">
+        <p class="mb-2 font-bold">What is the purpose of using kernel functions in Support Vector Machines (SVM)?</p>
+        <ul class="list-disc pl-6 mb-4">
+          <li class="ml-6">a) To transform data into higher-dimensional spaces</li>
+          <li class="ml-6">b) To compute the similarity between data points</li>
+          <li class="ml-6">c) To determine the optimal hyperplane</li>
+          <li class="ml-6">d) To calculate the cost function</li>
+        </ul>
+      </div>
+  
+      <!-- Question 2 -->
+      <div class="mb-6">
+        <p class="mb-2 font-bold">Which algorithm is suitable when the target field is binary, probability predictions are needed, and the data is linearly separable?</p>
+        <ul class="list-disc pl-6 mb-4">
+          <li class="ml-6">a) Decision trees</li>
+          <li class="ml-6">b) K-Nearest Neighbors (KNN)</li>
+          <li class="ml-6">c) Logistic regression</li>
+          <li class="ml-6">d) Support Vector Machines (SVM)</li>
+        </ul>
+      </div>
+   
+      <!-- Question 3 -->
+      <div class="mb-6">
+        <p class="mb-2 font-bold">Which one represents a typical classification problem?</p>
+        <ul class="list-disc pl-6 mb-4">
+          <li class="ml-6">a) To predict the estimated lifespan of a bridge based on its design and construction materials.</li>
+          <li class="ml-6">b) To predict the category of soil based on its composition and properties.</li>
+          <li class="ml-6">c) To predict the compressive strength of concrete based on its mix proportions and curing conditions.</li>
+          <li class="ml-6">d) To predict the traffic load capacity of a bridge based on its structural features.</li>
+        </ul>
+      </div>
+  
+      <!-- Question 4 -->
+      <div class="mb-6">
+        <p class="mb-2 font-bold">Which statement accurately describes Logistic Regression?</p>
+        <ul class="list-disc pl-6 mb-4">
+          <li class="ml-6">a) Logistic Regression can be utilized for both binary classification and multi-class classification tasks.</li>
+          <li class="ml-6">b) Logistic Regression is a modeling technique that shares similarities with linear regression but is specifically designed for predicting categorical or discrete target variables.</li>
+          <li class="ml-6">c) In Logistic Regression, the dependent variable is categorical in nature.</li>
+          <li class="ml-6">d) All of the aforementioned statements about Logistic Regression are true.</li>
+        </ul>
+      </div>
+  
+      <!-- Question 5 -->
+      <div class="mb-6">
+        <p class="mb-2 font-bold">Which of the following scenarios can be modeled using Logistic Regression? (Select all that apply)</p>
+        <ul class="list-disc pl-6 mb-4">
+          <li class="ml-6">a) Predicting the probability of a structural failure in a building based on its age and maintenance history.</li>
+          <li class="ml-6">b) Estimating the likelihood of a construction project exceeding its budget.</li>
+          <li class="ml-6">c) Determining the customer's likelihood to renew a long-term infrastructure maintenance contract.</li>
+          <li class="ml-6">d) Estimating the soil compaction level based on its moisture content and density.</li>
+        </ul>
+      </div>
+  
+      <!-- Question 6 -->
+      <div class="mb-6">
+        <p class="mb-2 font-bold">Which statement accurately describes the kNN algorithm?</p>
+        <ul class="list-disc pl-6 mb-4">
+          <li class="ml-6">a) The kNN algorithm can be employed to estimate continuous values for a target variable.</li>
+          <li class="ml-6">b) kNN utilizes a set of unlabeled points to predict the labels of other points.</li>
+        </ul>
+      </div>
+  
+      <!-- Question 7 -->
+      <div class="mb-6">
+        <p class="mb-2 font-bold">How can "information gain" in decision trees be defined?</p>
+        <ul class="list-disc pl-6 mb-4">
+          <li class="ml-6">a) It quantifies the degree of information disarray or randomness in each node.</li>
+          <li class="ml-6">b) It is the difference between the entropy of a tree before splitting and the weighted entropy after splitting based on an attribute.</li>
+          <li class="ml-6">c) It represents the information that can reduce the level of uncertainty after splitting in each node.</li>
+          <li class="ml-6">d) It is a measure of the confidence level associated with each node after splitting in a decision tree.</li>
+        </ul>
+      </div>
+
+      <h1 class="text-2xl font-bold mb-6">Answer Key:</h1>
+
+    <div class="mb-6">
+      <p class="mb-4">a) True</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">d) All of the above</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">a) True</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">a) Jaccard index</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">a) True</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">b) False</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">a) True</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">d) All of the above</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">a) True</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">a) To minimize the cost function</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">a) To transform data into higher-dimensional spaces</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">c) Logistic regression</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">b) To predict the category of soil based on its composition and properties.</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">d) All of the aforementioned statements about Logistic Regression are true.</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">a & b & c</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">a) The kNN algorithm can be employed to estimate continuous values for a target variable.</p>
+    </div>
+
+    <div class="mb-6">
+      <p class="mb-4">b) It is the difference between the entropy of a tree before splitting and the weighted entropy after splitting based on an attribute.</p>
+    </div>
+
+    <h2 class="text-xl font-bold mb-6">Module 3 – Assignment</h2>
+    <!-- You can continue with the styling for Module 3 – Assignment if needed -->
+
+  </section>
+{% endblock %}

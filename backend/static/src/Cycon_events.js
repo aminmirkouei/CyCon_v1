@@ -21,6 +21,13 @@ $(document).ready(function () {
      var metWeightCheckbox = document.getElementById('Met_WEIGHT2');
 
      // Set the checked property to false for all the input checkboxes
+     document.getElementById('Met_silhouette').checked = false;
+     document.getElementById('Met_calinski').checked = false;
+     document.getElementById('Met_davies').checked = false;
+
+     document.getElementById('Met_ari').checked = false;
+     document.getElementById('Met_homogeneity').checked = false;
+     document.getElementById('Met_v_measure').checked = false;
      metMSECheckbox.checked = false;
      metRMSECheckbox.checked = false;
      metMAECheckbox.checked = false;
@@ -47,6 +54,40 @@ $(document).ready(function () {
     document.getElementById('Met_Recall_Macro').checked = false;
     document.getElementById('Met_CM').checked = false;
     document.getElementById('Met_WEIGHT1').checked = false;
+
+    document.getElementById('Met_silhouette').checked = false;
+     document.getElementById('Met_calinski').checked = false;
+     document.getElementById('Met_davies').checked = false;
+
+     document.getElementById('Met_ari').checked = false;
+     document.getElementById('Met_homogeneity').checked = false;
+     document.getElementById('Met_v_measure').checked = false;
+    });
+
+
+    var clusteringRadio = document.getElementById('clusteringRadio');
+
+    // Add an event listener to the regression radio button
+    clusteringRadio.addEventListener('click', function() {
+    // Uncheck each checkbox individually by ID
+    document.getElementById('Met_ACC').checked = false;
+    document.getElementById('Met_Precision').checked = false;
+    document.getElementById('Met_Precision_Micro').checked = false;
+    document.getElementById('Met_Precision_Macro').checked = false;
+    document.getElementById('Met_F1').checked = false;
+    document.getElementById('Met_F1_Micro').checked = false;
+    document.getElementById('Met_F1_Macro').checked = false;
+    document.getElementById('Met_Recall').checked = false;
+    document.getElementById('Met_Recall_Micro').checked = false;
+    document.getElementById('Met_Recall_Macro').checked = false;
+    document.getElementById('Met_CM').checked = false;
+    document.getElementById('Met_WEIGHT1').checked = false;
+
+    document.getElementById('Met_MSE').checked = false;
+    document.getElementById('Met_RMSE').checked = false;
+    document.getElementById('Met_MAE').checked = false;
+    document.getElementById('Met_R2').checked = false;
+    document.getElementById('Met_WEIGHT2').checked = false;
     });
 
 
@@ -771,15 +812,18 @@ function getData(files, fileSelected, choice) {
 
     var classificationRadio = document.getElementById('classificationRadio');
     var regressionRadio = document.getElementById('regressionRadio');
-
+    var clusteringRadio = document.getElementById("clusteringRadio")
     var selectedValue;
     if (classificationRadio.checked) {
       selectedValue = classificationRadio.value;
     } else if (regressionRadio.checked) {
       selectedValue = regressionRadio.value;
     }
+    else if (clusteringRadio.checked) {
+        selectedValue = clusteringRadio.value
+    }
 
-    dict_data["regression"] = selectedValue
+    dict_data["metrics_catagory"] = selectedValue
     const class_column = document.getElementById("class_col").value;
     console.log("Selected-value: ", selectedValue)
 
@@ -1056,7 +1100,7 @@ function getData(files, fileSelected, choice) {
                             
                             }
                         else if (!document.getElementById('Met_R2').checked) {
-                            writeData.paragraph += '<span id=Met_R2_Data" class=Met_R2_Data" style="visibility: hidden; position: fixed;">' + "R-squared Score:" + Results["r2"] + '<br\>' + '</span>'
+                            writeData.paragraph += '<span id=Met_R2_Data" class=Met_R2_Data" style="visibility: hidden; position: fixed;">' + '<strong>R-squared Score:</strong>' + Results["r2"] + '<br\>' + '</span>'
                         }
 
                         /* Met_ACC_Data[i].style.visibility = 'hidden';
@@ -1140,7 +1184,53 @@ function getData(files, fileSelected, choice) {
                             writeData.paragraph += '<span id="Met_CM_Data" class="Met_CM_Data" style="visibility: hidden; position: fixed;">' + `${img.outerHTML}` + "<br\>" + '</span>'
                         }
 
+                        // Clustering
 
+                        if (document.getElementById('Met_silhouette').checked){
+                            writeData.paragraph += '<span id="Met_silhouette_Data" class="Met_silhouette_Data">' + '<strong>Silhouette:</strong>'+ Results["silhouette"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_silhouette').checked){
+                            writeData.paragraph += '<span id="Met_silhouette_Data" class="Met_silhouette_Data" style="visibility: hidden; position: fixed;">' + '<strong>Silhouette:</strong>' + Results["silhouette"] + "<br\>" + '</span>'
+                        }
+
+
+                        if (document.getElementById('Met_calinski').checked){
+                            writeData.paragraph += '<span id="Met_calinski_Data" class="Met_calinski_Data">' + '<strong>Calinski:</strong>'+ Results["calinski"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_calinski').checked){
+                            writeData.paragraph += '<span id="Met_calinski_Data" class="Met_calinski_Data" style="visibility: hidden; position: fixed;">' + '<strong>Calinski:</strong>' + Results["calinski"] + "<br\>" + '</span>'
+                        }
+
+                        if (document.getElementById('Met_davies').checked){
+                            writeData.paragraph += '<span id="Met_davies_Data" class="Met_davies_Data">' + '<strong>Davies:</strong>'+ Results["davies"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_davies').checked){
+                            writeData.paragraph += '<span id="Met_davies_Data" class="Met_davies_Data" style="visibility: hidden; position: fixed;">' + '<strong>Davies:</strong>' + Results["davies"] + "<br\>" + '</span>'
+                        }
+
+
+                        if (document.getElementById('Met_ari').checked){
+                            writeData.paragraph += '<span id="Met_ari_Data" class="Met_ari_Data">' + '<strong>Ari:</strong>'+ Results["ari"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_ari').checked){
+                            writeData.paragraph += '<span id="Met_ari_Data" class="Met_ari_Data" style="visibility: hidden; position: fixed;">' + '<strong>Ari:</strong>' + Results["ari"] + "<br\>" + '</span>'
+                        }
+                        
+
+                        if (document.getElementById('Met_homogeneity').checked){
+                            writeData.paragraph += '<span id="Met_homogeneity_Data" class="Met_homogeneity_Data">' + '<strong>Homogeneity:</strong>'+ Results["homogeneity"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_homogeneity').checked){
+                            writeData.paragraph += '<span id="Met_homogeneity_Data" class="Met_homogeneity_Data" style="visibility: hidden; position: fixed;">' + '<strong>Homogeneity:</strong>' + Results["homogeneity"] + "<br\>" + '</span>'
+                        }
+
+
+                        if (document.getElementById('Met_v_measure').checked){
+                            writeData.paragraph += '<span id="Met_v_measure_Data" class="Met_v_measure_Data">' + '<strong>V_measure:</strong>'+ Results["v_measure"] + "<br\>" + '</span>'
+                        }
+                        else if (!document.getElementById('Met_v_measure').checked){
+                            writeData.paragraph += '<span id="Met_v_measure_Data" class="Met_v_measure_Data" style="visibility: hidden; position: fixed;">' + '<strong>V_measure:</strong>' + Results["v_measure"] + "<br\>" + '</span>'
+                        }
                         //$('#Results').html(data.paragraph);
                         document.getElementById("Results").innerHTML = writeData.paragraph;
                         var writeData = {
@@ -1906,7 +1996,7 @@ function generatePDF(form) {
           pdf.setFontSize(10);
           pdf.setTextColor(150);
           // Add your footer content here
-          pdf.text("Copyright © CyCon 2024 version. Last updated: 04/10/2024", pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 10);
+          pdf.text("Copyright © CyCon 2024 version. Last updated: 04/17/2024", pdf.internal.pageSize.getWidth() - 100, pdf.internal.pageSize.getHeight() - 10);
         }
   
         // Save the PDF with the footer
@@ -2033,7 +2123,7 @@ function checkCSV(files, fileSelected, choice) {
         contentType: false, // important,
         success: function (Results) {
             if (Results[0] == "worked") {
-
+                console.log(Results)
                 Results = Results[2]
 
                 var writeData = {
@@ -3638,6 +3728,7 @@ function changeCSV(files, selectedFile, choice) {
 
             // create the initial option to choose a column for classifying.
             // label
+
             var name_label = "Class column:";
             var label = document.createElement('label')
             label.htmlFor = name_label;
